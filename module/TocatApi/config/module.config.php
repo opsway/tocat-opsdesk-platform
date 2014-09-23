@@ -63,13 +63,13 @@ return array(
     'zf-hal' => array(
         'metadata_map' => array(
             'TocatApi\\V1\\Rest\\Project\\ProjectEntity' => array(
-                'entity_identifier_name' => 'id',
+                'entity_identifier_name' => 'project_id',
                 'route_name' => 'tocat-api.rest.project',
                 'route_identifier_name' => 'project_id',
                 'hydrator' => 'Zend\\Stdlib\\Hydrator\\ArraySerializable',
             ),
             'TocatApi\\V1\\Rest\\Project\\ProjectCollection' => array(
-                'entity_identifier_name' => 'id',
+                'entity_identifier_name' => 'project_id',
                 'route_name' => 'tocat-api.rest.project',
                 'route_identifier_name' => 'project_id',
                 'is_collection' => true,
@@ -83,7 +83,7 @@ return array(
                 'table_name' => 'project',
                 'hydrator_name' => 'Zend\\Stdlib\\Hydrator\\ArraySerializable',
                 'controller_service_name' => 'TocatApi\\V1\\Rest\\Project\\Controller',
-                'entity_identifier_name' => 'id',
+                'entity_identifier_name' => 'project_id',
                 'table_service' => 'TocatApi\\V1\\Rest\\Project\\ProjectResource\\Table',
             ),
         ),
@@ -96,11 +96,11 @@ return array(
     'input_filter_specs' => array(
         'TocatApi\\V1\\Rest\\Project\\Validator' => array(
             0 => array(
-                'name' => 'id',
+                'name' => 'project_id',
                 'required' => true,
                 'filters' => array(),
                 'validators' => array(),
-                'description' => 'Project Identificator, string [A-z]',
+                'description' => 'Project External Identificator, Integer',
                 'error_message' => 'Only alphabetical',
                 'allow_empty' => false,
                 'continue_if_empty' => false,
@@ -114,6 +114,15 @@ return array(
                 'allow_empty' => true,
                 'continue_if_empty' => true,
                 'error_message' => 'Should be positive float number',
+            ),
+            2 => array(
+                'name' => 'uid',
+                'required' => false,
+                'filters' => array(),
+                'validators' => array(),
+                'continue_if_empty' => true,
+                'allow_empty' => true,
+                'description' => 'Uniq autoincrement ID (internal)',
             ),
         ),
     ),

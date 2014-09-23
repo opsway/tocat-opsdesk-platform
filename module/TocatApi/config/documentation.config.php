@@ -32,8 +32,9 @@ return array(
                        "href": "/api/v1/project[/:project_id]"
                    }
                }
-              "id": "Project Identificator, string [A-z]",
-              "budget": "Total cost for project"
+              "project_id": "Project External Identificator, Integer",
+              "budget": "Total cost for project",
+              "uid": "Uniq autoincrement ID (internal)"
            }
        ]
    }
@@ -42,8 +43,9 @@ return array(
             'POST' => array(
                 'description' => 'INSERT entity (project) in colection',
                 'request' => '{
-   "id": "Project Identificator, string [A-z]",
-   "budget": "Total cost for project"
+   "project_id": "Project External Identificator, Integer",
+   "budget": "Total cost for project",
+   "uid": "Uniq autoincrement ID (internal)"
 }',
                 'response' => '{
    "_links": {
@@ -67,15 +69,17 @@ return array(
            "href": "/api/v1/project[/:project_id]"
        }
    }
-   "id": "Project Identificator, string [A-z]",
-   "budget": "Total cost for project"
+   "project_id": "Project External Identificator, Integer",
+   "budget": "Total cost for project",
+   "uid": "Uniq autoincrement ID (internal)"
 }',
             ),
             'PATCH' => array(
                 'description' => 'UPDATE partically project entity',
                 'request' => '{
-   "id": "Project Identificator, string [A-z]",
-   "budget": "Total cost for project"
+   "project_id": "Project External Identificator, Integer",
+   "budget": "Total cost for project",
+   "uid": "Uniq autoincrement ID (internal)"
 }',
                 'response' => '{
    "_links": {
@@ -83,15 +87,17 @@ return array(
            "href": "/api/v1/project[/:project_id]"
        }
    }
-   "id": "Project Identificator, string [A-z]",
-   "budget": "Total cost for project"
+   "project_id": "Project External Identificator, Integer",
+   "budget": "Total cost for project",
+   "uid": "Uniq autoincrement ID (internal)"
 }',
             ),
             'PUT' => array(
                 'description' => 'INSERT all data to exists entity',
                 'request' => '{
-   "id": "Project Identificator, string [A-z]",
-   "budget": "Total cost for project"
+   "project_id": "Project External Identificator, Integer",
+   "budget": "Total cost for project",
+   "uid": "Uniq autoincrement ID (internal)"
 }',
                 'response' => '{
    "_links": {
@@ -99,15 +105,17 @@ return array(
            "href": "/api/v1/project[/:project_id]"
        }
    }
-   "id": "Project Identificator, string [A-z]",
-   "budget": "Total cost for project"
+   "project_id": "Project External Identificator, Integer",
+   "budget": "Total cost for project",
+   "uid": "Uniq autoincrement ID (internal)"
 }',
             ),
             'DELETE' => array(
                 'description' => 'DELETE project entity',
                 'request' => '{
-   "id": "Project Identificator, string [A-z]",
-   "budget": "Total cost for project"
+   "project_id": "Project External Identificator, Integer",
+   "budget": "Total cost for project",
+   "uid": "Uniq autoincrement ID (internal)"
 }',
                 'response' => '{
    "_links": {
@@ -115,8 +123,9 @@ return array(
            "href": "/api/v1/project[/:project_id]"
        }
    }
-   "id": "Project Identificator, string [A-z]",
-   "budget": "Total cost for project"
+   "project_id": "Project External Identificator, Integer",
+   "budget": "Total cost for project",
+   "uid": "Uniq autoincrement ID (internal)"
 }',
             ),
             'description' => 'Project entity',
