@@ -1,0 +1,27 @@
+{
+    "name": "opsway/tocat",
+    "description": "Skeleton Tocat Application for ZF2",
+    "license": "BSD-3-Clause",
+    "keywords": [
+        "framework",
+        "zf2",
+        "apigility"
+    ],
+    "config": {
+        "process-timeout": 5000
+    },
+    "require": {
+        "php": ">=5.3.23",
+        "zendframework/zendframework": ">=2.3.2,<3.0.0",
+        "zfcampus/zf-apigility": "~1.0"
+    },
+    "require-dev": {
+        "zendframework/zftool": "dev-master",
+        "zfcampus/zf-apigility-admin": "~1.0-dev@dev",
+        "zfcampus/zf-development-mode": "~2.0",
+        "zfcampus/zf-apigility-documentation": "~1.0",
+        "zendframework/zend-developer-tools": "dev-master",
+        "zfcampus/zf-deploy": "~1.0",
+        "zfcampus/zf-apigility-welcome": "~1.0"
+    }
+}
