@@ -11,11 +11,21 @@ return array(
                     ),
                 ),
             ),
+            'tocat-api.rest.ticket' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/api/v1/ticket[/:ticket_id]',
+                    'defaults' => array(
+                        'controller' => 'TocatApi\\V1\\Rest\\Ticket\\Controller',
+                    ),
+                ),
+            ),
         ),
     ),
     'zf-versioning' => array(
         'uri' => array(
             0 => 'tocat-api.rest.project',
+            1 => 'tocat-api.rest.ticket',
         ),
     ),
     'zf-rest' => array(
@@ -41,10 +51,32 @@ return array(
             'collection_class' => 'TocatApi\\V1\\Rest\\Project\\ProjectCollection',
             'service_name' => 'project',
         ),
+        'TocatApi\\V1\\Rest\\Ticket\\Controller' => array(
+            'listener' => 'TocatApi\\V1\\Rest\\Ticket\\TicketResource',
+            'route_name' => 'tocat-api.rest.ticket',
+            'route_identifier_name' => 'ticket_id',
+            'collection_name' => 'ticket',
+            'entity_http_methods' => array(
+                0 => 'GET',
+                1 => 'PUT',
+                2 => 'DELETE',
+            ),
+            'collection_http_methods' => array(
+                0 => 'GET',
+                1 => 'POST',
+            ),
+            'collection_query_whitelist' => array(),
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => 'TocatApi\\V1\\Rest\\Ticket\\TicketEntity',
+            'collection_class' => 'TocatApi\\V1\\Rest\\Ticket\\TicketCollection',
+            'service_name' => 'ticket',
+        ),
     ),
     'zf-content-negotiation' => array(
         'controllers' => array(
             'TocatApi\\V1\\Rest\\Project\\Controller' => 'Json',
+            'TocatApi\\V1\\Rest\\Ticket\\Controller' => 'Json',
         ),
         'accept_whitelist' => array(
             'TocatApi\\V1\\Rest\\Project\\Controller' => array(
@@ -52,9 +84,18 @@ return array(
                 1 => 'application/hal+json',
                 2 => 'application/json',
             ),
+            'TocatApi\\V1\\Rest\\Ticket\\Controller' => array(
+                0 => 'application/vnd.tocat-api.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ),
         ),
         'content_type_whitelist' => array(
             'TocatApi\\V1\\Rest\\Project\\Controller' => array(
+                0 => 'application/vnd.tocat-api.v1+json',
+                1 => 'application/json',
+            ),
+            'TocatApi\\V1\\Rest\\Ticket\\Controller' => array(
                 0 => 'application/vnd.tocat-api.v1+json',
                 1 => 'application/json',
             ),
@@ -74,6 +115,18 @@ return array(
                 'route_identifier_name' => 'project_id',
                 'is_collection' => true,
             ),
+            'TocatApi\\V1\\Rest\\Ticket\\TicketEntity' => array(
+                'entity_identifier_name' => 'ticket_id',
+                'route_name' => 'tocat-api.rest.ticket',
+                'route_identifier_name' => 'ticket_id',
+                'hydrator' => 'Zend\\Stdlib\\Hydrator\\ArraySerializable',
+            ),
+            'TocatApi\\V1\\Rest\\Ticket\\TicketCollection' => array(
+                'entity_identifier_name' => 'ticket_id',
+                'route_name' => 'tocat-api.rest.ticket',
+                'route_identifier_name' => 'ticket_id',
+                'is_collection' => true,
+            ),
         ),
     ),
     'zf-apigility' => array(
@@ -91,6 +144,9 @@ return array(
     'zf-content-validation' => array(
         'TocatApi\\V1\\Rest\\Project\\Controller' => array(
             'input_filter' => 'TocatApi\\V1\\Rest\\Project\\Validator',
+        ),
+        'TocatApi\\V1\\Rest\\Ticket\\Controller' => array(
+            'input_filter' => 'TocatApi\\V1\\Rest\\Ticket\\Validator',
         ),
     ),
     'input_filter_specs' => array(
@@ -124,6 +180,31 @@ return array(
                 'allow_empty' => true,
                 'description' => 'Uniq autoincrement ID (internal)',
             ),
+        ),
+        'TocatApi\\V1\\Rest\\Ticket\\Validator' => array(
+            0 => array(
+                'name' => 'uid',
+                'required' => true,
+                'filters' => array(),
+                'validators' => array(),
+            ),
+            1 => array(
+                'name' => 'ticket_id',
+                'required' => true,
+                'filters' => array(),
+                'validators' => array(),
+            ),
+            2 => array(
+                'name' => 'budget',
+                'required' => true,
+                'filters' => array(),
+                'validators' => array(),
+            ),
+        ),
+    ),
+    'service_manager' => array(
+        'factories' => array(
+            'TocatApi\\V1\\Rest\\Ticket\\TicketResource' => 'TocatApi\\V1\\Rest\\Ticket\\TicketResourceFactory',
         ),
     ),
 );
