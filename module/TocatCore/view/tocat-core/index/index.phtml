@@ -1,0 +1,93 @@
+<style>
+    .row table, .row table tr, .row table th, .row table td {
+        border: dashed #777 1px;
+        text-align: center;
+    }
+</style>
+<div class="jumbotron">
+    <h1><?php echo sprintf($this->translate('Welcome to %sTocat%s'), '<span class="zf-green">', '</span>') ?></h1>
+    <p>Enter to <a href="/apigility/welcome">Apigility Admin</a> </p>
+</div>
+<div class="row">
+    <div>List of project:</div>
+    <table>
+        <thead>
+        <tr><th>UID</th><th>PROJECT_ID</th></tr>
+        </thead>
+        <tbody>
+        <?php foreach ($this->project as $row): ?>
+            <tr>
+                <td><?= $row->uid ?></td>
+                <td><?= $row->project_id ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+    <br/>
+    <div>List of ticket:</div>
+    <table>
+        <thead>
+        <tr><th>UID</th><th>TICKET_ID</th><th>BUDGET</th></tr>
+        </thead>
+        <tbody>
+        <?php foreach ($this->ticket as $row): ?>
+            <tr>
+                <td><?= $row->uid ?></td>
+                <td><?= $row->ticket_id ?></td>
+                <td><?= $row->budget ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+    <br/>
+    <div>List of order:</div>
+    <table>
+        <thead>
+        <tr><th>UID</th><th>NAME</th><th>BUDGET</th></tr>
+        </thead>
+        <tbody>
+        <?php foreach ($this->order as $row): ?>
+            <tr>
+                <td><?= $row->uid ?></td>
+                <td><?= $row->name ?></td>
+                <td><?= $row->budget ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+    <br/>
+    <div>Relationship ticket - order entity:</div>
+    <table>
+        <thead>
+        <tr><th>UID</th><th>TICKET_UID</th><th>ORDER_UID</th></tr>
+        </thead>
+        <tbody>
+        <?php foreach ($this->orderTicket as $row): ?>
+            <tr>
+                <td><?= $row->uid ?></td>
+                <td><?= $row->ticket_uid ?></td>
+                <td><?= $row->order_uid ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+    <br/>
+    <div>Relationship project - order entity:</div>
+    <table>
+        <thead>
+        <tr><th>UID</th><th>PROJECT_UID</th><th>ORDER_UID</th></tr>
+        </thead>
+        <tbody>
+        <?php foreach ($this->orderProject as $row): ?>
+            <tr>
+                <td><?= $row->uid ?></td>
+                <td><?= $row->project_uid ?></td>
+                <td><?= $row->order_uid ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+    <pre><?php //print_r($this->project); ?></pre>
+</div>
+
+

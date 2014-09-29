@@ -105,6 +105,9 @@ class TicketResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
+        if ($data->budget > 100) {
+            return new ApiProblem(406, 'Budget value is not acceptable');
+        }
         $dataSource = array_column($this->_mockData, 'uid', 'ticket_id');
         if (array_key_exists($id, $dataSource)){
             $this->_mockData[$dataSource[$id]] = $data;

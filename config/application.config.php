@@ -6,7 +6,7 @@
  */
 return array(
     'modules' => array(
-        'Application',
+        'TocatCore',
         'ZF\\DevelopmentMode',
         'ZF\\Apigility',
         'ZF\\Apigility\\Provider',

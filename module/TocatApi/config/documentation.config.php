@@ -131,4 +131,13 @@ return array(
             'description' => 'Project entity',
         ),
     ),
+    'TocatApi\\V1\\Rpc\\GetBudget\\Controller' => array(
+        'POST' => array(
+            'description' => null,
+            'request' => '{
+   "type": "Type of budget",
+   "id": "Identificator for selected type entity"
+}',
+        ),
+    ),
 );
