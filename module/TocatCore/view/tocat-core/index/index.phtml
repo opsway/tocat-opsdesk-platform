@@ -9,41 +9,62 @@
     <p>Enter to <a href="/apigility/welcome">Apigility Admin</a> </p>
 </div>
 <div class="row">
-    <div>List of project:</div>
+    <h3>List of project:</h3>
     <table>
         <thead>
-        <tr><th>UID</th><th>PROJECT_ID</th></tr>
+        <tr><th>UID</th><th>Project_ID</th><th>Project Name</th> <th>Budget</th> <th>List of order</th></tr>
         </thead>
         <tbody>
         <?php foreach ($this->project as $row): ?>
             <tr>
                 <td><?= $row->uid ?></td>
                 <td><?= $row->project_id ?></td>
+                <td><?= $row->project['name'] ?></td>
+                <td><?= $row->totalBudget ?></td>
+                <td>
+                    <ul>
+                        <?php foreach ($row->listOrders as $order):?>
+                            <li><?=$order->name ?></li>
+                        <?php endforeach;?>
+                    </ul>
+                </td>
             </tr>
         <?php endforeach; ?>
         </tbody>
     </table>
     <br/>
-    <div>List of ticket:</div>
+    <h3>List of ticket:</h3>
     <table>
         <thead>
-        <tr><th>UID</th><th>TICKET_ID</th><th>BUDGET</th></tr>
+        <tr><th>UID</th><th>Ticket_ID</th> <th>Ticket Name</th> <th>Local Budget</th>  <th>Total Budget</th> <th>List of order</th> </tr>
         </thead>
         <tbody>
         <?php foreach ($this->ticket as $row): ?>
             <tr>
                 <td><?= $row->uid ?></td>
                 <td><?= $row->ticket_id ?></td>
+                <td><?php echo '<b>['.$row->issue['project']['name'].']</b> ('.$row->issue['status']['name'].') <a href="http://redmine.opsway.com/issues/'.$row->ticket_id.'">'.$row->issue['subject'] . '</a> <sub>'.$row->issue['author']['name'].'</sub>'?></td>
                 <td><?= $row->budget ?></td>
+                <td><?= $row->totalBudget ?></td>
+                <td>
+                    <ul>
+                        <?php foreach ($row->listOrders as $order):?>
+                            <li><?=$order->name ?></li>
+                        <?php endforeach;?>
+                    </ul>
+                </td>
+            </tr>
             </tr>
         <?php endforeach; ?>
         </tbody>
     </table>
     <br/>
-    <div>List of order:</div>
+    <h3>List of order:</h3>
+    <form method="post" id="order_form" action="<?= $this->url('application/default', array('action' => 'order','controller' => 'index'))?>">
+        <input type="hidden" name="uid">
     <table>
         <thead>
-        <tr><th>UID</th><th>NAME</th><th>BUDGET</th></tr>
+        <tr><th>UID</th><th>Name</th><th>Budget</th><th>Action</th></tr>
         </thead>
         <tbody>
         <?php foreach ($this->order as $row): ?>
@@ -51,12 +72,20 @@
                 <td><?= $row->uid ?></td>
                 <td><?= $row->name ?></td>
                 <td><?= $row->budget ?></td>
+                <td><input type="submit" name="action" value="Delete" onclick="if (confirm('Are you sure?')) { this.form.elements['uid'].value = '<?= $row->uid ?>'; } else { return false; }"></td>
             </tr>
         <?php endforeach; ?>
+        <tr>
+            <td>&nbsp;</td>
+            <td><input name="name" maxlength="100"/></td>
+            <td><input name="budget" maxlength="10"/></td>
+            <td><button type="submit">Add New</button></td>
+        </tr>
         </tbody>
     </table>
+    </form>
     <br/>
-    <div>Relationship ticket - order entity:</div>
+    <h3>Relationship ticket - order entity:</h3>
     <table>
         <thead>
         <tr><th>UID</th><th>TICKET_UID</th><th>ORDER_UID</th></tr>
@@ -72,7 +101,7 @@
         </tbody>
     </table>
     <br/>
-    <div>Relationship project - order entity:</div>
+    <h3>Relationship project - order entity:</h3>
     <table>
         <thead>
         <tr><th>UID</th><th>PROJECT_UID</th><th>ORDER_UID</th></tr>
@@ -87,7 +116,8 @@
         <?php endforeach; ?>
         </tbody>
     </table>
-    <pre><?php //print_r($this->project); ?></pre>
+    <pre><?php echo 'User:'; print_r($_SESSION['samlUserdata']);?></pre>
+    <pre><?php //print_r($this->test);?></pre>
 </div>
 
 

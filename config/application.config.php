@@ -22,7 +22,8 @@ return array(
         'ZF\\Rest',
         'ZF\\Rpc',
         'ZF\\Versioning',
-        'TocatApi'
+        'TocatApi',
+        'TwwSaml'
     ),
     'module_listener_options' => array(
         'module_paths' => array(

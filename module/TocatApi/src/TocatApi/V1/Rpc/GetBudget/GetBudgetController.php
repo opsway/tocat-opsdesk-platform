@@ -8,6 +8,7 @@ use ZF\ApiProblem\ApiProblem;
 use Zend\Db\Sql\Expression;
 use Zend\Db\Sql\Select;
 use Zend\Json\Json;
+use Redmine\Client;
 
 
 class GetBudgetController extends AbstractActionController
@@ -15,6 +16,8 @@ class GetBudgetController extends AbstractActionController
     public function getBudgetAction()
     {
         $params = Json::decode($this->getRequest()->getContent(),Json::TYPE_ARRAY);
+        $config = $this->getServiceLocator()->get('Config');
+        $redmine = new Client($config['redmine']['url'],$config['redmine']['api_access_key']);
 
         switch ($params['type']){
             case 'project':
@@ -22,7 +25,9 @@ class GetBudgetController extends AbstractActionController
                 $project = $this->getServiceLocator()->get('TocatCore\Model\ProjectTableGateway');
                 $rowset = $project->select(array('project_id' => $params['id']));
                 if (count($rowset) < 1) {
-                    return new ApiProblemResponse(new ApiProblem(404, 'Not Found'));
+                    //return new ApiProblemResponse(new ApiProblem(404, 'Not Found'));
+                    $project->insert(array('project_id' => $params['id']));
+                    $rowset = $project->select(array('project_id' => $params['id']));
                 }
                 $order = $this->getServiceLocator()->get('TocatCore\Model\OrderTableGateway');
                 $orderList = $order->select(function(Select $select) use ($rowset) {
@@ -38,7 +43,9 @@ class GetBudgetController extends AbstractActionController
                 $ticket = $this->getServiceLocator()->get('TocatCore\Model\TicketTableGateway');
                 $rowset = $ticket->select(array('ticket_id' => $params['id']));
                 if (count($rowset) < 1) {
-                    return new ApiProblemResponse(new ApiProblem(404, 'Not Found'));
+                    //return new ApiProblemResponse(new ApiProblem(404, 'Not Found'));
+                    $ticket->insert(array('ticket_id' => $params['id']));
+                    $rowset = $ticket->select(array('ticket_id' => $params['id']));
                 }
                 $order = $this->getServiceLocator()->get('TocatCore\Model\OrderTableGateway');
                 $orderList = $order->select(function(Select $select) use ($rowset) {

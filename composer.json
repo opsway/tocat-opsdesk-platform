@@ -13,7 +13,9 @@
     "require": {
         "php": ">=5.3.23",
         "zendframework/zendframework": ">=2.3.2,<3.0.0",
-        "zfcampus/zf-apigility": "~1.0"
+        "zfcampus/zf-apigility": "~1.0",
+        "twowholeworms/tww-saml":"dev-master",
+        "kbsali/redmine-api":"~1.0"
     },
     "require-dev": {
         "zendframework/zftool": "dev-master",

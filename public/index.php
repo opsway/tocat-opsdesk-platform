@@ -1,5 +1,5 @@
 <?php
-//opcache_reset();
+//opcache_reset(); For PHP 5.5 only in development mode
 /**
  * This makes our life easier when dealing with paths. Everything is relative
  * to the application root now.
@@ -23,4 +23,5 @@ if (file_exists(APPLICATION_PATH . '/config/development.config.php')) {
     $appConfig = Zend\Stdlib\ArrayUtils::merge($appConfig, include APPLICATION_PATH . '/config/development.config.php');
 }
 // Run the application!
+session_start(); // This is bad!
 Zend\Mvc\Application::init($appConfig)->run();
