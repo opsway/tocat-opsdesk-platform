@@ -5,6 +5,8 @@ Introduction
 ------------
 Theory of Constraints Accounting for Teams (TOCAT) provide UI and API for managment budgets.
 
+https://github.com/opsway/tocat/wiki/TODO-list
+
 Installation
 ------------
 
