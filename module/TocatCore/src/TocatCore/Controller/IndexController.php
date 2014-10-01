@@ -51,7 +51,7 @@ class IndexController extends AbstractActionController
                     $select->columns(array('totalBudget' => new Expression('SUM(order.budget)')));
                     $select->join('order_ticket', 'order_ticket.order_uid = order.uid', array());
                     $select->where(array('order_ticket.ticket_uid' => $row->uid));
-                    $select->group('order_ticket.uid');
+                    $select->group('order_ticket.ticket_uid');
                 });
             $orderList = $order->select(function(Select $select) use ($row) {
                     $select->join('order_ticket', 'order_ticket.order_uid = order.uid', array());
