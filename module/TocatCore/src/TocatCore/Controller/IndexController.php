@@ -24,7 +24,10 @@ class IndexController extends AbstractActionController
         $redmine = new Client($config['redmine']['url'],$config['redmine']['api_access_key']);
 
         $project = array();
-        foreach ($this->getServiceLocator()->get('TocatCore\Model\ProjectTableGateway')->select() as $row){
+        $limitClosure = function(Select $select){
+                $select->limit(30);
+            };
+        foreach ($this->getServiceLocator()->get('TocatCore\Model\ProjectTableGateway')->select($limitClosure) as $row){
             $res = $redmine->api('project')->show($row->project_id);
             $projectBudget = $order->select(function(Select $select) use ($row) {
                     $select->columns(array('totalBudget' => new Expression('SUM(order.budget)')));
@@ -42,7 +45,7 @@ class IndexController extends AbstractActionController
         }
 
         $ticket = array();
-        foreach ($this->getServiceLocator()->get('TocatCore\Model\TicketTableGateway')->select() as $row){
+        foreach ($this->getServiceLocator()->get('TocatCore\Model\TicketTableGateway')->select($limitClosure) as $row){
             $res = $redmine->api('issue')->show($row->ticket_id);
             $ticketTotalBudget = $order->select(function(Select $select) use ($row) {
                     $select->columns(array('totalBudget' => new Expression('SUM(order.budget)')));
