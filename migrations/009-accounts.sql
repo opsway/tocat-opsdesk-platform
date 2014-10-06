@@ -1,0 +1,8 @@
+CREATE  TABLE IF NOT EXISTS `accounts` (
+  `uid` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `account_type_uid` INT UNSIGNED NOT NULL,
+  `comment` VARCHAR(250) NOT NULL,
+  PRIMARY KEY (`uid`)
+) ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COMMENT = 'Accounts';

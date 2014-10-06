@@ -18,5 +18,3 @@ CREATE  TABLE IF NOT EXISTS `order_ticket` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB
 COMMENT = 'Relationships between ticket and order entities.';
-
-

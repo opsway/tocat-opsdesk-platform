@@ -47,6 +47,9 @@ class Module
                 'TocatCore\Model\OrderTableGateway' => $this->getCallbackTableInstance('order'),
                 'TocatCore\Model\OrderTicketTableGateway' => $this->getCallbackTableInstance('order_ticket'),
                 'TocatCore\Model\OrderProjectTableGateway' => $this->getCallbackTableInstance('order_project'),
+                'TocatCore\Model\TransactionsTableGateway' => $this->getCallbackTableInstance('transactions'),
+                'TocatCore\Model\UsersTableGateway' => $this->getCallbackTableInstance('users'),
+                'TocatCore\Model\AccountsTableGateway' => $this->getCallbackTableInstance('accounts'),
             ),
         );
     }

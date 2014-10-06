@@ -15,3 +15,5 @@ config/autoload/*.local.php
 !public/vendor/README.md
 data/cache/*
 !data/cache/.gitkeep
+
+sftp-config.json

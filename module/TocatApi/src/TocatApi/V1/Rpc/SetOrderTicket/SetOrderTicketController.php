@@ -31,6 +31,8 @@ class SetOrderTicketController extends AbstractActionController
                 $orderTicket->insert(array('ticket_uid' => $rowset->current()->uid, 'order_uid' => $params['order_uid']));
             } break;
         }
+
+        
         return new ViewModel(array('result' => true));
     }
 }
