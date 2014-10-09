@@ -15,7 +15,9 @@
         "zendframework/zendframework": ">=2.3.2,<3.0.0",
         "zfcampus/zf-apigility": "~1.0",
         "twowholeworms/tww-saml":"dev-master",
-        "kbsali/redmine-api":"~1.0"
+        "kbsali/redmine-api":"~1.0",
+        "zf-commons/zfc-user-doctrine-orm": "dev-master",
+        "bjyoungblood/bjy-authorize": "1.4.*"
     },
     "require-dev": {
         "zendframework/zftool": "dev-master",

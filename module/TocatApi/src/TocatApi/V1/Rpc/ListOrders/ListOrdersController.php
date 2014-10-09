@@ -20,7 +20,7 @@ class ListOrdersController extends AbstractActionController
         if (isset($params['ticket_id'])){
             $rowset = $order->select(function(Select $select) use ($params) {
                     $select->join('order_ticket', 'order_ticket.order_uid = order.uid', array());
-                    $select->join('ticket', 'order_ticket.ticket_uid = ticket.uid');
+                    $select->join('ticket', 'order_ticket.ticket_uid = ticket.uid',array());
                     $select->where(array('ticket.ticket_id' => $params['ticket_id']));
                     $select->quantifier('DISTINCT');
                 });

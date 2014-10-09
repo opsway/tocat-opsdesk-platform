@@ -6,8 +6,7 @@
  */
 return array(
     'modules' => array(
-        'TocatCore',
-        'ZF\\DevelopmentMode',
+       'ZF\\DevelopmentMode',
         'ZF\\Apigility',
         'ZF\\Apigility\\Provider',
         'ZF\\Apigility\\Documentation',
@@ -22,8 +21,17 @@ return array(
         'ZF\\Rest',
         'ZF\\Rpc',
         'ZF\\Versioning',
+        'ZendDeveloperTools',
+        'DoctrineModule',
+        'DoctrineORMModule',
+        'ZfcBase',
+        'ZfcUser',
+        'ZfcUserDoctrineORM',
+        'BjyAuthorize',
+        'TwwSaml',
+        'TocatCore',
         'TocatApi',
-        'TwwSaml'
+        'TocatUser',
     ),
     'module_listener_options' => array(
         'module_paths' => array(
@@ -34,9 +42,9 @@ return array(
             'config/autoload/{,*.}{global,local}.php'
         ),
         'config_cache_key' => 'application.config.cache',
-        'config_cache_enabled' => true,
+        'config_cache_enabled' => false,
         'module_map_cache_key' => 'application.module.cache',
-        'module_map_cache_enabled' => true,
+        'module_map_cache_enabled' => false,
         'cache_dir' => 'data/cache/'
     )
 );
