@@ -25,7 +25,7 @@ class IndexController extends AbstractActionController
 
         $project = array();
         $limitClosure = function(Select $select){
-                $select->limit(30);
+                $select->limit(5);
             };
         foreach ($this->getServiceLocator()->get('TocatCore\Model\ProjectTableGateway')->select($limitClosure) as $row){
             $res = $redmine->api('project')->show($row->project_id);

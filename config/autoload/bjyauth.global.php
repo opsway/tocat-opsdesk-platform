@@ -15,7 +15,7 @@ return array(
             /* If this guard is specified here (i.e. it is enabled), it will block
             * access to all controllers and actions unless they are specified here.
             * You may omit the 'action' index to allow access to the entire controller
-            */
+            * /
             'BjyAuthorize\Guard\Controller' => array(
                 array(
                     'controller' => 'zfcuser',
@@ -44,6 +44,22 @@ return array(
                     'roles'      => array('administrator'),
                 ),
             ),
+
+            \BjyAuthorize\Guard\Route::class => [
+                            ['route' => 'zfcuser', 'roles' => ['user']],
+                            ['route' => 'zfcuser/logout', 'roles' => ['user']],
+                            ['route' => 'zfcuser/login', 'roles' => ['guest']],
+                            ['route' => 'zfcuser/register', 'roles' => ['guest']],
+                            ['route' => 'scn-social-auth-hauth', 'roles' => ['guest']],
+                            ['route' => 'scn-social-auth-user', 'roles' => ['guest']],
+                            ['route' => 'scn-social-auth-user/authenticate', 'roles' => ['guest']],
+                            ['route' => 'scn-social-auth-user/login', 'roles' => ['guest']],
+                            ['route' => 'scn-social-auth-user/logout', 'roles' => ['guest']],
+                            ['route' => 'scn-social-auth-user/register', 'roles' => ['guest']],
+                            ['route' => 'scn-social-auth-user/add-provider', 'roles' => ['guest']],
+                            // Below is the default index action used by the ZendSkeletonApplication
+                            ['route' => 'home', 'roles' => ['guest', 'user']],
+                        ],*/
         ),
     ),
 );
