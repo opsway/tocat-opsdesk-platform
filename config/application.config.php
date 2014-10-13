@@ -30,7 +30,7 @@ return array(
         'ZfcUser',
         'ZfcUserDoctrineORM',
         'BjyAuthorize',
-        'TwwSaml',
+        'ZfcUserOnelogin',
         'TocatCore',
         'TocatApi',
         'TocatUser',

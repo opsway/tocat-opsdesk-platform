@@ -50,7 +50,10 @@ $settings = array(
      * Default value: array containing 'ZfcUser\Authentication\Adapter\Db' with priority 100
      * Accepted values: array containing services that implement 'ZfcUser\Authentication\Adapter\ChainableAdapter'
      */
-    'auth_adapters' => array( 100 => 'ZfcUser\Authentication\Adapter\Db' ),
+    'auth_adapters' => array(
+        100 => 'ZfcUser\Authentication\Adapter\Db',
+       // 110 => 'ZfcUserOnelogin\Authentication\Adapter\OneloginAuth',
+    ),
 
     /**
      * Enable Display Name
@@ -142,7 +145,7 @@ $settings = array(
 	 * Default value: 'zfc-user/user/login.phtml'
      * Accepted values: string path to a view script
 	 */
-    //'user_login_widget_view_template' => 'zfc-user/user/login.phtml',
+    //'user_login_widget_view_template' => 'zfc-user-onelogin/user/login.phtml',
 
     /**
      * Login Redirect Route

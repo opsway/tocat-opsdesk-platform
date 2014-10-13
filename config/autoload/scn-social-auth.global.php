@@ -182,7 +182,7 @@ $settings = array(
      * Set to true if you want to display only the social login buttons without
      * the username/password etc. from ZfcUser.
      */
-    'social_login_only' => true,
+    'social_login_only' => false,
 
     /**
      * Allow users to register their new account with social login
