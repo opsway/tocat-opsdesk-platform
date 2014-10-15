@@ -86,9 +86,6 @@ class OneloginAuth extends AbstractAdapter implements ServiceManagerAwareInterfa
                 return false;
             }
         }
-// Set the roles for stuff like ZfcRbac
- //       $userObject->setRoles($this->getMapper()->getLdapRoles($ldapObj));
-// Success! */
 
         $e->setIdentity($userObject);
         $this->setSatisfied(true);
@@ -113,6 +110,8 @@ class OneloginAuth extends AbstractAdapter implements ServiceManagerAwareInterfa
                 ->setDisplayName($samlAttribute['User.FirstName'][0]. ' ' .  $samlAttribute['User.LastName'][0])
                 ->setPassword('onelogin-registration')
                 ->setState(1);
+            $zfcServiceEvents = $this->getServiceManager()->get('zfcuser_user_service')->getEventManager();
+            $zfcServiceEvents->trigger('register', $this, array('user' => $zfcUser));
             $this->getMapper()->insert($zfcUser);
         }
 

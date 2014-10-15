@@ -23,6 +23,21 @@ class Module implements BootstrapListenerInterface,
         $eventManager        = $application->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
+        $services = $application->getServiceManager();
+        $zfcServiceEvents = $services->get('zfcuser_user_service')->getEventManager();
+        $zfcServiceEvents->attach('register',function ($e) use ($services) {
+                $zfcUser = $e->getParam('user');
+                $em = $services->get('doctrine.entitymanager.orm_default');
+                $configAuth = $services->get('BjyAuthorize\Config');
+                $providerConfig = $configAuth['role_providers']['BjyAuthorize\Provider\Role\ObjectRepositoryProvider'];
+
+                $criteria = array('roleId' => $configAuth['authenticated_role']);
+                $defaultUserRole = $em->getRepository($providerConfig['role_entity_class'])->findOneBy($criteria);
+                if ($defaultUserRole !== null)
+                {
+                    $zfcUser->addRole($defaultUserRole);
+                }
+            });
     }
 
     public function getAutoloaderConfig()
