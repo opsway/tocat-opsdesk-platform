@@ -12,6 +12,7 @@ namespace TocatCore;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 use Zend\Db\TableGateway;
+use Zend\View\Helper\Navigation as ZendViewHelperNavigation;
 
 class Module
 {
@@ -20,6 +21,14 @@ class Module
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
+
+        $sm = $e->getApplication()->getServiceManager();
+        // Add ACL information to the Navigation view helper
+        $authorize = $sm->get('BjyAuthorizeServiceAuthorize');
+        $acl = $authorize->getAcl();
+        $role = $authorize->getIdentity();
+        ZendViewHelperNavigation::setDefaultAcl($acl);
+        ZendViewHelperNavigation::setDefaultRole($role);
     }
 
     public function getConfig()

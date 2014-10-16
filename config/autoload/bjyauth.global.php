@@ -12,11 +12,30 @@ return array(
     'role_entity_class' => 'TocatUser\Entity\Role',
 ),
         ),
+
+        'resource_providers' => array(
+            \BjyAuthorize\Provider\Resource\Config::class => array(
+                'top_nav:teams' => array(),
+                'top_nav:staff' => array(),
+                'top_nav:budget' => array(),
+                'top_nav:payment' => array(),
+                'top_nav:administration' => array(),
+            ),
+        ),
+
+        'rule_providers' => array(
+            \BjyAuthorize\Provider\Rule\Config::class => array(
+                'allow' => array(
+                    array(array('user'), array('top_nav:teams','top_nav:staff','top_nav:budget', 'top_nav:payment', 'top_nav:administration'), array('list')),
+                ),
+            ),
+        ),
+
         'guards'             => array(
             /* If this guard is specified here (i.e. it is enabled), it will block
             * access to all controllers and actions unless they are specified here.
             * You may omit the 'action' index to allow access to the entire controller
-            */
+            * /
             'BjyAuthorize\Guard\Controller' => array(
                 array(
                     'controller' => 'zfcuser',
@@ -33,7 +52,7 @@ return array(
                     'action'     => array('logout'),
                     'roles'      => array('user'),
                 ),
-                array('controller' => 'TocatCore\Controller\Index', 'roles' => array('user')),
+                array('controller' => 'TocatCore\Controller\Index', 'action' => array('index','stub'), 'roles' => array('user')),
                 array(
                     'controller' => 'ZfcUserOnelogin\OneloginController',
                     'action'     => array('index', 'auth'),
@@ -53,7 +72,7 @@ return array(
                     'controller' => 'ScnSocialAuth-HybridAuth',
                     'action'     => array(),
                     'roles'      => array('guest'),
-                ), */
+                ), * /
             ),
 
             /*'BjyAuthorize\Guard\Route' => [

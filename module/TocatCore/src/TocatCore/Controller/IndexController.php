@@ -86,5 +86,9 @@ class IndexController extends AbstractActionController
             return $this->redirect()->toRoute('home');
         }
     }
+
+    public function stubAction(){
+        return new ViewModel(array('uid' => $this->params()->fromRoute('id')));
+    }
 }
 

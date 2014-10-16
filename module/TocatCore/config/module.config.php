@@ -46,6 +46,21 @@ return array(
                     ),
                 ),
             ),
+            'stub' => array(
+                    'type' => 'Segment',
+                    'options' => array(
+                        'route'    => '/app/stub[/:id]',
+                        'constraints' => array(
+                            'id' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        ),
+                        'defaults' => array(
+                            '__NAMESPACE__' => 'TocatCore\Controller',
+                            'controller'    => 'Index',
+                            'action'        => 'stub',
+                            'id' => 'null',
+                        ),
+                ),
+            ),
             // The following is a route to simplify getting started creating
             // new controllers and actions without needing to create a new
             // module. Simply drop new controllers in, and you can access them
@@ -53,7 +68,7 @@ return array(
             'application' => array(
                 'type'    => 'Literal',
                 'options' => array(
-                    'route'    => '/',
+                    'route'    => '/application',
                     'defaults' => array(
                         '__NAMESPACE__' => 'TocatCore\Controller',
                         'controller'    => 'Index',
@@ -83,6 +98,9 @@ return array(
             'Zend\Cache\Service\StorageCacheAbstractServiceFactory',
             'Zend\Log\LoggerAbstractServiceFactory',
         ),
+        'factories' => array(
+             'navigation' => 'TocatCore\Service\TopNavigationFactory',
+         ),
         'aliases' => array(
             'translator' => 'MvcTranslator',
         ),
@@ -113,6 +131,7 @@ return array(
         'template_map' => array(
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
             'tocat-core/index/index' => __DIR__ . '/../view/tocat-core/index/index.phtml',
+            'tocat-core/index/stub' => __DIR__ . '/../view/tocat-core/index/stub.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
         ),
