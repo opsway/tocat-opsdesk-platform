@@ -10,13 +10,19 @@
     "config": {
         "process-timeout": 5000
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/opsway/ZfcUserOnelogin"
+        }
+    ],
     "require": {
         "php": ">=5.3.23",
         "zendframework/zendframework": ">=2.3.2,<3.0.0",
         "zfcampus/zf-apigility": "~1.0",
-        "onelogin/php-saml": ">=2.1.0",
         "kbsali/redmine-api":"~1.0",
         "zf-commons/zfc-user-doctrine-orm": "1.*",
+        "opsway/zfc-user-onelogin": "dev-master",
         "bjyoungblood/bjy-authorize": "1.4.*"
     },
     "require-dev": {

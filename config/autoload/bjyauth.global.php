@@ -35,7 +35,7 @@ return array(
             /* If this guard is specified here (i.e. it is enabled), it will block
             * access to all controllers and actions unless they are specified here.
             * You may omit the 'action' index to allow access to the entire controller
-            * /
+            */
             'BjyAuthorize\Guard\Controller' => array(
                 array(
                     'controller' => 'zfcuser',
@@ -72,7 +72,7 @@ return array(
                     'controller' => 'ScnSocialAuth-HybridAuth',
                     'action'     => array(),
                     'roles'      => array('guest'),
-                ), * /
+                ), */
             ),
 
             /*'BjyAuthorize\Guard\Route' => [
