@@ -4,7 +4,7 @@ return array(
         'default_role'       => 'guest',
         'identity_provider'  => 'BjyAuthorize\Provider\Identity\AuthenticationIdentityProvider',
         'authenticated_role' => 'user',
-        'unauthorized_strategy' => 'BjyAuthorize\View\RedirectionStrategy',
+        'unauthorized_strategy' => 'TocatUser\View\UnauthorizedStrategy',
         'role_providers'     => array(
 // using an object repository (entity repository) to load all roles into our ACL
 'BjyAuthorize\Provider\Role\ObjectRepositoryProvider' => array(
@@ -50,7 +50,7 @@ return array(
                 array(
                     'controller' => 'zfcuser',
                     'action'     => array('logout'),
-                    'roles'      => array('user'),
+                    'roles'      => array('user','admin'),
                 ),
                 array('controller' => 'TocatCore\Controller\Index', 'action' => array('index','stub'), 'roles' => array('user')),
                 array(
@@ -58,33 +58,27 @@ return array(
                     'action'     => array('index', 'auth'),
                     'roles'      => array('guest', 'user'),
                 ),
-                /*array(
-                    'controller' => 'ScnSocialAuth-User',
-                    'action'     => array('authenticate', 'login', 'register'),
-                    'roles'      => array('guest'),
+
+                array(
+                    'controller' => 'zfcuseradmin',
+                    'roles'      => array('admin'),
                 ),
                 array(
-                    'controller' => 'ScnSocialAuth-User',
-                    'action'     => array('index', 'logout'),
-                    'roles'      => array('user'),
+                    'controller' => 'ZfcAdmin\Controller\AdminController',
+                    'action'     => array('index'),
+                    'roles'      => array('admin'),
                 ),
-                array(
-                    'controller' => 'ScnSocialAuth-HybridAuth',
-                    'action'     => array(),
-                    'roles'      => array('guest'),
-                ), */
             ),
 
             /*'BjyAuthorize\Guard\Route' => [
-                            ['route' => 'scn-social-auth-hauth', 'roles' => ['guest']],
-                            ['route' => 'scn-social-auth-user', 'roles' => ['guest']],
-                            ['route' => 'scn-social-auth-user/authenticate', 'roles' => ['guest']],
-                            ['route' => 'scn-social-auth-user/login', 'roles' => ['guest']],
-                            ['route' => 'scn-social-auth-user/logout', 'roles' => ['guest']],
-                            ['route' => 'scn-social-auth-user/register', 'roles' => ['guest']],
-                            ['route' => 'scn-social-auth-user/add-provider', 'roles' => ['guest']],
                             // Below is the default index action used by the ZendSkeletonApplication
                             ['route' => 'home', 'roles' => ['user']],
+                            ['route' => 'stub', 'roles' => ['user']],
+                            ['route' => 'zfcadmin', 'roles' => ['admin']],
+                            ['route' => 'zfcuseradmin', 'roles' => ['admin']],
+                            ['route' => 'zfcuser', 'roles' => ['user','guest']],
+                            ['route' => 'zfcuser/logout', 'roles' => ['user','guest']],
+                            ['route' => 'zfcuser/login', 'roles' => ['guest']],
                         ],*/
         ),
     ),

@@ -23,6 +23,7 @@
         "kbsali/redmine-api":"~1.0",
         "zf-commons/zfc-user-doctrine-orm": "1.*",
         "opsway/zfc-user-onelogin": "dev-master",
+        "danielss89/zfc-user-admin": "dev-master",
         "bjyoungblood/bjy-authorize": "1.4.*"
     },
     "require-dev": {

@@ -23,7 +23,23 @@
             ->prependFile($this->basePath() . '/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
             ->prependFile($this->basePath() . '/js/html5shiv.js',   'text/javascript', array('conditional' => 'lt IE 9',))
         ; ?>
+<script type="text/javascript">
 
+    $(function () {
+      var $win = $(window);
+      $win.resize(function () {
+          if ($win.width() > 768)
+              $(".navbar-nav > .dropdown > a").attr("data-toggle", "");
+          else
+              $(".navbar-nav > .dropdown > a").attr("data-toggle", "dropdown");
+      }).resize();
+      $(".dropdown-menu").find("input, button").each(function () {
+          $(this).click(function (e) {
+              e.stopPropagation();
+          });
+      });
+    });
+</script>
     </head>
     <body>
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -41,46 +57,12 @@
         navigation('navigation')
         ->menu()
         ->setUlClass('nav navbar-nav')
-        ->setPartial('partial/navigation.phtml');
+        ->setPartial('layout/partial/top-menu/navigation.phtml');
     ?>
-                    <!--ul class="nav navbar-nav">
-                        <li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Dashboard') ?></a></li>
-                        <li><a href="#">Teams</a></li>
-                        <li><a href="#">Staff</a></li>
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                  Budgets <span class="caret"></span>
-                                </a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="#">Ticket</a></li>
-                                    <li><a href="#">Order</a></li>
-                                </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                  Payments <span class="caret"></span>
-                                </a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="#">Invoices</a></li>
-                                    <li><a href="#">Transactions</a></li>
-                                    <li><a href="#">Balances</a></li>
-                                    <li><a href="#">Bonuses</a></li>
-                                </ul>
-                        </li>
-                    </ul-->
+
                     <ul class="nav navbar-nav pull-right">
                         <li class="right"> <span style="color: #f5f5f5;"><strong>Hello, <?=($this->zfcUserDisplayName())?'<a href="/user">'.$this->zfcUserDisplayName().'</a>':'guest'?></strong></span></li>
                     </ul>
                 </div><!--/.nav-collapse -->
             </div>
         </nav>
-        <div class="container">
-            <?php echo $this->content; ?>
-            <hr>
-            <footer>
-                <p>&copy; <?php echo date('Y') ?> by OpsWay Ltd. <?php echo $this->translate('All rights reserved.') ?></p>
-            </footer>
-        </div> <!-- /container -->
-        <?php echo $this->inlineScript() ?>
-    </body>
-</html>

@@ -8,6 +8,10 @@
  */
 
 return array(
+    'zfcadmin' => array(
+        'use_admin_layout' => true,
+        'admin_layout_template' => 'layout/admin',
+    ),
     'router' => array(
         'routes' => array(
             'home' => array(
@@ -129,7 +133,8 @@ return array(
         'not_found_template'       => 'error/404',
         'exception_template'       => 'error/index',
         'template_map' => array(
-            'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
+            'layout/layout'           => __DIR__ . '/../view/layout/main.phtml',
+            'layout/admin'           => __DIR__ . '/../view/layout/admin.phtml',
             'tocat-core/index/index' => __DIR__ . '/../view/tocat-core/index/index.phtml',
             'tocat-core/index/stub' => __DIR__ . '/../view/tocat-core/index/stub.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',

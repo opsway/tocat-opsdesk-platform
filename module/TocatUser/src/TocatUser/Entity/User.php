@@ -238,4 +238,20 @@ class User implements UserInterface, ProviderInterface
         $this->roles[] = $role;
         return $this;
     }
+
+
+    public function updateRoles($roles){
+        $this->roles->clear();
+        foreach ($roles as $role) {
+            $this->roles[] = $role;
+        }
+    }
+
+    public function removeRoles($roles)
+    {
+        foreach ($roles as $role) {
+            $this->roles->removeElement($role);
+        }
+        return $this;
+    }
 }

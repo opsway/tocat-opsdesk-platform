@@ -98,8 +98,8 @@ return array(
             'administration' => array(
                 'label' => 'Administration',
                 'icon' => 'glyphicon glyphicon-wrench',
-                'route' => 'stub',
-                'params' => array('id' => 'admin'),
+                'route' => 'zfcadmin',
+               // 'params' => array('id' => 'admin'),
                 'resource' => 'top_nav:administration',
                 'privilege' => 'list',
                 'order' => 100,

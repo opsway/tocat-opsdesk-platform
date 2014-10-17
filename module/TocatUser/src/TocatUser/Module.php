@@ -1,15 +1,11 @@
 <?php
 namespace TocatUser;
 
-use DoctrineModule\Persistence\ObjectManagerAwareInterface;
 use Zend\EventManager\EventInterface;
-use Zend\Form\FormElementManager;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\BootstrapListenerInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
-use Zend\ModuleManager\Feature\FormElementProviderInterface;
 use Zend\Mvc\ModuleRouteListener;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
 class Module implements BootstrapListenerInterface,
     ConfigProviderInterface,
@@ -37,6 +33,37 @@ class Module implements BootstrapListenerInterface,
                 {
                     $zfcUser->addRole($defaultUserRole);
                 }
+            });
+
+        $application->getEventManager()->getSharedManager()->attach('ZfcUserAdmin\Form\EditUser', 'init', function($e) {
+                // $form is a ZfcUser\Form\Register
+                $form = $e->getTarget();
+
+                $sm = $form->getServiceManager();
+                $om = $sm->get('Doctrine\ORM\EntityManager');
+
+                //$form->setHydrator(new \DoctrineORMModule\Stdlib\Hydrator\DoctrineEntity($om, 'TocatUser\Entity\User'));
+
+                $form->add(
+                    array(
+                        'name'    => 'roles',
+                        'type'    => 'DoctrineModule\Form\Element\ObjectMultiCheckbox',
+                        'options' => array(
+                            'label'          => 'Assign Roles',
+                            'object_manager' => $om,
+                            'target_class'   => 'TocatUser\Entity\Role',
+                            'property'       => 'roleId',
+                        ),
+                    )
+                );
+            });
+
+        $application->getEventManager()->getSharedManager()->attach('ZfcUserAdmin\Service\User', 'edit', function($e) {
+                $zfcUser = $e->getParam('user');
+                $post = $e->getParam('data');
+                $em = $e->getParam('form')->getServiceManager()->get('doctrine.entitymanager.orm_default');
+                $listRoles = $em->getRepository('TocatUser\Entity\Role')->findBy(array('id' => $post['roles']));
+                $zfcUser->updateRoles($listRoles);
             });
     }
 

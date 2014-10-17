@@ -29,6 +29,8 @@ return array(
         'ZfcUserDoctrineORM',
         'BjyAuthorize',
         'ZfcUserOnelogin',
+        'ZfcAdmin',
+        'ZfcUserAdmin',
         'TocatCore',
         'TocatApi',
         'TocatUser',

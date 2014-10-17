@@ -21,7 +21,7 @@
                 <td><?= $row->uid ?></td>
                 <td><?= $row->project_id ?></td>
                 <td><?= $row->project['name'] ?></td>
-                <td><?= $row->totalBudget ?></td>
+                <td><?php //$row->totalBudget ?></td>
                 <td>
                     <ul>
                         <?php foreach ($row->listOrders as $order):?>
@@ -55,7 +55,6 @@
                         <?php endforeach;?>
                     </ul>
                 </td>
-            </tr>
             </tr>
         <?php endforeach; ?>
         </tbody>
@@ -118,8 +117,7 @@
         <?php endforeach; ?>
         </tbody>
     </table>
-    <pre><?php echo 'User:'; print_r($_SESSION['samlUserdata']);?></pre>
-    <pre><?php //print_r($this->test);?></pre>
+    <pre><?php print_r($this->test);?></pre>
 </div>
 
 
