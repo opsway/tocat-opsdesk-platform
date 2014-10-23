@@ -1,0 +1,199 @@
+<style type="text/css">
+    .tree-node {
+        border: 1px solid #dae2ea;
+        background: #f8faff;
+        color: #7c9eb2;
+    }
+    .tree-node-content {
+        margin: 10px;
+    }
+    .tree-handle {
+        padding: 10px;
+        background: #428bca;
+        color: #FFF;
+        margin-right: 10px;
+    }
+
+    .angular-ui-tree-handle:hover {
+    }
+
+    .angular-ui-tree-placeholder {
+        background: #f0f9ff;
+        border: 2px dashed #bed2db;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+</style>
+<script type="text/javascript">
+    (function() {
+      'use strict';
+      var sampleData;
+
+
+
+      angular.module('tocatApp', ['ui.tree'])
+      .controller('rolesCtrl', function($scope, $http, $timeout) {
+
+              var extractData = function () {
+                  var map = {}, node = [];
+                  $scope.rolesList = [];
+                  for (var i = 0; i < sampleData.length; i++) {
+                  //    if (sampleData[i].pid === undefined)
+                      node = sampleData[i];
+                      node.editing = false;
+                      node.save = function(){
+                          this.editing = false;
+                      };
+                      node.nodes = [];
+                      map[node.id] = i; // use map to look-up the parents
+                      if (node.parentId != "0") {
+                          sampleData[map[node.parentId]].nodes.push(node);
+                      } else {
+                          $scope.rolesList.push(node);
+                      }
+                      delete node.parentId;
+                  }
+              };
+
+        $scope.deleteNode = function(node) {
+            $scope.editedFlag = true;
+            node.remove();
+        };
+
+        $scope.moveNode = function(node) {
+          $scope.editedFlag = true;
+          node.toggle();
+        };
+
+          $scope.editItem = function(node) {
+              node.editing = true;
+             };
+
+             $scope.cancelEditingItem = function(node) {
+                 node.editing = false;
+             };
+
+             $scope.saveItem = function(node) {
+                 node.save();
+                 $scope.editedFlag = true;
+             };
+
+        $scope.newSubItem = function(scope) {
+          var nodeData = scope.$modelValue;
+            //$scope.editedFlag = true;
+          nodeData.nodes.push({
+            //id: nodeData.id * 10 + nodeData.nodes.length,
+            roleId: nodeData.roleId + '_' + (nodeData.nodes.length + 1),
+            nodes: [],
+            save: function(){
+                                        this.editing = false;
+                                    }
+          });
+            $scope.saveTree();
+        };
+
+              $scope.saveTree = function() {
+                  var dataSource = $http.post('<?php echo $this->url('zfcadmin/roles',array('action' => 'save-tree')) ?>',$scope.rolesList);
+                  if (dataSource) {
+                      dataSource.success(function (data) {
+                          sampleData = data;
+                          // At first only populate the TreeView with root items
+                          extractData();
+                          //loadList();
+                      });
+                      dataSource.error(function (data) {
+                          alert("AJAX failed to Load Data");
+                      });
+                  }
+                  $scope.editedFlag = false;
+              };
+
+        $scope.rolesList = [];
+              $scope.editedFlag = false;
+
+            var loadList = function(){
+                  // Read data from a JSON file using $http methods
+                  var dataSource = $http.get('<?php echo $this->url('zfcadmin/roles',array('action' => 'list')) ?>');
+                  if (dataSource) {
+                      dataSource.success(function (data) {
+                          sampleData = data;
+                          // At first only populate the TreeView with root items
+                          extractData();
+                      });
+                      dataSource.error(function (data) {
+                          alert("AJAX failed to Load Data");
+                      });
+                  }
+            };
+              var timer = $timeout(function () {
+                  loadList();
+                  $timeout.cancel(timer);
+              }, 1000);
+
+
+      });
+
+    })();
+</script>
+
+<!-- Nested node template -->
+<script type="text/ng-template" id="nodes_renderer2.html">
+  <div class="tree-node">
+    <div class="pull-left tree-handle" ui-tree-handle>
+      <span class="glyphicon glyphicon-list"></span>
+    </div>
+    <div class="tree-node-content">
+        <div class="group-title angular-ui-tree-handle" ng-show="!node.editing">
+            <a class="btn btn-success btn-xs" data-nodrag ng-click="moveNode(this)"><span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a>
+            {{node.roleId}}
+            <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="deleteNode(this)"><span class="glyphicon glyphicon-remove"></span></a>
+            <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;"><span class="glyphicon glyphicon-plus"></span></a>
+            <a href="" class="btn btn-primary btn-xs pull-right" data-nodrag="" ng-click="editItem(node)"  style="margin-right: 8px;"><span class="glyphicon glyphicon-pencil"></span></a>
+        </div>
+        <div class="group-title angular-ui-tree-handle ng-hide" data-nodrag="" ng-show="node.editing">
+          <form class="form-inline ng-valid ng-dirty" role="form">
+            <div class="form-group">
+              <label class="sr-only" for="roleId">Role ID</label>
+              <input class="form-control ng-valid ng-dirty" placeholder="Role ID" ng-model="node.roleId" type="text">
+            </div>
+            <button type="submit" class="btn btn-default" ng-click="saveItem(node)">Save</button>
+            <button type="submit" class="btn btn-default" ng-click="cancelEditingItem(node)">Cancel</button>
+          </form>
+        </div>
+    </div>
+  </div>
+  <ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">
+    <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer2.html'">
+    </li>
+  </ol>
+</script>
+<div class="container" ng-controller="rolesCtrl">
+  <h2>Management roles</h2>
+  <div class="row">
+    <div class="col-sm-6">
+      <h3>Tree Roles</h3>
+      <div ui-tree id="tree1-root">
+        <ol ui-tree-nodes="" ng-model="rolesList">
+          <li ng-repeat="node in rolesList" ui-tree-node ng-include="'nodes_renderer2.html'"></li>
+        </ol>
+      </div>
+        <br/>
+        <button type="submit" ng-disabled="!editedFlag" class="btn btn-primary" ng-click="saveTree()">Save changes to DB</button>
+    </div>
+
+    <div class="col-sm-6">
+      <h3>Import Roles from OneLogin?</h3>
+
+    </div>
+  </div>
+
+  <!--h3>Data binding</h3>
+  <div class="row">
+    <div class="col-sm-6">
+      <pre class="code">{{ rolesList | json }}</pre>
+    </div>
+
+  </div-->
+
+</div>

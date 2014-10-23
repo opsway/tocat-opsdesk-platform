@@ -58,7 +58,10 @@ return array(
                     'action'     => array('index', 'auth'),
                     'roles'      => array('guest', 'user'),
                 ),
-
+                array(
+                    'controller' => 'TocatUser\Controller\Admin\Role',
+                    'roles'      => array('admin'),
+                ),
                 array(
                     'controller' => 'zfcuseradmin',
                     'roles'      => array('admin'),

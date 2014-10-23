@@ -1,4 +1,6 @@
 <?php
+namespace TocatUser;
+
 return array(
     'doctrine' => array(
         'driver' => array(
@@ -46,22 +48,53 @@ return array(
 
     'service_manager' => array(
         'invokables' => array(
-            'TocatUser\View\UnauthorizedStrategy' => 'TocatUser\View\UnauthorizedStrategy',
+            View\UnauthorizedStrategy::class => View\UnauthorizedStrategy::class,
+        ),
+        'factories' => [
+            Repository\RoleRepository::class => Factory\Repository\RoleRepositoryFactory::class,
+            Service\RoleService::class  => Factory\Service\RoleServiceFactory::class,
+        ],
+    ),
+    'controllers' => array(
+        'invokables' => [
+        ],
+        'factories' => array(
+            'TocatUser\Controller\Admin\Role' => Factory\Controller\Admin\RoleControllerFactory::class,
+        ),
+    ),
+    'router' => array(
+           'routes' => array(
+               'zfcadmin' => array(
+                   'child_routes' => array(
+                       'roles' => array(
+                           'type' => 'Segment',
+                           'priority' => 1000,
+                           'options' => array(
+                               'route' => '/roles[/:action]',
+                               'constraints' => array(
+                                   'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                               ),
+                               'defaults' => array(
+                                   'controller' => 'TocatUser\Controller\Admin\Role',
+                                   'action'     => 'index',
+                               ),
+                           ),
+                       ),
+                   ),
+               ),
+           ),
+    ),
+    'view_manager' => array(
+        'template_path_stack' => array(
+            __DIR__ . '/../view',
         ),
     ),
     'navigation' => array(
         'admin' => array(
             'roleadmin' => array(
                 'label' => 'Roles',
-                'route' => 'stub',
+                'route' => 'zfcadmin/roles',
                 'params' => array('id' => 'RoleTree'),
-                'pages' => array(
-                    'create' => array(
-                        'label' => 'New Role',
-                        'route' => 'stub',
-                        'params' => array('id' => 'NewRole'),
-                    ),
-                ),
             ),
         ),
     ),

@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * An example entity that represents a role.
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="TocatUser\Repository\RoleRepository")
  * @ORM\Table(name="role")
  *
  * @author Tom Oram <tom@scl.co.uk>
@@ -98,7 +98,7 @@ class Role implements HierarchicalRoleInterface
     /**
      * Set the parent role.
      *
-     * @param Role $role
+     * @param Role $parent
      *
      * @return void
      */
