@@ -5,7 +5,6 @@ use Zend\Mvc\Controller\AbstractActionController;
 use ZF\ApiProblem\ApiProblemResponse;
 use ZF\ContentNegotiation\ViewModel;
 use ZF\ApiProblem\ApiProblem;
-use Zend\Db\Sql\Expression;
 use Zend\Db\Sql\Select;
 use Zend\Json\Json;
 
@@ -21,20 +20,19 @@ class SetOrderTicketController extends AbstractActionController
         }
         $orderTicket = $this->getServiceLocator()->get('TocatCore\Model\OrderTicketTableGateway');
         switch ($params['method']) {
-            case 'DELETE': {
+            case 'DELETE':
                 $orderTicket->delete(array(
                         'ticket_uid' => $rowset->current()->uid,
                         'order_uid'  => $params['order_uid']
                     ));
-            }
+
                 break;
             case 'INSERT':
-            default: {
-            $orderTicket->insert(array('ticket_uid' => $rowset->current()->uid, 'order_uid' => $params['order_uid']));
-            }
-            break;
-        }
+            default:
+                $orderTicket->insert(array('ticket_uid' => $rowset->current()->uid, 'order_uid' => $params['order_uid']));
 
+                break;
+        }
 
         return new ViewModel(array('result' => true));
     }

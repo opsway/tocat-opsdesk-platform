@@ -27,8 +27,7 @@ class IndexController extends AbstractActionController
         $limitClosure = function (Select $select) {
             $select->limit(5);
         };
-        foreach ($this->getServiceLocator()->get('TocatCore\Model\ProjectTableGateway')->select($limitClosure) as $row)
-        {
+        foreach ($this->getServiceLocator()->get('TocatCore\Model\ProjectTableGateway')->select($limitClosure) as $row) {
             $res = $redmine->api('project')->show($row->project_id);
             $projectBudget = $order->select(function (Select $select) use ($row) {
                 $select->columns(array('totalBudget' => new Expression('SUM(order.budget)')));
@@ -42,7 +41,7 @@ class IndexController extends AbstractActionController
                 $select->where(array('project.uid' => $row->uid));
                 $select->quantifier('DISTINCT');
             });
-            $project[] = (object)((array)$row + $res + (array)$projectBudget->current()
+            $project[] = (object) ((array) $row + $res + (array) $projectBudget->current()
                 + array('listOrders' => iterator_to_array($orderList)));
         }
 
@@ -61,7 +60,7 @@ class IndexController extends AbstractActionController
                 $select->where(array('ticket.uid' => $row->uid));
                 $select->quantifier('DISTINCT');
             });
-            $ticket[] = (object)((array)$row + $res + (array)$ticketTotalBudget->current()
+            $ticket[] = (object) ((array) $row + $res + (array) $ticketTotalBudget->current()
                 + array('listOrders' => iterator_to_array($orderList)));
         }
 
@@ -73,7 +72,8 @@ class IndexController extends AbstractActionController
                 'orderTicket'  => $this->getServiceLocator()->get('TocatCore\Model\OrderTicketTableGateway')->select(),
                 'orderProject' => $this->getServiceLocator()->get('TocatCore\Model\OrderProjectTableGateway')->select(),
                 'test'         => $ticket
-            ));
+            )
+        );
     }
 
     public function orderAction()
@@ -85,8 +85,9 @@ class IndexController extends AbstractActionController
                 $order->delete(array('uid' => $post['uid']));
             } else {
                 unset($post['uid']);
-                $order->insert((array)$post);
+                $order->insert((array) $post);
             }
+
             return $this->redirect()->toRoute('home');
         }
     }

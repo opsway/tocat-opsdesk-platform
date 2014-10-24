@@ -33,6 +33,7 @@ class RoleService
             unset($data['parent']);
             $result[] = $data;
         }
+
         return $result;
     }
 

@@ -15,12 +15,11 @@ class SetBudgetController extends AbstractActionController
     {
         $params = Json::decode($this->getRequest()->getContent(), Json::TYPE_ARRAY);
 
-
         switch ($params['type']) {
-            case 'project': {
+            case 'project':
                 return new ApiProblemResponse(new ApiProblem(406, 'Not Implemented'));
-            }
-                break;
+
+            break;
             case 'ticket':
             default:
                 $ticket = $this->getServiceLocator()->get('TocatCore\Model\TicketTableGateway');
@@ -40,7 +39,8 @@ class SetBudgetController extends AbstractActionController
                 }
                 $ticket->update(array('budget' => $params['budget']), array('uid' => $rowset->current()->uid));
                 $rowset = $ticket->select(array('ticket_id' => $params['id']));
-                return new ViewModel((array)$rowset->current() + (array)$orderList->current());
+
+                return new ViewModel((array) $rowset->current() + (array) $orderList->current());
                 break;
 
         }

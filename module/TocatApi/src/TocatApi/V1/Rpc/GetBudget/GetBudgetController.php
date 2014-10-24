@@ -10,7 +10,6 @@ use Zend\Db\Sql\Select;
 use Zend\Json\Json;
 use Redmine\Client;
 
-
 class GetBudgetController extends AbstractActionController
 {
     public function getBudgetAction()
@@ -20,7 +19,7 @@ class GetBudgetController extends AbstractActionController
         $redmine = new Client($config['redmine']['url'], $config['redmine']['api_access_key']);
 
         switch ($params['type']) {
-            case 'project': {
+            case 'project':
                 $project = $this->getServiceLocator()->get('TocatCore\Model\ProjectTableGateway');
                 $rowset = $project->select(array('project_id' => $params['id']));
                 if (count($rowset) < 1) {
@@ -35,9 +34,9 @@ class GetBudgetController extends AbstractActionController
                     $select->where(array('order_project.uid' => $rowset->current()->uid));
                     $select->group('order_project.uid');
                 });
-                return new ViewModel((array)$rowset->current() + (array)$orderList->current());
-            }
-                break;
+
+                return new ViewModel((array) $rowset->current() + (array) $orderList->current());
+            break;
             case 'ticket':
             default:
                 $ticket = $this->getServiceLocator()->get('TocatCore\Model\TicketTableGateway');
@@ -54,11 +53,11 @@ class GetBudgetController extends AbstractActionController
                     $select->where(array('order_ticket.ticket_uid' => $rowset->current()->uid));
                     $select->group('order_ticket.ticket_uid');
                 });
-                return new ViewModel((array)$rowset->current() + (array)$orderList->current());
-                break;
+
+                return new ViewModel((array) $rowset->current() + (array) $orderList->current());
+             break;
 
         }
-
 
     }
 }

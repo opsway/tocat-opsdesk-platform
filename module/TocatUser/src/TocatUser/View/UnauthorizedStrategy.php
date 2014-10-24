@@ -52,7 +52,7 @@ class UnauthorizedStrategy implements ListenerAggregateInterface
      */
     public function __construct($template)
     {
-        $this->template = (string)$template;
+        $this->template = (string) $template;
     }
 
     /**
@@ -80,7 +80,7 @@ class UnauthorizedStrategy implements ListenerAggregateInterface
      */
     public function setTemplate($template)
     {
-        $this->template = (string)$template;
+        $this->template = (string) $template;
     }
 
     /**
@@ -194,13 +194,12 @@ class UnauthorizedStrategy implements ListenerAggregateInterface
         }
     }
 
-
     /**
      * @param string $redirectRoute
      */
     public function setRedirectRoute($redirectRoute)
     {
-        $this->redirectRoute = (string)$redirectRoute;
+        $this->redirectRoute = (string) $redirectRoute;
     }
 
     /**
@@ -208,6 +207,6 @@ class UnauthorizedStrategy implements ListenerAggregateInterface
      */
     public function setRedirectUri($redirectUri)
     {
-        $this->redirectUri = $redirectUri ? (string)$redirectUri : null;
+        $this->redirectUri = $redirectUri ? (string) $redirectUri : null;
     }
 }

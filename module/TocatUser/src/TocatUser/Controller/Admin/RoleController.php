@@ -9,13 +9,11 @@
 
 namespace TocatUser\Controller\Admin;
 
-use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
 use TocatUser\Service\RoleService;
 use Zend\Json\Json;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
-use TocatUser\Entity;
 
 class RoleController extends AbstractActionController
 {
@@ -47,5 +45,4 @@ class RoleController extends AbstractActionController
         //return $this->forward('TocatUser\Controller\Admin\Role',array('action' => 'list'));
         return new JsonModel($this->service->getList());
     }
-
 }
