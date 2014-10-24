@@ -1,0 +1,27 @@
+<phpunit bootstrap="./Bootstrap.php"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         verbose="true"
+         stopOnFailure="false"
+         processIsolation="false"
+         backupGlobals="false"
+         syntaxCheck="true"
+>
+    <testsuites>
+        <testsuite name="Tocat Tests">
+            <directory suffix="Test.php">../module/TocatUser/tests/TocatUserTest</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <php>
+            <ini name="memory_limit" value="2048M"/>
+        </php>
+        <whitelist>
+            <directory suffix=".php">../module/TocatUser</directory>
+        </whitelist>
+    </filter>
+
+</phpunit>

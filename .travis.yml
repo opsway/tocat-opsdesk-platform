@@ -1,0 +1,24 @@
+language: php
+
+php:
+  - 5.5
+  - 5.6
+
+before_script:
+  - composer self-update
+  - composer install --dev --prefer-source;
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - mysql -e "create database IF NOT EXISTS tocat;" -uroot
+
+script:
+  - ./vendor/bin/phpunit --bootstrap=tests/Bootstrap.php
+  - ./vendor/bin/phpcs -n --standard=PSR2 ./module/ ./tests/
+
+notifications:
+  hipchat:
+    rooms:
+      - secure: "TQDUDVYrJE8a4AqL/ITAeQ7Jo21ZhHXLFjEqukscFFlZlAs/IRqncCTRDSt5zeYvF92yNY9C0KsBTDFU/adYEMq/V41TS5E7mj3T7xYSLX9Vo5N3kmm0RuW1oQhOA78EVOYsHzNSBp6r5na2s7Av0hqdAzFq9oLlT5zgTTqjPBw="
+
+matrix:
+  allow_failures:
+    - php: 5.6
