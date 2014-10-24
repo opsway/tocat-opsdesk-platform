@@ -2,15 +2,19 @@
 
 namespace TocatUserTest\Entity;
 
+use TocatUser\Entity\Role;
 use TocatUser\Entity\User as Entity;
 
 class UserTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var Entity
+     */
     protected $user;
 
     public function setUp()
     {
-        $user = new Entity;
+        $user = new Entity();
         $this->user = $user;
     }
 
@@ -72,5 +76,43 @@ class UserTest extends \PHPUnit_Framework_TestCase
     {
         $this->user->setState(1);
         $this->assertEquals(1, $this->user->getState());
+    }
+
+    public function testRoles()
+    {
+        // Setup two different roles
+        $role = new Role();
+        $role2 = new Role();
+        $role2->setId(2);
+        $role2->setRoleId('fake');
+        $role2->setParent($role);
+
+        //Check what current user don't contain any roles
+        $this->assertCount(0, $this->user->getRoles());
+        //Check count roles after add one roles
+        $this->user->addRole($role);
+        $this->assertCount(1, $this->user->getRoles());
+        //Check equal one role in list user roles
+        foreach ($this->user->getRoles() as $row) {
+            $this->assertEquals($role, $row);
+        }
+        //Check not equal two role2 in list user roles
+        foreach ($this->user->getRoles() as $row) {
+            $this->assertNotEquals($role2, $row);
+        }
+        //Check same inverted after updating roles
+        $this->user->updateRoles(array($role2));
+        foreach ($this->user->getRoles() as $row) {
+            $this->assertEquals($role2, $row);
+        }
+        foreach ($this->user->getRoles() as $row) {
+            $this->assertNotEquals($role, $row);
+        }
+        //Check what removing deleting right role
+        $this->user->removeRoles(array($role));
+        $this->assertCount(1, $this->user->getRoles());
+        $this->user->removeRoles(array($role2));
+        $this->assertCount(0, $this->user->getRoles());
+
     }
 }

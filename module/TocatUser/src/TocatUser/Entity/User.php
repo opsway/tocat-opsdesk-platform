@@ -93,7 +93,7 @@ class User implements UserInterface, ProviderInterface
      *
      * @param int $id
      *
-     * @return void
+     * @return self
      */
     public function setId($id)
     {
@@ -117,7 +117,7 @@ class User implements UserInterface, ProviderInterface
      *
      * @param string $username
      *
-     * @return void
+     * @return self
      */
     public function setUsername($username)
     {
@@ -141,7 +141,7 @@ class User implements UserInterface, ProviderInterface
      *
      * @param string $email
      *
-     * @return void
+     * @return self
      */
     public function setEmail($email)
     {
@@ -165,7 +165,7 @@ class User implements UserInterface, ProviderInterface
      *
      * @param string $displayName
      *
-     * @return void
+     * @return self
      */
     public function setDisplayName($displayName)
     {
@@ -189,7 +189,7 @@ class User implements UserInterface, ProviderInterface
      *
      * @param string $password
      *
-     * @return void
+     * @return self
      */
     public function setPassword($password)
     {
@@ -213,7 +213,7 @@ class User implements UserInterface, ProviderInterface
      *
      * @param int $state
      *
-     * @return void
+     * @return self
      */
     public function setState($state)
     {
@@ -237,7 +237,7 @@ class User implements UserInterface, ProviderInterface
      *
      * @param Role $role
      *
-     * @return void
+     * @return self
      */
     public function addRole($role)
     {

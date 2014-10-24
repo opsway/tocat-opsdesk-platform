@@ -1,3 +1,6 @@
+<?php  $this->headScript()
+            ->prependFile($this->basePath() . '/bower_components/angular-ui-tree/dist/angular-ui-tree.min.js')
+            ->prependFile($this->basePath() . '/bower_components/angular/angular.min.js'); ?>
 <style type="text/css">
     .tree-node {
         border: 1px solid #dae2ea;
@@ -129,7 +132,7 @@
               var timer = $timeout(function () {
                   loadList();
                   $timeout.cancel(timer);
-              }, 1000);
+              }, 300);
 
 
       });
