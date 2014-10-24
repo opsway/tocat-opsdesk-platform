@@ -1,6 +1,6 @@
 <?php
 
-namespace Test;
+namespace Tests;
 
 use Zend\Loader\AutoloaderFactory;
 use Zend\Mvc\Service\ServiceManagerConfig;
@@ -8,6 +8,7 @@ use Zend\ServiceManager\ServiceManager;
 use Zend\Stdlib\ArrayUtils;
 
 define('ROOT_PATH', dirname(__DIR__));
+chdir(__DIR__);
 define('DEVELOPMENT_ENV', (getenv('APPLICATION_ENV') === 'development') ? true : false);
 
 /**
@@ -78,9 +79,10 @@ class Bootstrap
         }
 
         $zf2ModulePaths = implode(PATH_SEPARATOR, $zf2ModulePaths) . PATH_SEPARATOR;
-        $zf2ModulePaths .= getenv('ZF2_MODULES_TEST_PATHS') ? : (defined(
-            'ZF2_MODULES_TEST_PATHS'
-        ) ? ZF2_MODULES_TEST_PATHS : '');
+        $zf2ModulePaths .= getenv('ZF2_MODULES_TEST_PATHS')
+            ?: (defined(
+                'ZF2_MODULES_TEST_PATHS'
+            ) ? ZF2_MODULES_TEST_PATHS : '');
 
         // use ModuleManager to load this module and it's dependencies
         $baseConfig = array(
@@ -128,8 +130,8 @@ class Bootstrap
             array(
                 'Zend\Loader\StandardAutoloader' => array(
                     'autoregister_zf' => true,
-                    'namespaces' => array(
-                        __NAMESPACE__ => __DIR__ . '/' . __NAMESPACE__,
+                    'namespaces'      => array(
+                        __NAMESPACE__   => __DIR__ . '/' . __NAMESPACE__,
                         'TocatUserTest' => ROOT_PATH . '/module/TocatUser/tests/TocatUserTest',
                     ),
                 ),

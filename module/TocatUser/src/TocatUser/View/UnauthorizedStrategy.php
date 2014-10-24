@@ -2,7 +2,7 @@
 /**
  * BjyAuthorize Module (https://github.com/bjyoungblood/BjyAuthorize)
  *
- * @link https://github.com/bjyoungblood/BjyAuthorize for the canonical source repository
+ * @link    https://github.com/bjyoungblood/BjyAuthorize for the canonical source repository
  * @license http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -52,7 +52,7 @@ class UnauthorizedStrategy implements ListenerAggregateInterface
      */
     public function __construct($template)
     {
-        $this->template = (string) $template;
+        $this->template = (string)$template;
     }
 
     /**
@@ -80,7 +80,7 @@ class UnauthorizedStrategy implements ListenerAggregateInterface
      */
     public function setTemplate($template)
     {
-        $this->template = (string) $template;
+        $this->template = (string)$template;
     }
 
     /**
@@ -102,17 +102,17 @@ class UnauthorizedStrategy implements ListenerAggregateInterface
      */
     public function onDispatchError(MvcEvent $event)
     {
-                            // Do nothing if the result is a response object
-        $result     = $event->getResult();
+        // Do nothing if the result is a response object
+        $result = $event->getResult();
         $routeMatch = $event->getRouteMatch();
-        $response   = $event->getResponse();
-        $router     = $event->getRouter();
-        $error      = $event->getError();
+        $response = $event->getResponse();
+        $router = $event->getRouter();
+        $error = $event->getError();
 
         if ($result instanceof Response
-            || ! $routeMatch
-            || ($response && ! $response instanceof Response)
-            || ! (
+            || !$routeMatch
+            || ($response && !$response instanceof Response)
+            || !(
                 Route::ERROR === $error
                 || Controller::ERROR === $error
                 || (
@@ -129,9 +129,9 @@ class UnauthorizedStrategy implements ListenerAggregateInterface
         $roles = $services->get('BjyAuthorize\Provider\Identity\ProviderInterface')->getIdentityRoles();
         $config = $services->get('BjyAuthorize\Config');
         $this->setTemplate($config['template']);
-        if (in_array('guest',$roles)){
+        if (in_array('guest', $roles)) {
 
-            $url        = $this->redirectUri;
+            $url = $this->redirectUri;
 
             if (null === $url) {
                 $url = $router->assemble(array(), array('name' => $this->redirectRoute));
@@ -200,7 +200,7 @@ class UnauthorizedStrategy implements ListenerAggregateInterface
      */
     public function setRedirectRoute($redirectRoute)
     {
-        $this->redirectRoute = (string) $redirectRoute;
+        $this->redirectRoute = (string)$redirectRoute;
     }
 
     /**
@@ -208,6 +208,6 @@ class UnauthorizedStrategy implements ListenerAggregateInterface
      */
     public function setRedirectUri($redirectUri)
     {
-        $this->redirectUri = $redirectUri ? (string) $redirectUri : null;
+        $this->redirectUri = $redirectUri ? (string)$redirectUri : null;
     }
 }

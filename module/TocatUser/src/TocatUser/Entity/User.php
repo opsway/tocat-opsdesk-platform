@@ -2,10 +2,10 @@
 /**
  * BjyAuthorize Module (https://github.com/bjyoungblood/BjyAuthorize)
  *
- * @link https://github.com/bjyoungblood/BjyAuthorize for the canonical source repository
+ * @link    https://github.com/bjyoungblood/BjyAuthorize for the canonical source repository
  * @license http://framework.zend.com/license/new-bsd New BSD License
  */
- 
+
 namespace TocatUser\Entity;
 
 use BjyAuthorize\Provider\Role\ProviderInterface;
@@ -97,7 +97,7 @@ class User implements UserInterface, ProviderInterface
      */
     public function setId($id)
     {
-        $this->id = (int) $id;
+        $this->id = (int)$id;
         return $this;
     }
 
@@ -240,7 +240,8 @@ class User implements UserInterface, ProviderInterface
     }
 
 
-    public function updateRoles($roles){
+    public function updateRoles($roles)
+    {
         $this->roles->clear();
         foreach ($roles as $role) {
             $this->roles[] = $role;

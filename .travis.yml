@@ -18,6 +18,8 @@ notifications:
   hipchat:
     rooms:
       - secure: "TQDUDVYrJE8a4AqL/ITAeQ7Jo21ZhHXLFjEqukscFFlZlAs/IRqncCTRDSt5zeYvF92yNY9C0KsBTDFU/adYEMq/V41TS5E7mj3T7xYSLX9Vo5N3kmm0RuW1oQhOA78EVOYsHzNSBp6r5na2s7Av0hqdAzFq9oLlT5zgTTqjPBw="
+    template:
+      - '%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}'
 
 matrix:
   allow_failures:

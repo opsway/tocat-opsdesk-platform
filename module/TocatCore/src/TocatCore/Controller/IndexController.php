@@ -21,63 +21,67 @@ class IndexController extends AbstractActionController
     {
         $order = $this->getServiceLocator()->get('TocatCore\Model\OrderTableGateway');
         $config = $this->getServiceLocator()->get('Config');
-        $redmine = new Client($config['redmine']['url'],$config['redmine']['api_access_key']);
+        $redmine = new Client($config['redmine']['url'], $config['redmine']['api_access_key']);
 
         $project = array();
-        $limitClosure = function(Select $select){
-                $select->limit(5);
-            };
-        foreach ($this->getServiceLocator()->get('TocatCore\Model\ProjectTableGateway')->select($limitClosure) as $row){
+        $limitClosure = function (Select $select) {
+            $select->limit(5);
+        };
+        foreach ($this->getServiceLocator()->get('TocatCore\Model\ProjectTableGateway')->select($limitClosure) as $row)
+        {
             $res = $redmine->api('project')->show($row->project_id);
-            $projectBudget = $order->select(function(Select $select) use ($row) {
-                    $select->columns(array('totalBudget' => new Expression('SUM(order.budget)')));
-                    $select->join('order_project', 'order_project.order_uid = order.uid', array());
-                    $select->where(array('order_project.uid' => $row->uid));
-                    $select->group('order_project.uid');
-                });
-            $orderList = $order->select(function(Select $select) use ($row) {
-                    $select->join('order_project', 'order_project.order_uid = order.uid', array());
-                    $select->join('project', 'order_project.project_uid = project.uid');
-                    $select->where(array('project.uid' => $row->uid));
-                    $select->quantifier('DISTINCT');
-                });
-            $project[] = (object)((array)$row + $res + (array)$projectBudget->current() + array('listOrders' => iterator_to_array($orderList)));
+            $projectBudget = $order->select(function (Select $select) use ($row) {
+                $select->columns(array('totalBudget' => new Expression('SUM(order.budget)')));
+                $select->join('order_project', 'order_project.order_uid = order.uid', array());
+                $select->where(array('order_project.uid' => $row->uid));
+                $select->group('order_project.uid');
+            });
+            $orderList = $order->select(function (Select $select) use ($row) {
+                $select->join('order_project', 'order_project.order_uid = order.uid', array());
+                $select->join('project', 'order_project.project_uid = project.uid');
+                $select->where(array('project.uid' => $row->uid));
+                $select->quantifier('DISTINCT');
+            });
+            $project[] = (object)((array)$row + $res + (array)$projectBudget->current()
+                + array('listOrders' => iterator_to_array($orderList)));
         }
 
         $ticket = array();
-        foreach ($this->getServiceLocator()->get('TocatCore\Model\TicketTableGateway')->select($limitClosure) as $row){
+        foreach ($this->getServiceLocator()->get('TocatCore\Model\TicketTableGateway')->select($limitClosure) as $row) {
             $res = $redmine->api('issue')->show($row->ticket_id);
-            $ticketTotalBudget = $order->select(function(Select $select) use ($row) {
-                    $select->columns(array('totalBudget' => new Expression('SUM(order.budget)')));
-                    $select->join('order_ticket', 'order_ticket.order_uid = order.uid', array());
-                    $select->where(array('order_ticket.ticket_uid' => $row->uid));
-                    $select->group('order_ticket.ticket_uid');
-                });
-            $orderList = $order->select(function(Select $select) use ($row) {
-                    $select->join('order_ticket', 'order_ticket.order_uid = order.uid', array());
-                    $select->join('ticket', 'order_ticket.ticket_uid = ticket.uid');
-                    $select->where(array('ticket.uid' =>  $row->uid));
-                    $select->quantifier('DISTINCT');
-                });
-            $ticket[] = (object)((array)$row + $res + (array)$ticketTotalBudget->current() + array('listOrders' => iterator_to_array($orderList)));
+            $ticketTotalBudget = $order->select(function (Select $select) use ($row) {
+                $select->columns(array('totalBudget' => new Expression('SUM(order.budget)')));
+                $select->join('order_ticket', 'order_ticket.order_uid = order.uid', array());
+                $select->where(array('order_ticket.ticket_uid' => $row->uid));
+                $select->group('order_ticket.ticket_uid');
+            });
+            $orderList = $order->select(function (Select $select) use ($row) {
+                $select->join('order_ticket', 'order_ticket.order_uid = order.uid', array());
+                $select->join('ticket', 'order_ticket.ticket_uid = ticket.uid');
+                $select->where(array('ticket.uid' => $row->uid));
+                $select->quantifier('DISTINCT');
+            });
+            $ticket[] = (object)((array)$row + $res + (array)$ticketTotalBudget->current()
+                + array('listOrders' => iterator_to_array($orderList)));
         }
 
         return new ViewModel(
             array(
-                'project' => $project,
-                'ticket' => $ticket,
-                'order' => $order->select(),
-                'orderTicket' => $this->getServiceLocator()->get('TocatCore\Model\OrderTicketTableGateway')->select(),
+                'project'      => $project,
+                'ticket'       => $ticket,
+                'order'        => $order->select(),
+                'orderTicket'  => $this->getServiceLocator()->get('TocatCore\Model\OrderTicketTableGateway')->select(),
                 'orderProject' => $this->getServiceLocator()->get('TocatCore\Model\OrderProjectTableGateway')->select(),
-                'test' => $ticket
+                'test'         => $ticket
             ));
     }
 
-    public function orderAction(){
+    public function orderAction()
+    {
         $order = $this->getServiceLocator()->get('TocatCore\Model\OrderTableGateway');
-        if ($this->getRequest()->isPost()){
+        if ($this->getRequest()->isPost()) {
             $post = $this->getRequest()->getPost();
-            if (isset($post['action']) && $post['action'] == 'Delete'){
+            if (isset($post['action']) && $post['action'] == 'Delete') {
                 $order->delete(array('uid' => $post['uid']));
             } else {
                 unset($post['uid']);
@@ -87,8 +91,8 @@ class IndexController extends AbstractActionController
         }
     }
 
-    public function stubAction(){
+    public function stubAction()
+    {
         return new ViewModel(array('uid' => $this->params()->fromRoute('id')));
     }
 }
-

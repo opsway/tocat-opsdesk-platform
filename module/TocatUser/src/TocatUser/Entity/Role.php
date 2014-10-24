@@ -2,7 +2,7 @@
 /**
  * BjyAuthorize Module (https://github.com/bjyoungblood/BjyAuthorize)
  *
- * @link https://github.com/bjyoungblood/BjyAuthorize for the canonical source repository
+ * @link    https://github.com/bjyoungblood/BjyAuthorize for the canonical source repository
  * @license http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -82,7 +82,7 @@ class Role implements HierarchicalRoleInterface
      */
     public function setRoleId($roleId)
     {
-        $this->roleId = (string) $roleId;
+        $this->roleId = (string)$roleId;
     }
 
     /**

@@ -8,7 +8,7 @@
          processIsolation="false"
          backupGlobals="false"
          syntaxCheck="true"
->
+        >
     <testsuites>
         <testsuite name="Tocat Tests">
             <directory suffix="Test.php">../module/TocatUser/tests/TocatUserTest</directory>

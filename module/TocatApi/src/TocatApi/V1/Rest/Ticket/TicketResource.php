@@ -6,17 +6,20 @@ use ZF\Rest\AbstractResourceListener;
 
 class TicketResource extends AbstractResourceListener
 {
-    protected $_mockData = [
-        1 => ['uid' => 1, 'ticket_id' => 17179 , 'budget' => 0],
-        2 => ['uid' => 2, 'ticket_id' => 17177, 'budget' => 1],
-        3 => ['uid' => 3, 'ticket_id' => 15337, 'budget' => 2],
-        4 => ['uid' => 4, 'ticket_id' => 16482, 'budget' => 5.5],
-        5 => ['uid' => 5, 'ticket_id' => 10000, 'budget' => 10],
-    ];
+    protected $_mockData
+        = [
+            1 => ['uid' => 1, 'ticket_id' => 17179, 'budget' => 0],
+            2 => ['uid' => 2, 'ticket_id' => 17177, 'budget' => 1],
+            3 => ['uid' => 3, 'ticket_id' => 15337, 'budget' => 2],
+            4 => ['uid' => 4, 'ticket_id' => 16482, 'budget' => 5.5],
+            5 => ['uid' => 5, 'ticket_id' => 10000, 'budget' => 10],
+        ];
+
     /**
      * Create a resource
      *
      * @param  mixed $data
+     *
      * @return ApiProblem|mixed
      */
     public function create($data)
@@ -28,6 +31,7 @@ class TicketResource extends AbstractResourceListener
      * Delete a resource
      *
      * @param  mixed $id
+     *
      * @return ApiProblem|mixed
      */
     public function delete($id)
@@ -39,6 +43,7 @@ class TicketResource extends AbstractResourceListener
      * Delete a collection, or members of a collection
      *
      * @param  mixed $data
+     *
      * @return ApiProblem|mixed
      */
     public function deleteList($data)
@@ -50,14 +55,15 @@ class TicketResource extends AbstractResourceListener
      * Fetch a resource
      *
      * @param  mixed $id
+     *
      * @return ApiProblem|mixed
      */
     public function fetch($id)
     {
         $data = array_column($this->_mockData, 'uid', 'ticket_id');
-        if (array_key_exists($id, $data)){
+        if (array_key_exists($id, $data)) {
             return $this->_mockData[$data[$id]];
-        }else{
+        } else {
             return new ApiProblem(404, 'Not Found');
         }
     }
@@ -66,6 +72,7 @@ class TicketResource extends AbstractResourceListener
      * Fetch all or a subset of resources
      *
      * @param  array $params
+     *
      * @return ApiProblem|mixed
      */
     public function fetchAll($params = array())
@@ -78,6 +85,7 @@ class TicketResource extends AbstractResourceListener
      *
      * @param  mixed $id
      * @param  mixed $data
+     *
      * @return ApiProblem|mixed
      */
     public function patch($id, $data)
@@ -89,6 +97,7 @@ class TicketResource extends AbstractResourceListener
      * Replace a collection or members of a collection
      *
      * @param  mixed $data
+     *
      * @return ApiProblem|mixed
      */
     public function replaceList($data)
@@ -101,6 +110,7 @@ class TicketResource extends AbstractResourceListener
      *
      * @param  mixed $id
      * @param  mixed $data
+     *
      * @return ApiProblem|mixed
      */
     public function update($id, $data)
@@ -109,10 +119,10 @@ class TicketResource extends AbstractResourceListener
             return new ApiProblem(406, 'Budget value is not acceptable');
         }
         $dataSource = array_column($this->_mockData, 'uid', 'ticket_id');
-        if (array_key_exists($id, $dataSource)){
+        if (array_key_exists($id, $dataSource)) {
             $this->_mockData[$dataSource[$id]] = $data;
             return $this->_mockData[$dataSource[$id]];
-        }else{
+        } else {
             return new ApiProblem(404, 'Not Found');
         }
 

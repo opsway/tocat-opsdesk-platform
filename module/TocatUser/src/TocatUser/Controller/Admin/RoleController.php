@@ -20,8 +20,8 @@ use TocatUser\Entity;
 class RoleController extends AbstractActionController
 {
     /**
-    * @var RoleService
-    */
+     * @var RoleService
+     */
     private $service;
 
     public function __construct($service)
@@ -41,7 +41,7 @@ class RoleController extends AbstractActionController
 
     public function saveTreeAction()
     {
-        $tree = Json::decode($this->getRequest()->getContent(),Json::TYPE_ARRAY);
+        $tree = Json::decode($this->getRequest()->getContent(), Json::TYPE_ARRAY);
         $this->service->saveTree($tree);
         // todo: report bug to zfcAdmin module
         //return $this->forward('TocatUser\Controller\Admin\Role',array('action' => 'list'));
@@ -49,5 +49,3 @@ class RoleController extends AbstractActionController
     }
 
 }
-
-

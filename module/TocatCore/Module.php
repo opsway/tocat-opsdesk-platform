@@ -18,7 +18,7 @@ class Module
 {
     public function onBootstrap(MvcEvent $e)
     {
-        $eventManager        = $e->getApplication()->getEventManager();
+        $eventManager = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
 
@@ -51,20 +51,21 @@ class Module
     {
         return array(
             'factories' => array(
-                'TocatCore\Model\ProjectTableGateway' => $this->getCallbackTableInstance('project'),
-                'TocatCore\Model\TicketTableGateway' => $this->getCallbackTableInstance('ticket'),
-                'TocatCore\Model\OrderTableGateway' => $this->getCallbackTableInstance('order'),
-                'TocatCore\Model\OrderTicketTableGateway' => $this->getCallbackTableInstance('order_ticket'),
+                'TocatCore\Model\ProjectTableGateway'      => $this->getCallbackTableInstance('project'),
+                'TocatCore\Model\TicketTableGateway'       => $this->getCallbackTableInstance('ticket'),
+                'TocatCore\Model\OrderTableGateway'        => $this->getCallbackTableInstance('order'),
+                'TocatCore\Model\OrderTicketTableGateway'  => $this->getCallbackTableInstance('order_ticket'),
                 'TocatCore\Model\OrderProjectTableGateway' => $this->getCallbackTableInstance('order_project'),
                 'TocatCore\Model\TransactionsTableGateway' => $this->getCallbackTableInstance('transactions'),
-                'TocatCore\Model\UsersTableGateway' => $this->getCallbackTableInstance('users'),
-                'TocatCore\Model\AccountsTableGateway' => $this->getCallbackTableInstance('accounts'),
+                'TocatCore\Model\UsersTableGateway'        => $this->getCallbackTableInstance('users'),
+                'TocatCore\Model\AccountsTableGateway'     => $this->getCallbackTableInstance('accounts'),
             ),
         );
     }
 
-    public function getCallbackTableInstance($name){
-        return function($sm) use ($name) {
+    public function getCallbackTableInstance($name)
+    {
+        return function ($sm) use ($name) {
             $dbAdapter = $sm->get('dbBase');
             $table = new TableGateway\TableGateway($name, $dbAdapter);
             return $table;
