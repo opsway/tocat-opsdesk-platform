@@ -1,6 +1,6 @@
 TOCAT App
 =======================
-
+[![Build Status](https://travis-ci.org/opsway/tocat.svg)](https://travis-ci.org/opsway/tocat)
 Introduction
 ------------
 Theory of Constraints Accounting for Teams (TOCAT) provide UI and API for managment budgets.
