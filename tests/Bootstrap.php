@@ -154,7 +154,6 @@ class Bootstrap
 
         return $entity;
     }
-
 }
 
 Bootstrap::init();

@@ -50,7 +50,7 @@ class UnauthorizedStrategy implements ListenerAggregateInterface
     /**
      * @param string $template name of the template to use on unauthorized requests
      */
-    public function __construct($template)
+    public function __construct($template = '')
     {
         $this->template = (string) $template;
     }

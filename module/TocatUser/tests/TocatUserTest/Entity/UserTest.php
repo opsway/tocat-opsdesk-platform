@@ -2,6 +2,7 @@
 
 namespace TocatUserTest\Entity;
 
+use TocatUser\Entity\Group;
 use TocatUser\Entity\Role;
 use TocatUser\Entity\User as Entity;
 
@@ -114,5 +115,10 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->user->removeRoles(array($role2));
         $this->assertCount(0, $this->user->getRoles());
 
+    }
+
+    public function testGroups()
+    {
+        $this->assertCount(0, $this->user->getGroups());
     }
 }

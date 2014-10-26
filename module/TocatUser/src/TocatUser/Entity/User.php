@@ -1,10 +1,4 @@
 <?php
-/**
- * BjyAuthorize Module (https://github.com/bjyoungblood/BjyAuthorize)
- *
- * @link    https://github.com/bjyoungblood/BjyAuthorize for the canonical source repository
- * @license http://framework.zend.com/license/new-bsd New BSD License
- */
 
 namespace TocatUser\Entity;
 
@@ -71,11 +65,22 @@ class User implements UserInterface, ProviderInterface
     protected $roles;
 
     /**
-     * Initialies the roles variable.
+     * @var \Doctrine\Common\Collections\Collection
+     * @ORM\ManyToMany(targetEntity="TocatUser\Entity\Group", inversedBy="groups", cascade={"persist"})
+     * @ORM\JoinTable(name="user_group_linker",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="id")}
+     * )
+     */
+    protected $groups;
+
+    /**
+     * Initialies the roles and group variable.
      */
     public function __construct()
     {
         $this->roles = new ArrayCollection();
+        $this->groups = new ArrayCollection();
     }
 
     /**
@@ -246,14 +251,30 @@ class User implements UserInterface, ProviderInterface
         return $this;
     }
 
+    /**
+     * Update all roles
+     *
+     * @param Role[] $roles
+     *
+     * @return $this
+     */
     public function updateRoles($roles)
     {
         $this->roles->clear();
         foreach ($roles as $role) {
             $this->roles[] = $role;
         }
+
+        return $this;
     }
 
+    /**
+     * Deleting roles
+     *
+     * @param Role[] $roles
+     *
+     * @return $this
+     */
     public function removeRoles($roles)
     {
         foreach ($roles as $role) {
@@ -261,5 +282,15 @@ class User implements UserInterface, ProviderInterface
         }
 
         return $this;
+    }
+
+    /**
+     * Get groups
+     *
+     * @return array
+     */
+    public function getGroups()
+    {
+        return $this->groups->getValues();
     }
 }
