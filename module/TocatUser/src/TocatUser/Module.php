@@ -76,8 +76,10 @@ class Module implements BootstrapListenerInterface, ConfigProviderInterface, Aut
             $zfcUser = $e->getParam('user');
             $post = $e->getParam('data');
             $em = $e->getParam('form')->getServiceManager()->get('doctrine.entitymanager.orm_default');
-            $listRoles = $em->getRepository('TocatUser\Entity\Role')->findBy(array('id' => $post['roles']));
+            $listRoles = $em->getRepository(Entity\Role::class)->findBy(array('id' => $post['roles']));
             $zfcUser->updateRoles($listRoles);
+            $listGroup = $em->getRepository(Entity\Group::class)->findBy(array('id' => $post['groups']));
+            $zfcUser->updateGroups($listGroup);
         });
     }
 

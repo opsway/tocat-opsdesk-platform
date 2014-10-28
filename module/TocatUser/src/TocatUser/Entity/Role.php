@@ -56,11 +56,12 @@ class Role implements HierarchicalRoleInterface
      *
      * @param int $id
      *
-     * @return void
+     * @return $this
      */
     public function setId($id)
     {
         $this->id = (int) $id;
+        return $this;
     }
 
     /**
@@ -78,11 +79,12 @@ class Role implements HierarchicalRoleInterface
      *
      * @param string $roleId
      *
-     * @return void
+     * @return $this
      */
     public function setRoleId($roleId)
     {
         $this->roleId = (string) $roleId;
+        return $this;
     }
 
     /**
@@ -100,10 +102,11 @@ class Role implements HierarchicalRoleInterface
      *
      * @param Role $parent
      *
-     * @return void
+     * @return $this
      */
     public function setParent(Role $parent)
     {
         $this->parent = $parent;
+        return $this;
     }
 }

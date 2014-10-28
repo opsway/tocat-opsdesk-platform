@@ -29,7 +29,8 @@ class GroupRepositoryFactory implements FactoryInterface
         $hydrator = new Hydrator(
             $em,
             true,
-            ['id', 'name', 'description', 'team', 'active', 'users' => ['id', 'email']]
+            ['id', 'name', 'description', 'team', 'active', 'users' => ['id', 'email', 'displayName']],
+            false
         );
         $groupRepository->setHydrator($hydrator);
 

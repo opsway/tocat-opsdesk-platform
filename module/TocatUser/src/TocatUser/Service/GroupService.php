@@ -41,4 +41,13 @@ class GroupService
         $this->groupRepository->save($group);
         return $this->groupRepository->extract($group);
     }
+
+    public function deleteRow(array $row)
+    {
+        if (!isset($row['id'])) {
+            throw new \InvalidArgumentException('$entity should contain ID key for delete action');
+        }
+        $group = $this->groupRepository->find($row['id']);
+        $this->groupRepository->delete($group);
+    }
 }

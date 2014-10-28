@@ -16,19 +16,19 @@ class RoleTest extends \PHPUnit_Framework_TestCase
 
     public function testSetGetId()
     {
-        $this->role->setId(123);
+        $this->assertEquals($this->role, $this->role->setId(123));
         $this->assertEquals(123, $this->role->getId());
     }
 
     public function testSetGetRoleId()
     {
-        $this->role->setRoleId('test');
+        $this->assertEquals($this->role, $this->role->setRoleId('test'));
         $this->assertEquals('test', $this->role->getRoleId());
     }
 
     public function testSetGetParent()
     {
-        $this->role->setParent(new Entity());
+        $this->assertEquals($this->role, $this->role->setParent(new Entity()));
         $this->assertNotEquals($this->role, $this->role->getParent());
         $this->assertEquals(new Entity(), $this->role->getParent());
     }

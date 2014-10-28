@@ -7,6 +7,9 @@ use TocatCore\Library\Traits\DoctrineHydratorAwareTrait;
 use Doctrine\ORM\EntityRepository;
 use TocatUser\Entity\Group as GroupEntity;
 
+/**
+ *  @method null|GroupEntity find($id, $lockMode = \Doctrine\DBAL\LockMode::NONE, $lockVersion = null)
+ */
 class GroupRepository extends EntityRepository implements DoctrineHydratorAwareInterface
 {
     use DoctrineHydratorAwareTrait;

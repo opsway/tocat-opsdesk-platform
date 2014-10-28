@@ -70,10 +70,13 @@ class Group
 
     /**
      * @param boolean $active
+     *
+     * @return $this
      */
     public function setActive($active)
     {
         $this->active = $active;
+        return $this;
     }
 
     /**
@@ -86,10 +89,13 @@ class Group
 
     /**
      * @param string $description
+     *
+     * @return $this
      */
     public function setDescription($description)
     {
         $this->description = $description;
+        return $this;
     }
 
     /**
@@ -102,10 +108,13 @@ class Group
 
     /**
      * @param int $id
+     *
+     * @return $this
      */
     public function setId($id)
     {
         $this->id = $id;
+        return $this;
     }
 
     /**
@@ -118,10 +127,13 @@ class Group
 
     /**
      * @param boolean $isTeam
+     *
+     * @return $this
      */
     public function setIsTeam($isTeam)
     {
         $this->team = $isTeam;
+        return $this;
     }
 
     /**
@@ -134,10 +146,13 @@ class Group
 
     /**
      * @param string $name
+     *
+     * @return $this
      */
     public function setName($name)
     {
         $this->name = $name;
+        return $this;
     }
 
     /**

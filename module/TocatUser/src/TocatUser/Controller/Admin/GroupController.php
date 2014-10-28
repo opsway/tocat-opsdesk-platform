@@ -45,4 +45,21 @@ class GroupController extends AbstractActionController
             )
         );
     }
+
+    public function saveBulkAction()
+    {
+        $result = [];
+        foreach (Json::decode($this->getRequest()->getContent(), Json::TYPE_ARRAY) as $item) {
+            $result[] = $this->service->saveRow($item);
+        }
+        return new JsonModel($result);
+    }
+
+    public function deleteAction()
+    {
+        foreach (Json::decode($this->getRequest()->getContent(), Json::TYPE_ARRAY) as $item) {
+            $this->service->deleteRow($item);
+        }
+        return new JsonModel([]);
+    }
 }

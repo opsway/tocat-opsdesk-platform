@@ -293,4 +293,35 @@ class User implements UserInterface, ProviderInterface
     {
         return $this->groups->getValues();
     }
+
+    /**
+     * Add a group to the user.
+     *
+     * @param Group $group
+     *
+     * @return self
+     */
+    public function addGroup($group)
+    {
+        $this->groups[] = $group;
+
+        return $this;
+    }
+
+    /**
+     * Update all grups
+     *
+     * @param Group[] $groups
+     *
+     * @return $this
+     */
+    public function updateGroups($groups)
+    {
+        $this->groups->clear();
+        foreach ($groups as $group) {
+            $this->addGroup($group);
+        }
+
+        return $this;
+    }
 }

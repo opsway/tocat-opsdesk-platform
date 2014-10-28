@@ -120,5 +120,16 @@ class UserTest extends \PHPUnit_Framework_TestCase
     public function testGroups()
     {
         $this->assertCount(0, $this->user->getGroups());
+        $this->user->addGroup(new Group());
+        $this->assertCount(1, $this->user->getGroups());
+        foreach ($this->user->getGroups() as $group) {
+            $this->assertEquals(new Group(), $group);
+        }
+        $groups = [(new Group())->setId(1), (new Group())->setId(2)];
+        $this->user->updateGroups($groups);
+        $this->assertCount(2, $this->user->getGroups());
+        foreach ($this->user->getGroups() as $group) {
+            $this->assertNotEquals(new Group(), $group);
+        }
     }
 }

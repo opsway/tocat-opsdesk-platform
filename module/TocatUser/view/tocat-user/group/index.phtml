@@ -6,19 +6,17 @@
     .ui-grid-icon-menu:after {
         content: "Menu Action";
     }
+
+    .ui-grid-menu-button {
+        top: -30px;
+    }
 </style>
 <script type="text/javascript">
     var app = angular.module('tocatApp', ['ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.selection']);
 
-    angular.module('addressFormatter', []).filter('address', function () {
-        return function (input) {
-            return input.street + ', ' + input.city + ', ' + input.state + ', ' + input.zip;
-        };
-    });
-
     app.controller('MainCtrl', ['$scope', '$http', '$q', '$interval', function ($scope, $http, $q, $interval) {
 
-        $scope.groupsUnSave = {};
+        $scope.groupsSelected = {};
         $scope.gridOptions = {};
         //$scope.gridOptions.enableFiltering = true;
         $scope.gridOptions.enableRowSelection = true;
@@ -35,7 +33,7 @@
             {
                 title: 'Save Selected Groups',
                 action: function ($event) {
-                    alert(1);
+                    $scope.selectSendToServer('<?=$this->url('zfcadmin/groups', array('action' => 'save-bulk')) ?>');
                 }
             },
             {
@@ -47,7 +45,13 @@
             {
                 title: 'Delete Selected Groups',
                 action: function ($event) {
-                    alert(1);
+                    if (confirm('Are you sure?')) $scope.selectSendToServer('<?=$this->url('zfcadmin/groups', array('action' => 'delete')) ?>');
+                }
+            },
+            {
+                title: 'Assign members',
+                action: function ($event) {
+                    alert('modalWindow?');
                 }
             }
         ];
@@ -77,6 +81,27 @@
 
         };
 
+        $scope.selectSendToServer = function(url) {
+            var rows = $.extend(true,[],$scope.gridApi.selection.getSelectedRows());
+            if (rows.length == 0) {
+                alert('Please select row!');
+                return;
+            }
+            rows.forEach(function(row){
+                if (row.users !== undefined) delete row['users'];
+            });
+            $http.post(url, rows)
+                .success(function (data) {
+                    $scope.gridApi.selection.getSelectedGridRows().forEach(function (row) {
+                        row.isSelected = false;
+                    });
+                    $scope.getAllGroups();
+                    $scope.groupsSelected = {};
+                }).error(function (data) {
+                    alert("AJAX failed to Load Data");
+                });
+        };
+
         $scope.gridOptions.onRegisterApi = function (gridApi) {
             //set gridApi on scope
             $scope.gridApi = gridApi;
@@ -86,22 +111,16 @@
             });
             //gridApi.rowEdit.on.saveRow($scope, $scope.saveRow);
             gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+                if (row.entity.id  === undefined) return;
                 if (row.isSelected) {
-                    $scope.groupsUnSave[row.entity.id] = row.entity;
+                    $scope.groupsSelected[row.entity.id] = row.entity;
                 } else {
-                    delete  $scope.groupsUnSave[row.entity.id];
+                    delete  $scope.groupsSelected[row.entity.id];
                 }
                 console.log(row);
                 //$log.log(msg);
             });
 
-            /*gridApi.selection.on.rowSelectionChangedBatch($scope, function (rows) {
-                $.forEach(function(item){
-                    $scope.groupsUnSave[item.id] = item;
-                },rows);
-                var msg = 'rows changed ' + rows.length;
-                $log.log(msg);
-            });*/
         };
 
         $scope.getAllGroups = function() {
@@ -121,8 +140,28 @@
 </script>
 <div>
     <div ng-controller="MainCtrl">
-        <div ui-grid="gridOptions" ui-grid-selection ui-grid-edit ui-grid-resize-columns ui-grid-pinning class="grid"></div>
-        <pre class="code">{{ groupsUnSave | json }}</pre>
+        <h2>Management Groups / Teams</h2>
+
+        <div class="row">
+            <div class="col-sm-8">
+                <h3>Groups list</h3>
+                <div ui-grid="gridOptions" ui-grid-selection ui-grid-edit ui-grid-resize-columns ui-grid-pinning
+                     class="grid"></div>
+            </div>
+            <div class="col-sm-4">
+                <h3>Group members</h3>
+                <ul ng-model="groupsSelected">
+                  <li ng-repeat="group in groupsSelected">
+                      {{group.name}}
+                      <ul>
+                          <li ng-repeat="user in group.users">
+                              {{user.display_name}} ({{user.email}})
+                          </li>
+                      </ul>
+                  </li>
+                </ul>
+            </div>
+        </div>
     </div>
 
 </div>
