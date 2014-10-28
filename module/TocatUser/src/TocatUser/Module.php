@@ -54,6 +54,22 @@ class Module implements BootstrapListenerInterface, ConfigProviderInterface, Aut
                         ),
                     )
                 );
+
+                $form->add(
+                    array(
+                        'name'    => 'groups',
+                        'type'    => 'DoctrineModule\Form\Element\ObjectSelect',
+                        'options' => array(
+                            'label'          => 'Assign Groups',
+                            'object_manager' => $om,
+                            'target_class'   => Entity\Group::class,
+                            'property'       => 'name',
+                        ),
+                        'attributes' => array(
+                            'multiple'  => true,
+                        ),
+                    )
+                );
             });
 
         $application->getEventManager()->getSharedManager()->attach('ZfcUserAdmin\Service\User', 'edit', function ($e) {

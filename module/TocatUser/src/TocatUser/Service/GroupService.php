@@ -1,0 +1,44 @@
+<?php
+namespace TocatUser\Service;
+
+use TocatUser\Entity\Group;
+use TocatUser\Repository\GroupRepository;
+
+class GroupService
+{
+    /**
+     * @var GroupRepository
+     */
+    private $groupRepository;
+
+    public function __construct(GroupRepository $groupRepository)
+    {
+        $this->groupRepository = $groupRepository;
+    }
+
+    public function getAll()
+    {
+        return $this->groupRepository->findAll();
+    }
+
+    public function getList()
+    {
+        return array_map(function ($group) {
+            return $this->groupRepository->extract($group);
+        }, $this->getAll());
+    }
+    
+    public function saveRow(array $row)
+    {
+        $group = false;
+        if (isset($row['id'])) {
+            $group = $this->groupRepository->find($row['id']);
+        }
+        if (!$group) {
+            $group = new Group();
+        }
+        $group = $this->groupRepository->hydrate($group, $row);
+        $this->groupRepository->save($group);
+        return $this->groupRepository->extract($group);
+    }
+}

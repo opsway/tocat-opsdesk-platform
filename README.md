@@ -5,7 +5,7 @@ Introduction
 ------------
 Theory of Constraints Accounting for Teams (TOCAT) provide UI and API for managment budgets.
 
-https://github.com/opsway/tocat/wiki/TODO-list
+Unstable application, development process...
 
 Installation
 ------------
@@ -21,21 +21,30 @@ Rename config/autoload/local.php.dist to local.php and write access to DB like:
 ```php
 <?php
 return array(
-    'db' => array(
-        'adapters' => array(
-            'dbBase' => array(
-                'driver' => 'Pdo_Mysql',
-                'database' => 'tocat',
-                'username' => 'user',
-                'password' => 'password',
-                'charset' => 'utf8',
+    'doctrine' => array(
+            'connection' => array(
+                'orm_default' => array(
+                    'driverClass' =>'Doctrine\DBAL\Driver\PDOMySql\Driver',
+                    'params' => array(
+                        'host'     => 'localhost',
+                        'port'     => '3306',
+                        'user'     => 'root',
+                        'password' => 'password',
+                        'dbname'   => 'tocat',
+                    )
+                )
             ),
-        ),
+            'entity_resolver' => array(
+                    'orm_default' => array()
+                ),
     ),
 );
 ```
 
-Run migration sql files in folder "migrations/".
+Create database and run doctrine update scheme:
+```bash
+./vendor/bin/doctrine-module orm:schema-tool:update --force
+```
 
 ### Development
 

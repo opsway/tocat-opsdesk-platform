@@ -24,7 +24,8 @@
         "zf-commons/zfc-user-doctrine-orm": "1.*",
         "opsway/zfc-user-onelogin": "dev-master",
         "danielss89/zfc-user-admin": "dev-master",
-        "bjyoungblood/bjy-authorize": "1.4.*"
+        "bjyoungblood/bjy-authorize": "1.4.*",
+        "shandy-dev/humus-doctrine-hydrator": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit" : ">=3.7,<4",

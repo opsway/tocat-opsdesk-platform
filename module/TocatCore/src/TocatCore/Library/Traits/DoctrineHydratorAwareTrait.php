@@ -2,22 +2,22 @@
 
 namespace TocatCore\Library\Traits;
 
-use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
+use Zend\Stdlib\Hydrator\HydratorInterface;
 
 trait DoctrineHydratorAwareTrait
 {
     /**
-     * @var DoctrineObject;
+     * @var HydratorInterface;
      */
     protected $hydrator;
 
-    public function setHydrator(DoctrineObject $hydrator)
+    public function setHydrator(HydratorInterface $hydrator)
     {
         $this->hydrator = $hydrator;
     }
 
     /**
-     * @return DoctrineObject
+     * @return HydratorInterface
      * @throws \LogicException
      */
     protected function getHydrator()

@@ -44,9 +44,11 @@ return array(
         'invokables' => array(
             View\UnauthorizedStrategy::class => View\UnauthorizedStrategy::class,
         ),
-        'factories'  => [
-            Repository\RoleRepository::class => Factory\Repository\RoleRepositoryFactory::class,
-            Service\RoleService::class       => Factory\Service\RoleServiceFactory::class,
+        'factories' => [
+            Repository\RoleRepository::class  => Factory\Repository\RoleRepositoryFactory::class,
+            Repository\GroupRepository::class => Factory\Repository\GroupRepositoryFactory::class,
+            Service\RoleService::class        => Factory\Service\RoleServiceFactory::class,
+            Service\GroupService::class       => Factory\Service\GroupServiceFactory::class
         ],
     ),
     'controllers'     => array(
@@ -54,6 +56,7 @@ return array(
         ],
         'factories'  => array(
             'TocatUser\Controller\Admin\Role' => Factory\Controller\Admin\RoleControllerFactory::class,
+            Controller\Admin\GroupController::class => Factory\Controller\Admin\GroupControllerFactory::class,
         ),
     ),
     'router'          => array(
@@ -74,6 +77,20 @@ return array(
                             ),
                         ),
                     ),
+                    'groups' => array(
+                        'type'     => 'Segment',
+                        'priority' => 1000,
+                        'options'  => array(
+                            'route'       => '/groups[/:action]',
+                            'constraints' => array(
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                            'defaults'    => array(
+                                'controller' => Controller\Admin\GroupController::class,
+                                'action'     => 'index',
+                            ),
+                        ),
+                    ),
                 ),
             ),
         ),
@@ -88,7 +105,10 @@ return array(
             'roleadmin' => array(
                 'label'  => 'Roles',
                 'route'  => 'zfcadmin/roles',
-                'params' => array('id' => 'RoleTree'),
+            ),
+            'groupadmin' => array(
+                'label'  => 'Groups / Teams',
+                'route'  => 'zfcadmin/groups',
             ),
         ),
     ),

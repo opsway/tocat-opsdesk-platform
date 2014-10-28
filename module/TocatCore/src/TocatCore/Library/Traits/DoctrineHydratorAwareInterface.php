@@ -2,11 +2,11 @@
 
 namespace TocatCore\Library\Traits;
 
-use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
+use Zend\Stdlib\Hydrator\HydratorInterface;
 
 interface DoctrineHydratorAwareInterface
 {
-    public function setHydrator(DoctrineObject $hydrator);
+    public function setHydrator(HydratorInterface $hydrator);
 
     public function getHydrator();
 }

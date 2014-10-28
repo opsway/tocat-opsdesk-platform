@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Entity Group
  *
  * @package TocatUser\Entity
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="TocatUser\Repository\GroupRepository")
  * @ORM\Table(name="groups")
  */
 class Group
@@ -48,7 +48,7 @@ class Group
 
     /**
      * @var \Doctrine\Common\Collections\Collection
-     * @ORM\ManyToMany(targetEntity="TocatUser\Entity\User", mappedBy="users", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="TocatUser\Entity\User", mappedBy="groups", cascade={"persist"})
      */
     protected $users;
 

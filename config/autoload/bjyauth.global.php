@@ -63,6 +63,10 @@ return array(
                     'roles'      => array('admin'),
                 ),
                 array(
+                    'controller' => TocatUser\Controller\Admin\GroupController::class,
+                    'roles'      => array('admin'),
+                ),
+                array(
                     'controller' => 'zfcuseradmin',
                     'roles'      => array('admin'),
                 ),

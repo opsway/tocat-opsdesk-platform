@@ -19,7 +19,7 @@ class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
-        $order = $this->getServiceLocator()->get('TocatCore\Model\OrderTableGateway');
+        /*$order = $this->getServiceLocator()->get('TocatCore\Model\OrderTableGateway');
         $config = $this->getServiceLocator()->get('Config');
         $redmine = new Client($config['redmine']['url'], $config['redmine']['api_access_key']);
 
@@ -73,7 +73,8 @@ class IndexController extends AbstractActionController
                 'orderProject' => $this->getServiceLocator()->get('TocatCore\Model\OrderProjectTableGateway')->select(),
                 'test'         => $ticket
             )
-        );
+        );*/
+        return new ViewModel();
     }
 
     public function orderAction()

@@ -66,7 +66,7 @@ class User implements UserInterface, ProviderInterface
 
     /**
      * @var \Doctrine\Common\Collections\Collection
-     * @ORM\ManyToMany(targetEntity="TocatUser\Entity\Group", inversedBy="groups", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="TocatUser\Entity\Group", inversedBy="users", cascade={"persist"})
      * @ORM\JoinTable(name="user_group_linker",
      *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="id")}
