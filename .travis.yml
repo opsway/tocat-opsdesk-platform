@@ -8,10 +8,14 @@ before_script:
   - composer self-update
   - composer install --dev --prefer-source;
   - mysql -e "create database IF NOT EXISTS tocat;" -uroot
+  - mkdir -p build/logs
 
 script:
   - ./vendor/bin/phpunit --bootstrap=tests/Bootstrap.php
   - ./vendor/bin/phpcs -n --standard=PSR2 ./module/ ./tests/
+
+after_script:
+  - php vendor/bin/coveralls -v
 
 notifications:
   email: false

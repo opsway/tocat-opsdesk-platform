@@ -1,6 +1,7 @@
 TOCAT App
 =======================
 [![Build Status](https://travis-ci.org/opsway/tocat.svg)](https://travis-ci.org/opsway/tocat)
+[![Coverage Status](https://coveralls.io/repos/opsway/tocat/badge.png)](https://coveralls.io/r/opsway/tocat)
 Introduction
 ------------
 Theory of Constraints Accounting for Teams (TOCAT) provide UI and API for managment budgets.
