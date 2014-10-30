@@ -110,6 +110,23 @@ return array(
                 'label'  => 'Groups / Teams',
                 'route'  => 'zfcadmin/groups',
             ),
+            'acladmin' => array(
+                'label' => 'Permissions',
+                'route' => 'stub',
+                'params' => array('id' => 'permissions'),
+                'pages' => array(
+                    'pages2' => array(
+                        'label' => 'Pages',
+                        'route' => 'stub',
+                        'params' => array('id' => 'pages'),
+                    ),
+                    'resource' => array(
+                        'label' => 'Resource',
+                        'route' => 'stub',
+                        'params' => array('id' => 'resource'),
+                    ),
+                ),
+            ),
         ),
     ),
 );

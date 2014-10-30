@@ -122,7 +122,6 @@ return array(
         'invokables' => array(
             'TocatCore\Controller\Index'   => 'TocatCore\Controller\IndexController',
             'TocatCore\Controller\Payment' => 'TocatCore\Controller\PaymentController',
-            'TocatCore\Controller\User'    => 'TocatCore\Controller\UserController',
         ),
     ),
     'view_manager'    => array(

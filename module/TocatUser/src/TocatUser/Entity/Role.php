@@ -9,6 +9,7 @@
 namespace TocatUser\Entity;
 
 use BjyAuthorize\Acl\HierarchicalRoleInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -40,6 +41,19 @@ class Role implements HierarchicalRoleInterface
      * @ORM\ManyToOne(targetEntity="TocatUser\Entity\Role")
      */
     protected $parent;
+
+    /**
+     * @ORM\OneToMany(targetEntity="TocatUser\Entity\Permission", mappedBy="role", cascade={"persist"})
+     */
+    protected $permissions;
+
+    /**
+     * Initialies the $permissions variable.
+     */
+    public function __construct()
+    {
+        $this->permissions = new ArrayCollection();
+    }
 
     /**
      * Get the id.
@@ -108,5 +122,13 @@ class Role implements HierarchicalRoleInterface
     {
         $this->parent = $parent;
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getPermissions()
+    {
+        return $this->permissions->getValues();
     }
 }

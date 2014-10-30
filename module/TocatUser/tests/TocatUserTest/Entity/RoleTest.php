@@ -6,6 +6,9 @@ use TocatUser\Entity\Role as Entity;
 
 class RoleTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var Entity
+     */
     protected $role;
 
     public function setUp()
@@ -31,5 +34,10 @@ class RoleTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($this->role, $this->role->setParent(new Entity()));
         $this->assertNotEquals($this->role, $this->role->getParent());
         $this->assertEquals(new Entity(), $this->role->getParent());
+    }
+
+    public function testGetPermission()
+    {
+        $this->assertCount(0, $this->role->getPermissions());
     }
 }
