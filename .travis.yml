@@ -1,31 +1,25 @@
 language: php
-
-php:
-  - 5.5
-  - 5.6
-
-before_script:
-  - composer self-update
-  - composer install --dev --prefer-source;
-  - mysql -e "create database IF NOT EXISTS tocat;" -uroot
-  - mkdir -p build/logs
-
-script:
-  - ./vendor/bin/phpunit --bootstrap=tests/Bootstrap.php
-  - ./vendor/bin/phpcs -n --standard=PSR2 ./module/ ./tests/
-
-after_script:
-  - php vendor/bin/coveralls -v
-
-notifications:
+php: 
+- 5.5
+- 5.6
+before_script: 
+- composer self-update
+- composer install --dev --prefer-source;
+- mysql -e "create database IF NOT EXISTS tocat;" -uroot
+- mkdir -p build/logs
+script: 
+- ./vendor/bin/phpunit --bootstrap=tests/Bootstrap.php
+- ./vendor/bin/phpcs -n --standard=PSR2 ./module/ ./tests/
+after_script: 
+- php vendor/bin/coveralls -v
+notifications: 
   email: false
-  hipchat:
-    rooms:
-      - secure: "TQDUDVYrJE8a4AqL/ITAeQ7Jo21ZhHXLFjEqukscFFlZlAs/IRqncCTRDSt5zeYvF92yNY9C0KsBTDFU/adYEMq/V41TS5E7mj3T7xYSLX9Vo5N3kmm0RuW1oQhOA78EVOYsHzNSBp6r5na2s7Av0hqdAzFq9oLlT5zgTTqjPBw="
-    template:
-      - 'BUILD #%{build_number} - <b>%{repository}</b> (<i>%{commit} (%{branch}): <u>%{author}</u></i>): %{message} (See more: <a href="%{build_url}">Details build</a> / <a href="%{compare_url}">Changeset diff<a>)'
+  hipchat: 
+    rooms: 
+      secure: K+/pIASMlrM2fp+SoYnmQmceecrhidnHfA4p5Uc01bSa6d3JzAwuHmqCjfXvpyIMQoVGwnoGdkOx11Qx2jhe+3LwgbRFt/qXJim7VA9EtIH4VsTyex3mE1kFbDGj3WYetdl5SLcyEsxIqvG3sYR+Ix1qH/5IaVYjmIeFJS+VOlg=
+    template: 
+    - "BUILD #%{build_number} - <b>%{repository}</b> (<i>%{commit} (%{branch}): <u>%{author}</u></i>): %{message} (See more: <a href=\"%{build_url}\">Details build</a> / <a href=\"%{compare_url}\">Changeset diff<a>)"
     format: html
-
-matrix:
-  allow_failures:
-    - php: 5.6
+matrix: 
+  allow_failures: 
+  - php: 5.6
