@@ -13,6 +13,9 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     protected $user;
 
+    /**
+     * @covers TocatUser\Entity\User::__construct
+     */
     public function setUp()
     {
         $user = new Entity();
@@ -79,6 +82,12 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, $this->user->getState());
     }
 
+    /**
+     * @covers TocatUser\Entity\User::getRoles
+     * @covers TocatUser\Entity\User::addRole
+     * @covers TocatUser\Entity\User::updateRoles
+     * @covers TocatUser\Entity\User::removeRoles
+     */
     public function testRoles()
     {
         // Setup two different roles
@@ -117,6 +126,11 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     * @covers TocatUser\Entity\User::addGroup
+     * @covers TocatUser\Entity\User::getGroups
+     * @covers TocatUser\Entity\User::updateGroups
+     */
     public function testGroups()
     {
         $this->assertCount(0, $this->user->getGroups());

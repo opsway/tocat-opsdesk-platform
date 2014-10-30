@@ -28,8 +28,8 @@
         <php>
             <ini name="memory_limit" value="2048M"/>
         </php>
-        <whitelist>
-            <directory suffix=".php">../module/TocatUser</directory>
+        <whitelist addUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">../module/TocatUser/src</directory>
         </whitelist>
     </filter>
 
