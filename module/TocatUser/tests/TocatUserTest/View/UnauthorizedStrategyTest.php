@@ -331,4 +331,63 @@ class UnauthorizedStrategyTest extends PHPUnit_Framework_TestCase
 
         $this->strategy->onDispatchError($mvcEvent);
     }
+
+
+    /**
+     * @covers \TocatUser\View\UnauthorizedStrategy::onDispatchError
+     * @covers \TocatUser\View\UnauthorizedStrategy::setRedirectUri
+     */
+    public function testWillForbiddenToRouteOnSetUriWithApplicationError()
+    {
+        $this->strategy = new UnauthorizedStrategy('template/name');
+        $this->strategy->setRedirectUri('http://www.example.org/');
+
+        $mvcEvent = $this->getMock('Zend\\Mvc\\MvcEvent');
+        $response = $this->getMock('Zend\\Http\\Response');
+        $routeMatch = $this->getMock('Zend\\Mvc\\Router\\RouteMatch', array(), array(), '', false);
+        $route = $this->getMock('Zend\\Mvc\\Router\\RouteInterface');
+        $headers = $this->getMock('Zend\\Http\\Headers');
+        $exception = $this->getMock('BjyAuthorize\\Exception\\UnAuthorizedException');
+        $viewModel = $this->getMock('Zend\\View\\Model\\ModelInterface');
+        $mvcEvent->expects($this->any())->method('getViewModel')->will($this->returnValue($viewModel));
+
+        $mvcEvent->expects($this->any())->method('getResponse')->will($this->returnValue($response));
+        $mvcEvent->expects($this->any())->method('getRouteMatch')->will($this->returnValue($routeMatch));
+        $mvcEvent->expects($this->any())->method('getRouter')->will($this->returnValue($route));
+        $mvcEvent->expects($this->any())->method('getError')->will($this->returnValue(Application::ERROR_EXCEPTION));
+        //$mvcEvent->expects($this->exactly(2))->method('getParam')->with('exception')->will($this->returnValue($exception));
+
+        $application = $this->getMockBuilder('Zend\\Mvc\\Application')->disableOriginalConstructor()->getMock();
+        $serviceLocator = $this->getMock('Zend\\ServiceManager\\ServiceLocatorInterface');
+        $identityProvider = $this->getMock('BjyAuthorize\\Provider\\Identity\\ProviderInterface');
+        $identityProvider->expects($this->any())->method('getIdentityRoles')->will($this->returnValue([
+                    'test'
+                ]));
+        $serviceLocator->expects($this->at(0))->method('get')
+            ->with('BjyAuthorize\\Provider\\Identity\\ProviderInterface')->will($this->returnValue($identityProvider));
+        $serviceLocator->expects($this->at(1))->method('get')->with('BjyAuthorize\Config')
+            ->will($this->returnValue(['template' => 'test']));
+        $application->expects($this->any())->method('getServiceManager')->will($this->returnValue($serviceLocator));
+
+        $mvcEvent
+            ->expects($this->any())
+            ->method('getParam')
+            ->will(
+                $this->returnCallback(
+                    function ($name) use ($exception, $application) {
+                        return $name === 'exception' ? $exception : $application;
+                    }
+                )
+            );
+
+
+        $response->expects($this->any())->method('getHeaders')->will($this->returnValue($headers));
+        $response->expects($this->once())->method('setStatusCode')->with(403);
+
+        //$headers->expects($this->once())->method('addHeaderLine')->with('Location', 'http://www.example.org/');
+
+        $mvcEvent->expects($this->once())->method('setResponse')->with($response);
+
+        $this->strategy->onDispatchError($mvcEvent);
+    }
 }
