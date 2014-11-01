@@ -45,10 +45,12 @@ return array(
             View\UnauthorizedStrategy::class => View\UnauthorizedStrategy::class,
         ),
         'factories' => [
-            Repository\RoleRepository::class  => Factory\Repository\RoleRepositoryFactory::class,
-            Repository\GroupRepository::class => Factory\Repository\GroupRepositoryFactory::class,
-            Service\RoleService::class        => Factory\Service\RoleServiceFactory::class,
-            Service\GroupService::class       => Factory\Service\GroupServiceFactory::class
+            Repository\RoleRepository::class       => Factory\Repository\RoleRepositoryFactory::class,
+            Repository\GroupRepository::class      => Factory\Repository\GroupRepositoryFactory::class,
+            Repository\PermissionRepository::class => Factory\Repository\PermissionRepositoryFactory::class,
+            Service\RoleService::class             => Factory\Service\RoleServiceFactory::class,
+            Service\GroupService::class            => Factory\Service\GroupServiceFactory::class,
+            Service\PermissionService::class       => Factory\Service\PermissionServiceFactory::class,
         ],
     ),
     'controllers'     => array(
@@ -57,6 +59,7 @@ return array(
         'factories'  => array(
             'TocatUser\Controller\Admin\Role' => Factory\Controller\Admin\RoleControllerFactory::class,
             Controller\Admin\GroupController::class => Factory\Controller\Admin\GroupControllerFactory::class,
+            Controller\Admin\PermissionController::class => Factory\Controller\Admin\PermissionControllerFactory::class,
         ),
     ),
     'router'          => array(
@@ -91,6 +94,20 @@ return array(
                             ),
                         ),
                     ),
+                    'permission' => array(
+                        'type'     => 'Segment',
+                        'priority' => 1000,
+                        'options'  => array(
+                            'route'       => '/permission[/:action]',
+                            'constraints' => array(
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                            'defaults'    => array(
+                                'controller' => Controller\Admin\PermissionController::class,
+                                'action'     => 'index',
+                            ),
+                        ),
+                    ),
                 ),
             ),
         ),
@@ -112,18 +129,17 @@ return array(
             ),
             'acladmin' => array(
                 'label' => 'Permissions',
-                'route' => 'stub',
-                'params' => array('id' => 'permissions'),
+                'route' => 'zfcadmin/permission',
                 'pages' => array(
-                    'pages2' => array(
+                    'guard' => array(
                         'label' => 'Pages',
-                        'route' => 'stub',
-                        'params' => array('id' => 'pages'),
+                        'route' => 'zfcadmin/permission',
+                        'params' => array('action' => 'pages'),
                     ),
                     'resource' => array(
                         'label' => 'Resource',
-                        'route' => 'stub',
-                        'params' => array('id' => 'resource'),
+                        'route' => 'zfcadmin/permission',
+                        'params' => array('action' => 'resource'),
                     ),
                 ),
             ),

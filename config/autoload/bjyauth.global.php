@@ -67,6 +67,10 @@ return array(
                     'roles'      => array('admin'),
                 ),
                 array(
+                    'controller' => TocatUser\Controller\Admin\PermissionController::class,
+                    'roles'      => array('admin'),
+                ),
+                array(
                     'controller' => 'zfcuseradmin',
                     'roles'      => array('admin'),
                 ),

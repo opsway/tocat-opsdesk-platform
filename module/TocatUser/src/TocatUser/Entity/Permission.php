@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Entity Group
  *
  * @package TocatUser\Entity
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="TocatUser\Repository\PermissionRepository")
  * @ORM\Table(name="permissions")
  */
 class Permission
