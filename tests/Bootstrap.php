@@ -132,7 +132,7 @@ class Bootstrap
                     'autoregister_zf' => true,
                     'namespaces'      => array(
                         __NAMESPACE__   => __DIR__ . '/' . __NAMESPACE__,
-                        'TocatUserTest' => ROOT_PATH . '/module/TocatUser/tests/TocatUserTest',
+                        'OpsWay\TocatUserTest' => ROOT_PATH . '/modules/OpsWay/TocatUser/tests/TocatUserTest',
                     ),
                 ),
             )

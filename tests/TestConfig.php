@@ -27,16 +27,16 @@ return [
         'ZfcUserOnelogin',
         'ZfcAdmin',
         'ZfcUserAdmin',
-        'TocatCore',
-        'TocatApi',
-        'TocatUser',
+        'OpsWay\TocatCore',
+        'OpsWay\TocatApi',
+        'OpsWay\TocatUser',
     ],
     'module_listener_options' => [
         'config_glob_paths' => [
             ROOT_PATH . '/config/autoload/{,*.}{global,local,test}.php',
         ],
         'module_paths'      => [
-            'module',
+            'modules',
             'vendor',
             'tests',
         ],

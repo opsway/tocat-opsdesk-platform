@@ -21,7 +21,7 @@ $settings = array(
      * instead of the default one provided. Default is ZfcUser\Entity\User.
      * The entity class should implement ZfcUser\Entity\UserInterface
      */
-    'user_entity_class' => 'TocatUser\Entity\User',
+    'user_entity_class' => 'OpsWay\TocatUser\Entity\User',
 
     /**
      * Enable registration
@@ -222,7 +222,7 @@ $settings = array(
 
     // telling ZfcUserDoctrineORM to skip the entities it defines
     'enable_default_entities' => false,
-    'UserEntityClass' => 'TocatUser\Entity\User',
+    'UserEntityClass' => 'OpsWay\TocatUser\Entity\User',
     'EnableDefaultEntities' => false,
     
     /**

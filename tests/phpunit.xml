@@ -11,7 +11,7 @@
         >
     <testsuites>
         <testsuite name="Tocat Tests">
-            <directory suffix="Test.php">../module/TocatUser/tests/TocatUserTest</directory>
+            <directory suffix="Test.php">../modules/OpsWay/TocatUser/tests/TocatUserTest</directory>
         </testsuite>
     </testsuites>
 
@@ -29,7 +29,7 @@
             <ini name="memory_limit" value="2048M"/>
         </php>
         <whitelist addUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">../module/TocatUser/src</directory>
+            <directory suffix=".php">../modules/OpsWay/TocatUser/code</directory>
         </whitelist>
     </filter>
 

@@ -1,11 +1,19 @@
 {
     "name": "opsway/tocat",
-    "description": "Skeleton Tocat Application for ZF2",
+    "description": "Tocat CMF based on ZF2",
     "license": "BSD-3-Clause",
     "keywords": [
         "framework",
         "zf2",
-        "apigility"
+        "tocat",
+        "application"
+    ],
+    "homepage": "https://github.com/opsway/tocat",
+    "authors": [
+        {
+            "name": "Alexandr Vronskiy",
+            "email": "shandy.developer@gmail.com"
+        }
     ],
     "config": {
         "process-timeout": 5000
@@ -38,5 +46,11 @@
         "zendframework/zend-developer-tools": "dev-master",
         "zfcampus/zf-deploy": "~1.0",
         "zfcampus/zf-apigility-welcome": "~1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "OpsWay\\TocatCore": "modules/OpsWay/TocatCore/code/",
+            "OpsWay\\TocatUser": "modules/OpsWay/TocatUser/code/"
+        }
     }
 }

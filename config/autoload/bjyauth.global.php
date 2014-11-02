@@ -4,12 +4,12 @@ return array(
         'default_role'       => 'guest',
         'identity_provider'  => 'BjyAuthorize\Provider\Identity\AuthenticationIdentityProvider',
         'authenticated_role' => 'user',
-        'unauthorized_strategy' => 'TocatUser\View\UnauthorizedStrategy',
+        'unauthorized_strategy' => 'OpsWay\TocatUser\View\UnauthorizedStrategy',
         'role_providers'     => array(
 // using an object repository (entity repository) to load all roles into our ACL
 'BjyAuthorize\Provider\Role\ObjectRepositoryProvider' => array(
     'object_manager'    => 'doctrine.entitymanager.orm_default',
-    'role_entity_class' => 'TocatUser\Entity\Role',
+    'role_entity_class' => 'OpsWay\TocatUser\Entity\Role',
 ),
         ),
 
@@ -52,22 +52,22 @@ return array(
                     'action'     => array('logout'),
                     'roles'      => array('user','admin'),
                 ),
-                array('controller' => 'TocatCore\Controller\Index', 'action' => array('index','stub'), 'roles' => array('user')),
+                array('controller' => 'OpsWay\TocatCore\Controller\Index', 'action' => array('index','stub'), 'roles' => array('user')),
                 array(
                     'controller' => 'ZfcUserOnelogin\OneloginController',
                     'action'     => array('index', 'auth'),
                     'roles'      => array('guest', 'user'),
                 ),
                 array(
-                    'controller' => 'TocatUser\Controller\Admin\Role',
+                    'controller' => 'OpsWay\TocatUser\Controller\Admin\Role',
                     'roles'      => array('admin'),
                 ),
                 array(
-                    'controller' => TocatUser\Controller\Admin\GroupController::class,
+                    'controller' => OpsWay\TocatUser\Controller\Admin\GroupController::class,
                     'roles'      => array('admin'),
                 ),
                 array(
-                    'controller' => TocatUser\Controller\Admin\PermissionController::class,
+                    'controller' => OpsWay\TocatUser\Controller\Admin\PermissionController::class,
                     'roles'      => array('admin'),
                 ),
                 array(

@@ -31,13 +31,13 @@ $config = array(
         'ZfcUserOnelogin',
         'ZfcAdmin',
         'ZfcUserAdmin',
-        'TocatCore',
-        'TocatApi',
-        'TocatUser',
+        'OpsWay\TocatCore',
+        'OpsWay\TocatApi',
+        'OpsWay\TocatUser',
     ),
     'module_listener_options' => array(
         'module_paths' => array(
-            './module',
+            './modules',
             './vendor'
         ),
         'config_glob_paths' => array(
