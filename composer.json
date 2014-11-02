@@ -49,8 +49,8 @@
     },
     "autoload": {
         "psr-4": {
-            "OpsWay\\TocatCore": "modules/OpsWay/TocatCore/code/",
-            "OpsWay\\TocatUser": "modules/OpsWay/TocatUser/code/"
+            "OpsWay\\TocatCore\\": "modules/OpsWay/TocatCore/code/",
+            "OpsWay\\TocatUser\\": "modules/OpsWay/TocatUser/code/"
         }
     }
 }
