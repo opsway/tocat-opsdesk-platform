@@ -21,7 +21,9 @@ class Module
         $eventManager = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
-
+        if (\Zend\Console\Console::isConsole()){
+            return;
+        }
         $sm = $e->getApplication()->getServiceManager();
         // Add ACL information to the Navigation view helper
         $authorize = $sm->get('BjyAuthorizeServiceAuthorize');

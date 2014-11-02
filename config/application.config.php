@@ -4,7 +4,7 @@
  *
  * The previous config file has been stored in application.config.old
  */
-return array(
+$config = array(
     'modules' => array(
        'ZF\\DevelopmentMode',
         'ZF\\Apigility',
@@ -50,3 +50,7 @@ return array(
         'cache_dir' => 'data/cache/'
     )
 );
+if (Zend\Console\Console::isConsole()) {
+    array_splice($config['modules'],array_search('BjyAuthorize',$config['modules']),1);
+}
+return $config;

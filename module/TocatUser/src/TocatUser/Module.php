@@ -17,6 +17,9 @@ class Module implements BootstrapListenerInterface, ConfigProviderInterface, Aut
         $eventManager = $application->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
+        if (\Zend\Console\Console::isConsole()){
+            return;
+        }
         $services = $application->getServiceManager();
         $zfcServiceEvents = $services->get('zfcuser_user_service')->getEventManager();
         $zfcServiceEvents->attach('register', function ($e) use ($services) {
