@@ -20,50 +20,7 @@ class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
-        $controllerManager = $this->getServiceLocator()->get('ControllerManager');
-        $controllerConfig = $controllerManager->getRegisteredServices();
-        $it = new \RecursiveIteratorIterator(
-            new \RecursiveArrayIterator($controllerConfig)
-        );
-        $test = (iterator_to_array($it, false));
-        $result = [];
-        foreach ($test as $controllerName2) {
-
-            $c = array_search($controllerName2, $controllerManager->getCanonicalNames());
-            if ($c) {
-                $controllerName = $c;
-            } else {
-                $controllerName = $controllerName2;
-            }
-            try {
-                $controller = $controllerManager->get($controllerName2);
-            } catch (\Exception $e) {
-                $result[$controllerName] = [];
-                continue;
-            }
-            $reflection = new \ReflectionObject($controller);
-            $methods = $reflection->getMethods(\ReflectionMethod::IS_PUBLIC);
-            $result[$controllerName] = array_map(
-                function ($action) {
-                    return str_replace('Action', '', $action);
-                },
-                array_filter(
-                    array_map(function ($method) {
-                        return $method->name;
-                    }, $methods),
-                    function ($action) {
-                        if ($action === 'getMethodFromAction') {
-                            return false;
-                        }
-                        return (strpos($action, 'Action') !== false);
-                    }
-                )
-            );
-        }
-        $test = $result;
-        $match = $this->getEvent()->getRouteMatch();
-        $controller = $match->getParam('controller');
-       // $test = ($controllerManager->getCanonicalNames());
+        $test = '';
         /*$order = $this->getServiceLocator()->get('OpsWay\TocatCore\Model\OrderTableGateway');
         $config = $this->getServiceLocator()->get('Config');
         $redmine = new Client($config['redmine']['url'], $config['redmine']['api_access_key']);

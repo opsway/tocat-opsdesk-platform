@@ -39,7 +39,7 @@ class Permission
     protected $privileges;
 
     /**
-     * @var bool
+     * @var string
      * @ORM\Column(type="string", length=50, nullable=false)
      */
     protected $type;

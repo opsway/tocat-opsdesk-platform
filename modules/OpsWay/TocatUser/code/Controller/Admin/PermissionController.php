@@ -10,6 +10,7 @@
 namespace OpsWay\TocatUser\Controller\Admin;
 
 use Herrera\Json\Exception\Exception;
+use OpsWay\TocatUser\Provider\Rule\DoctrineRuleProvider;
 use OpsWay\TocatUser\Service\PermissionService;
 use OpsWay\TocatUser\Service\RoleService;
 use Zend\Json\Json;
@@ -45,7 +46,7 @@ class PermissionController extends AbstractActionController
             $roleId = (int)$data['role_id'];
             try {
                 $roleEntity = $serviceRole->getById($roleId);
-                $this->service->updateAclByRole($roleEntity, $data['acl'], PermissionService::TYPE_GUARD);
+                $this->service->updateAclByRole($roleEntity, $data['acl'], DoctrineRuleProvider::TYPE_GUARD);
                 $this->flashMessenger()->addSuccessMessage('Permissions was saved.');
             } catch (\Exception $e) {
                 $this->flashMessenger()->addErrorMessage($e->getMessage());

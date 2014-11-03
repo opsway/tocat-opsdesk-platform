@@ -8,8 +8,6 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 
 class PermissionService
 {
-    const TYPE_GUARD = 'guard';
-    const TYPE_RESOURCE = 'resource';
     /**
      * @var PermissionRepository
      */
