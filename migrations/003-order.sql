@@ -1,9 +1,0 @@
-CREATE  TABLE IF NOT EXISTS `order` (
-  `uid` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(100) NOT NULL,
-  `budget` DECIMAL(12,3) NOT NULL DEFAULT 0.000,
-  PRIMARY KEY (`uid`)
-) ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COMMENT = 'List of order with budgets';
-

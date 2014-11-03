@@ -20,7 +20,12 @@ class RoleService
         return $this->roleRepository->findAll();
     }
 
-    public function getList()
+    public function getById($id)
+    {
+        return $this->roleRepository->find($id);
+    }
+
+    public function getList($withKeyId = false)
     {
         $result = [];
         foreach ($this->getAll() as $role) {
@@ -31,7 +36,11 @@ class RoleService
                 $data['parentId'] = 0;
             }
             unset($data['parent']);
-            $result[] = $data;
+            if ($withKeyId) {
+                $result[$data['id']] = $data;
+            } else {
+                $result[] = $data;
+            }
         }
 
         return $result;

@@ -68,4 +68,9 @@ class PermissionRepository extends EntityRepository implements DoctrineHydratorA
             $this->getEntityManager()->flush();
         }
     }
+
+    public function flushAll()
+    {
+        $this->getEntityManager()->flush();
+    }
 }

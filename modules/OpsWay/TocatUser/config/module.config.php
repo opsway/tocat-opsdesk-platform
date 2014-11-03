@@ -97,13 +97,15 @@ return array(
                         'type'     => 'Segment',
                         'priority' => 1000,
                         'options'  => array(
-                            'route'       => '/permission[/:action]',
+                            'route'       => '/permission[/:action[/:role_id]]',
                             'constraints' => array(
                                 'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'role_id' => '[0-9]*'
                             ),
                             'defaults'    => array(
                                 'controller' => Controller\Admin\PermissionController::class,
                                 'action'     => 'index',
+                                'role_id'    => null
                             ),
                         ),
                     ),

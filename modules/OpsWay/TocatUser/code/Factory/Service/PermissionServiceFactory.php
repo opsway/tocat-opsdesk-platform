@@ -23,6 +23,6 @@ class PermissionServiceFactory implements FactoryInterface
          */
         $permissionRepository = $serviceLocator->get(PermissionRepository::class);
 
-        return new PermissionService($permissionRepository);
+        return new PermissionService($permissionRepository, $serviceLocator);
     }
 }

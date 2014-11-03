@@ -1,1 +1,103 @@
-Pages
+<h2>Management Permissions</h2>
+<h3>Access to pages</h3>
+<?php
+$flash = $this->flashMessenger();
+ $flash->setMessageOpenFormat('<div%s>
+     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+         &times;
+     </button>
+     <ul><li>')
+     ->setMessageSeparatorString('</li><li>')
+     ->setMessageCloseString('</li></ul></div>');
+
+ echo $flash->render('error',   array('alert', 'alert-dismissable', 'alert-danger'));
+ echo $flash->render('info',    array('alert', 'alert-dismissable', 'alert-info'));
+ echo $flash->render('default', array('alert', 'alert-dismissable', 'alert-warning'));
+ echo $flash->render('success', array('alert', 'alert-dismissable', 'alert-success'));
+?>
+<form action="" method="post">
+<div class="btn-group">
+    <button class="btn btn-default btn-lg dropdown-toggle" type="button" data-toggle="dropdown">
+        <?php if ($this->role_id): ?>
+            <?= $this->listRole[$this->role_id]['roleId'] ?>
+            <input type="hidden" name="role_id" value="<?=$this->role_id?>"/>
+        <?php else: ?>
+            Please select role
+        <?php endif; ?>
+        <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+        <?php foreach ($this->listRole as $role): ?>
+            <li><a href="<?= $this->url('zfcadmin/permission',
+                    ['action' => 'pages', 'role_id' => $role['id']]) ?>"><?= $role['roleId'] ?></a></li>
+        <?php endforeach; ?>
+    </ul>
+</div>
+    <button type="submit" class="btn btn-primary btn-lg">Save</button>
+<div class="table-responsive">
+    <table id="guardTable" class="table table-hover table-condensed">
+        <caption>If you want give access to all actions for controller, just leave all it action empty</caption>
+        <thead>
+        <tr class="active">
+            <th>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" onclick="$(':checkbox[class=controller]').prop('checked', this.checked);"> <strong>Full Controller Name</strong>
+                    </label>
+                </div>
+            </th>
+            <th>List Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($this->staticList as $name => $actions):?>
+        <tr class="row-acl">
+            <td class="controller">
+                <div class="checkbox">
+                    <label>
+                        <input class="controller" type="checkbox" name="acl[<?=$name?>][controller]" <?php if ($this->isAccessed[0]($name)): ?>checked="checked"<?php endif; ?> value="<?=$name?>">
+                        <?= $name ?>
+                    </label>
+                </div>
+            </td>
+            <td class="action">
+
+                    <?php foreach($actions as $action):?>
+                        <label class="checkbox-inline">
+                          <input type="checkbox" name="acl[<?=$name?>][action][<?=$action?>]" <?php if ($this->isAccessed[0]($name, $action)): ?>checked="checked"<?php endif; ?> value="<?=$action?>">
+                            <?=$action?>
+                        </label>
+                    <?php endforeach;?>
+
+            </td>
+        </tr>
+        <?php endforeach;?>
+        </tbody>
+    </table>
+</div>
+</form>
+<script type="text/javascript">
+    $(function(){
+        $('#guardTable tr.row-acl').each(function(){
+            var controllerAllow = $(this).find('td.controller :checkbox').first().prop('checked')
+            if (!controllerAllow) {
+                $(this).addClass('danger');
+                return;
+            }
+            var action = [];
+            var count = 0;
+            $(this).find('td.action :checkbox').each(function(){
+                if ($(this).prop('checked')) {
+                    action.push($(this).val());
+                }
+                count++;
+            });
+            if ((action.length == 0 || action.length == count)) {
+                $(this).addClass('success');
+            } else {
+                $(this).addClass('warning');
+            }
+
+        });
+    });
+</script>
