@@ -47,7 +47,7 @@ $config = array(
         'cache_dir' => 'data/cache/'
     )
 );
-//todo Delete this hack after update BjyAuthorize module to 2.0
+//todo Delete this hack (avoid unit tests) after update BjyAuthorize module to 2.0
 if (Zend\Console\Console::isConsole()) {
     array_splice($config['modules'],array_search('BjyAuthorize',$config['modules']),1);
 }

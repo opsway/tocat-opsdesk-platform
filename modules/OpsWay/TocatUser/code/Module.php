@@ -19,6 +19,7 @@ class Module implements BootstrapListenerInterface, ConfigProviderInterface, Aut
         $eventManager = $application->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
+        //todo Delete this hack (avoid unit tests) after update BjyAuthorize module to 2.0
         if (\Zend\Console\Console::isConsole()) {
             return;
         }
@@ -132,7 +133,7 @@ class Module implements BootstrapListenerInterface, ConfigProviderInterface, Aut
             'ZfcUser',
             'ZfcUserDoctrineORM',
             'ZfcUserAdmin',
-            'BjyAuthorize',
+            //'BjyAuthorize', todo Delete this hack (avoid unit tests) after update BjyAuthorize module to 2.0
             'OpsWay\TocatCore'
         ];
     }
