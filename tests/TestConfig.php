@@ -33,6 +33,8 @@ return [
     ],
     'module_listener_options' => [
         'config_glob_paths' => [
+            ROOT_PATH . '/config/autoload/global/{,*.}{global,local}.php',
+            ROOT_PATH . '/config/autoload/local/{,*.}{global,local}.php',
             ROOT_PATH . '/config/autoload/{,*.}{global,local,test}.php',
         ],
         'module_paths'      => [

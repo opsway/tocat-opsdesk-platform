@@ -13,7 +13,14 @@ class ModuleTest extends PHPUnit_Framework_TestCase
      */
     public function provideServiceList()
     {
-        $config = include __DIR__ . '/../../config/module.config.php';
+        $config = array_merge(
+            include __DIR__ . '/../../config/module.config.php',
+            include __DIR__ . '/../../config/controller.config.php',
+            include __DIR__ . '/../../config/router.config.php',
+            include __DIR__ . '/../../config/service.config.php',
+            include __DIR__ . '/../../config/view.config.php',
+            include __DIR__ . '/../../config/navigation.config.php'
+        );
         $serviceConfig = array_merge(
             isset($config['service_manager']['factories'])?$config['service_manager']['factories']:array(),
             isset($config['service_manager']['invokables'])?$config['service_manager']['invokables']:array()
@@ -39,7 +46,14 @@ class ModuleTest extends PHPUnit_Framework_TestCase
 
     public function testGetConfig()
     {
-        $config = include __DIR__ . '/../../config/module.config.php';
+        $config = array_merge(
+            include __DIR__ . '/../../config/module.config.php',
+            include __DIR__ . '/../../config/controller.config.php',
+            include __DIR__ . '/../../config/router.config.php',
+            include __DIR__ . '/../../config/service.config.php',
+            include __DIR__ . '/../../config/view.config.php',
+            include __DIR__ . '/../../config/navigation.config.php'
+        );
         $configAutoload = array(
                     'Zend\Loader\StandardAutoloader' => array(
                         'namespaces' => array(

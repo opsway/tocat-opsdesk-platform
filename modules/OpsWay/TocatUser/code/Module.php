@@ -5,9 +5,11 @@ use Zend\EventManager\EventInterface;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\BootstrapListenerInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
+use Zend\ModuleManager\Feature\DependencyIndicatorInterface;
+use Zend\View\Helper\Navigation as ZendViewHelperNavigation;
 use Zend\Mvc\ModuleRouteListener;
 
-class Module implements BootstrapListenerInterface, ConfigProviderInterface, AutoloaderProviderInterface
+class Module implements BootstrapListenerInterface, ConfigProviderInterface, AutoloaderProviderInterface, DependencyIndicatorInterface
 {
 
     public function onBootstrap(EventInterface $e)
@@ -20,6 +22,15 @@ class Module implements BootstrapListenerInterface, ConfigProviderInterface, Aut
         if (\Zend\Console\Console::isConsole()) {
             return;
         }
+
+        $sm = $e->getApplication()->getServiceManager();
+        // Add ACL information to the Navigation view helper
+        $authorize = $sm->get('BjyAuthorizeServiceAuthorize');
+        $acl = $authorize->getAcl();
+        $role = $authorize->getIdentity();
+        ZendViewHelperNavigation::setDefaultAcl($acl);
+        ZendViewHelperNavigation::setDefaultRole($role);
+
         $services = $application->getServiceManager();
         $zfcServiceEvents = $services->get('zfcuser_user_service')->getEventManager();
         $zfcServiceEvents->attach('register', function ($e) use ($services) {
@@ -99,6 +110,30 @@ class Module implements BootstrapListenerInterface, ConfigProviderInterface, Aut
 
     public function getConfig()
     {
-        return include __DIR__ . '/../config/module.config.php';
+        return array_merge(
+            include __DIR__ . '/../config/module.config.php',
+            include __DIR__ . '/../config/controller.config.php',
+            include __DIR__ . '/../config/router.config.php',
+            include __DIR__ . '/../config/service.config.php',
+            include __DIR__ . '/../config/view.config.php',
+            include __DIR__ . '/../config/navigation.config.php'
+        );
+    }
+
+
+    /**
+     * Expected to return an array of modules on which the current one depends on
+     *
+     * @return array
+     */
+    public function getModuleDependencies()
+    {
+        return [
+            'ZfcUser',
+            'ZfcUserDoctrineORM',
+            'ZfcUserAdmin',
+            'BjyAuthorize',
+            'OpsWay\TocatCore'
+        ];
     }
 }

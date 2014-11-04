@@ -9,33 +9,32 @@
 
 namespace OpsWay\TocatCore;
 
+use Zend\EventManager\EventInterface;
+use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
+use Zend\ModuleManager\Feature\BootstrapListenerInterface;
+use Zend\ModuleManager\Feature\DependencyIndicatorInterface;
+use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\Mvc\ModuleRouteListener;
-use Zend\Mvc\MvcEvent;
-use Zend\Db\TableGateway;
-use Zend\View\Helper\Navigation as ZendViewHelperNavigation;
 
-class Module
+class Module implements BootstrapListenerInterface, ConfigProviderInterface, AutoloaderProviderInterface, DependencyIndicatorInterface
 {
-    public function onBootstrap(MvcEvent $e)
+    public function onBootstrap(EventInterface $e)
     {
         $eventManager = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
-        if (\Zend\Console\Console::isConsole()) {
-            return;
-        }
-        $sm = $e->getApplication()->getServiceManager();
-        // Add ACL information to the Navigation view helper
-        $authorize = $sm->get('BjyAuthorizeServiceAuthorize');
-        $acl = $authorize->getAcl();
-        $role = $authorize->getIdentity();
-        ZendViewHelperNavigation::setDefaultAcl($acl);
-        ZendViewHelperNavigation::setDefaultRole($role);
     }
 
     public function getConfig()
     {
-        return include __DIR__ . '/../config/module.config.php';
+        return array_merge(
+            include __DIR__ . '/../config/module.config.php',
+            include __DIR__ . '/../config/controller.config.php',
+            include __DIR__ . '/../config/router.config.php',
+            include __DIR__ . '/../config/service.config.php',
+            include __DIR__ . '/../config/view.config.php',
+            include __DIR__ . '/../config/navigation.config.php'
+        );
     }
 
     public function getAutoloaderConfig()
@@ -48,29 +47,19 @@ class Module
             ),
         );
     }
-
-    public function getServiceConfig()
+    /**
+     * Expected to return an array of modules on which the current one depends on
+     *
+     * @return array
+     */
+    public function getModuleDependencies()
     {
-        return array(
-            'factories' => array(
-                'OpsWay\TocatCore\Model\ProjectTableGateway'      => $this->getCallbackTableInstance('project'),
-                'OpsWay\TocatCore\Model\TicketTableGateway'       => $this->getCallbackTableInstance('ticket'),
-                'OpsWay\TocatCore\Model\OrderTableGateway'        => $this->getCallbackTableInstance('order'),
-                'OpsWay\TocatCore\Model\OrderTicketTableGateway'  => $this->getCallbackTableInstance('order_ticket'),
-                'OpsWay\TocatCore\Model\OrderProjectTableGateway' => $this->getCallbackTableInstance('order_project'),
-                'OpsWay\TocatCore\Model\TransactionsTableGateway' => $this->getCallbackTableInstance('transactions'),
-                'OpsWay\TocatCore\Model\UsersTableGateway'        => $this->getCallbackTableInstance('users'),
-                'OpsWay\TocatCore\Model\AccountsTableGateway'     => $this->getCallbackTableInstance('accounts'),
-            ),
-        );
-    }
-
-    public function getCallbackTableInstance($name)
-    {
-        return function ($sm) use ($name) {
-            $dbAdapter = $sm->get('dbBase');
-            $table = new TableGateway\TableGateway($name, $dbAdapter);
-            return $table;
-        };
+        return [
+            'DoctrineModule',
+            'DoctrineORMModule',
+            'ZfcAdmin',
+            'ZF\Apigility',
+            'AssetManager'
+        ];
     }
 }
