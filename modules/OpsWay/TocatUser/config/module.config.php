@@ -1,8 +1,13 @@
 <?php
 namespace OpsWay\TocatUser;
 
+use BjyAuthorize\Provider\Resource;
+use BjyAuthorize\Provider\Rule;
+use BjyAuthorize\Provider\Role;
+use BjyAuthorize\Provider\Identity;
+
 return [
-    'doctrine'        => [
+    'doctrine'     => [
         'driver' => [
             'zfcuser_entity' => [
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
@@ -10,39 +15,39 @@ return [
             ],
             'orm_default'    => [
                 'drivers' => [
-                    'OpsWay\TocatUser\Entity' => 'zfcuser_entity',
+                    __NAMESPACE__ . '\Entity' => 'zfcuser_entity',
                 ]
             ]
         ]
     ],
-    'zfcuser'         => [
-        'user_entity_class'       => 'OpsWay\TocatUser\Entity\User',
+    'zfcuser'      => [
+        'user_entity_class'       => Entity\User::class,
         'enable_default_entities' => false,
-        'UserEntityClass'         => 'OpsWay\TocatUser\Entity\User',
+        'UserEntityClass'         => Entity\User::class,
         'EnableDefaultEntities'   => false,
-        'enable_username' => false,
-        'enable_display_name' => true,
-        'auth_identity_fields' => ['email'],
+        'enable_username'         => false,
+        'enable_display_name'     => true,
+        'auth_identity_fields'    => ['email'],
         //'login_redirect_route' => 'zfcuser',
     ],
-    'zfcuseradmin'    => [
+    'zfcuseradmin' => [
         'user_list_elements'        => ['Id' => 'id', 'Name' => 'display_name', 'Email address' => 'email'],
         'create_user_auto_password' => true,
         'user_mapper'               => 'ZfcUserAdmin\Mapper\UserDoctrine',
     ],
-    'bjyauthorize'    => [
+    'bjyauthorize' => [
         'default_role'          => 'guest',
-        'identity_provider'     => 'BjyAuthorize\Provider\Identity\AuthenticationIdentityProvider',
+        'identity_provider'     => Identity\AuthenticationIdentityProvider::class,
         'authenticated_role'    => 'user',
-        'unauthorized_strategy' => 'OpsWay\TocatUser\View\UnauthorizedStrategy',
+        'unauthorized_strategy' => View\UnauthorizedStrategy::class,
         'role_providers'        => [
-            'BjyAuthorize\Provider\Role\ObjectRepositoryProvider' => [
+            Role\ObjectRepositoryProvider::class => [
                 'object_manager'    => 'doctrine.entitymanager.orm_default',
-                'role_entity_class' => 'OpsWay\TocatUser\Entity\Role',
+                'role_entity_class' => Entity\Role::class,
             ],
         ],
-        'resource_providers' => [
-            \BjyAuthorize\Provider\Resource\Config::class => [
+        'resource_providers'    => [
+            Resource\Config::class => [
                 'top_nav:teams'          => [],
                 'top_nav:staff'          => [],
                 'top_nav:budget'         => [],
@@ -50,8 +55,8 @@ return [
                 'top_nav:administration' => [],
             ],
         ],
-        'rule_providers' => [
-            \BjyAuthorize\Provider\Rule\Config::class => [
+        'rule_providers'        => [
+            Rule\Config::class => [
                 'allow' => [
                     [
                         ['user'],
@@ -67,10 +72,10 @@ return [
                 ],
             ],
         ],
-        'guards' => [
-            'OpsWay\TocatUser\Guard\DoctrineController' => [
+        'guards'                => [
+            Guard\DoctrineController::class => [
                 'object_manager'    => 'doctrine.entitymanager.orm_default',
-                'rule_entity_class' => 'OpsWay\TocatUser\Entity\Permission'
+                'rule_entity_class' => Entity\Permission::class
             ],
         ],
     ],

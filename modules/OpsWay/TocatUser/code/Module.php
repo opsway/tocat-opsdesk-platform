@@ -64,7 +64,7 @@ class Module implements BootstrapListenerInterface, ConfigProviderInterface, Aut
                         'options' => array(
                             'label'          => 'Assign Roles',
                             'object_manager' => $om,
-                            'target_class'   => 'OpsWay\TocatUser\Entity\Role',
+                            'target_class'   => Entity\Role::class,
                             'property'       => 'roleId',
                         ),
                     )
