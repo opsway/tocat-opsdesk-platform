@@ -16,10 +16,9 @@ return [
             ],
         ],
     ],
-    // Placeholder for console routes
-    'console'    => [
-        'router' => [
-            'routes' => [],
+    'application_manager' => [
+        'module_paths_migration' => [
+            __NAMESPACE__ => __DIR__ . '/../migration'
         ],
     ],
 ];

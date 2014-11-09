@@ -20,6 +20,11 @@ return [
             ]
         ]
     ],
+    'application_manager' => [
+        'module_paths_migration' => [
+            __NAMESPACE__ => __DIR__ . '/../migration'
+        ],
+    ],
     'zfcuser'      => [
         'user_entity_class'       => Entity\User::class,
         'enable_default_entities' => false,

@@ -50,7 +50,8 @@
     "autoload": {
         "psr-4": {
             "OpsWay\\TocatCore\\": "modules/OpsWay/TocatCore/code/",
-            "OpsWay\\TocatUser\\": "modules/OpsWay/TocatUser/code/"
+            "OpsWay\\TocatUser\\": "modules/OpsWay/TocatUser/code/",
+            "OpsWay\\AppManager\\": "modules/OpsWay/AppManager/code/"
         }
     }
 }

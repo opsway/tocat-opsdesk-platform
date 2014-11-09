@@ -9,6 +9,7 @@
 
 namespace OpsWay\TocatCore;
 
+use OpsWay\AppManager\Feature\VersionProviderInterface;
 use Zend\EventManager\EventInterface;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\BootstrapListenerInterface;
@@ -16,7 +17,7 @@ use Zend\ModuleManager\Feature\DependencyIndicatorInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\Mvc\ModuleRouteListener;
 
-class Module implements BootstrapListenerInterface, ConfigProviderInterface, AutoloaderProviderInterface, DependencyIndicatorInterface
+class Module implements BootstrapListenerInterface, ConfigProviderInterface, AutoloaderProviderInterface, DependencyIndicatorInterface, VersionProviderInterface
 {
     public function onBootstrap(EventInterface $e)
     {
@@ -61,5 +62,16 @@ class Module implements BootstrapListenerInterface, ConfigProviderInterface, Aut
             'ZF\Apigility',
             'AssetManager'
         ];
+    }
+
+    /**
+     * Expected to return \Zend\ServiceManager\Config object or array to
+     * seed such an object.
+     *
+     * @return string
+     */
+    public function getVersion()
+    {
+        return TOCAT_VERSION_SYNC_MODULES;
     }
 }

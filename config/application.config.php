@@ -1,4 +1,5 @@
 <?php
+define('TOCAT_VERSION_SYNC_MODULES', '0.1.0-dev');
 $config = array(
     'modules' => array(
        'ZF\DevelopmentMode',
@@ -29,6 +30,7 @@ $config = array(
         'OpsWay\TocatCore',
         'OpsWay\TocatApi',
         'OpsWay\TocatUser',
+        'OpsWay\AppManager'
     ),
     'module_listener_options' => array(
         'module_paths' => array(

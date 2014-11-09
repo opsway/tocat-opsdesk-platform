@@ -4,48 +4,30 @@ TOCAT App
 [![Coverage Status](https://coveralls.io/repos/opsway/tocat/badge.png)](https://coveralls.io/r/opsway/tocat)
 Introduction
 ------------
-Theory of Constraints Accounting for Teams (TOCAT) provide UI and API for managment budgets.
+Theory of Constraints Accounting for Teams (TOCAT) provide UI and API for management budgets.
+TOCAT Platform based on Zend Framework 2 and it modules.
 
 Unstable application, development process...
 
 Installation
 ------------
 
-Cloning source and run composer
+Create MySQL/PostgresSQL database:
+```sql
+CREATE DATABASE tocat;
+```
+
+Cloning source and run composer, after run install/update application and follow instruction in console:
 ```bash
 git clone git@github.com:opsway/tocat.git
 cd tocat
 php composer.phar install
+php public/index.php app install && php public/index.php app update
 ```
 
-Rename config/autoload/local.php.dist to local.php and write access to DB like:
-```php
-<?php
-return array(
-    'doctrine' => array(
-            'connection' => array(
-                'orm_default' => array(
-                    'driverClass' =>'Doctrine\DBAL\Driver\PDOMySql\Driver',
-                    'params' => array(
-                        'host'     => 'localhost',
-                        'port'     => '3306',
-                        'user'     => 'root',
-                        'password' => 'password',
-                        'dbname'   => 'tocat',
-                    )
-                )
-            ),
-            'entity_resolver' => array(
-                    'orm_default' => array()
-                ),
-    ),
-);
-```
-
-Create database and run doctrine update scheme:
-```bash
-./vendor/bin/doctrine-module orm:schema-tool:update --force
-```
+If you need OneLogin write setting in config/autoload/local/onelogin.local.php file.
+Or use email/password access to site provide by default: admin@test.com / admin123
+Enjoy!
 
 ### Development
 
