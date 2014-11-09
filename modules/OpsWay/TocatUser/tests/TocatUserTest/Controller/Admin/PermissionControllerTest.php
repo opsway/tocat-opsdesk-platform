@@ -3,6 +3,8 @@
 namespace OpsWay\TocatUserTest\Controller\Admin;
 
 use OpsWay\TocatUser\Controller\Admin\PermissionController;
+use OpsWay\TocatUser\Entity\Role;
+use ReflectionMethod;
 use Tests\Bootstrap;
 use Zend\Mvc\Router\Http\TreeRouteStack as HttpRouter;
 use Zend\Http\Request;
@@ -10,6 +12,7 @@ use Zend\Http\Response;
 use Zend\Mvc\MvcEvent;
 use Zend\Mvc\Router\RouteMatch;
 use PHPUnit_Framework_TestCase;
+use Zend\Stdlib\Parameters;
 
 class PermissionControllerTest extends PHPUnit_Framework_TestCase
 {
@@ -58,6 +61,31 @@ class PermissionControllerTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(200, $response->getStatusCode());
     }
 
+    public function testPagesActionCanBeWithParam()
+    {
+        $this->routeMatch->setParam('action', 'pages');
+        $this->routeMatch->setParam('role_id', '1');
+
+        $result   = $this->controller->dispatch($this->request);
+        $response = $this->controller->getResponse();
+        $this->assertInstanceOf('Zend\View\Model\ViewModel', $result);
+        $this->assertEquals(200, $response->getStatusCode());
+    }
+
+    public function testPagesActionCanBeAccessedByPost()
+    {
+        $this->routeMatch->setParam('action', 'pages');
+        $this->request->setMethod('POST');
+        $p = new Parameters();
+        $p->set('role_id', '1');
+        $this->request->setPost($p);
+
+        $result = $this->controller->dispatch($this->request);
+        $response = $this->controller->getResponse();
+        $this->assertInstanceOf('Zend\Http\Response', $result);
+        $this->assertEquals(302, $response->getStatusCode());
+    }
+
     public function testResourceActionCanBeAccessed()
     {
         $this->routeMatch->setParam('action', 'resource');
@@ -67,5 +95,25 @@ class PermissionControllerTest extends PHPUnit_Framework_TestCase
         $response = $this->controller->getResponse();
         $this->assertInstanceOf('Zend\View\Model\ViewModel', $result);
         $this->assertEquals(200, $response->getStatusCode());
+    }
+
+    /**
+     * @covers \OpsWay\TocatUser\Controller\Admin\PermissionController::getAllowedParentStaticResource
+     */
+    public function testGetAllowedParentStaticResourceReturnResult()
+    {
+        $reflectionMethod = new ReflectionMethod($this->controller, 'getAllowedParentStaticResource');
+        $reflectionMethod->setAccessible(true);
+        $a = [];
+        $result = $reflectionMethod->invokeArgs($this->controller, [new Role(), &$a]);
+        $this->assertEquals($a, $result);
+    }
+
+    /**
+     * @covers \OpsWay\TocatUser\Controller\Admin\PermissionController::getAllowedParentStaticResource
+     */
+    public function testGetAllowedParentStaticResourceInternal()
+    {
+
     }
 }

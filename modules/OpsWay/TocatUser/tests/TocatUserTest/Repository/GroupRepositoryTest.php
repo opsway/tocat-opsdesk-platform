@@ -25,7 +25,7 @@ class GroupRepositoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(new GroupEntity(), $this->repository->createNewEntity());
     }
 
-    /*public function testHydrate()
+    public function testHydrate()
     {
         $data = ['id' => 1, 'name' => 'test', 'description' => 'test', 'team' => true, 'active' => true];
         $group = $this->repository->hydrate(new GroupEntity(), $data);
@@ -40,5 +40,5 @@ class GroupRepositoryTest extends \PHPUnit_Framework_TestCase
         $data = $this->repository->extract($group);
         $this->assertArrayHasKey('id', $data);
         $this->assertEquals(2, $data['id']);
-    }*/
+    }
 }
