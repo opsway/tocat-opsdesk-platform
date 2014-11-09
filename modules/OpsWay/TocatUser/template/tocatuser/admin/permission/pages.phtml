@@ -76,6 +76,45 @@ $flash = $this->flashMessenger();
     </table>
 </div>
 </form>
+<br/>
+<hr/>
+<?php if (count($this->staticParentList) > 0): ?>
+<h4>This Role have parent role(s) with current allow permission</h4>
+<div class="table-responsive">
+    <table id="parentGuardTable" class="table table-hover table-condensed">
+        <caption>
+            You don't need allow these permissions for current role, this works by parent tree. <br/>
+            But if you see controller in both tables - this means in parent roles not all access to allowed.
+        </caption>
+        <thead>
+        <tr class="active">
+            <th>
+                <div class="checkbox">
+                    <label>
+                        <strong>Full Controller Name</strong>
+                    </label>
+                </div>
+            </th>
+            <th>List Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($this->staticParentList as $name => $actions):?>
+        <tr class="row-acl success">
+            <td class="controller">
+                <?= $name ?>
+            </td>
+            <td class="action">
+            <?php foreach($actions as $action):?>
+                <?=$action?>
+            <?php endforeach;?>
+            </td>
+        </tr>
+        <?php endforeach;?>
+        </tbody>
+    </table>
+</div>
+<?php endif; ?>
 <script type="text/javascript">
     $(function(){
         $('#guardTable tr.row-acl').each(function(){

@@ -22,8 +22,7 @@ return [
                         'id' => '[a-zA-Z][a-zA-Z0-9_-]*',
                     ],
                     'defaults'    => [
-                        '__NAMESPACE__' => __NAMESPACE__ . '\Controller',
-                        'controller'    => 'Index',
+                        'controller'    => Controller\IndexController::class,
                         'action'        => 'stub',
                         'id'            => 'null',
                     ],
@@ -38,8 +37,7 @@ return [
                 'options'       => [
                     'route'    => '/application',
                     'defaults' => [
-                        '__NAMESPACE__' => __NAMESPACE__ . '\Controller',
-                        'controller'    => 'Index',
+                        'controller'    => Controller\IndexController::class,
                         'action'        => 'index',
                     ],
                 ],

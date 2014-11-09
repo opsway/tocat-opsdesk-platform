@@ -55,16 +55,54 @@ class PermissionController extends AbstractActionController
         }
         $roleId = $this->params('role_id', null);
         $staticResources = [];
+        $staticParentList = [];
         if ($roleId) {
             $staticResources = $this->service->getAllStaticControllerGuard();
+            $roleEntity = $serviceRole->getById($roleId);
+            $staticParentList = $this->getAllowedParentStaticResource($roleEntity, $staticResources);
         }
 
         return new ViewModel([
-            'role_id'    => $roleId,
-            'listRole'   => $serviceRole->getList(true),
-            'staticList' => $staticResources,
-            'isAccessed' => [$this->service->getIsAccessedCallback($roleId)]
+            'role_id'          => $roleId,
+            'listRole'         => $serviceRole->getList(true),
+            'staticList'       => $staticResources,
+            'staticParentList' => $staticParentList,
+            'isAccessed'       => [$this->service->getIsAccessedCallback($roleId)]
         ]);
+    }
+
+    protected function getAllowedParentStaticResource($roleEntity, &$staticResources)
+    {
+        $result = [];
+        $roleEntity = $roleEntity->getParent();
+        if ($roleEntity) {
+            $isAllowed = $this->service->getIsAccessedCallback($roleEntity->getId());
+            foreach ($staticResources as $c => $a) {
+                if (count($a) > 0) {
+                    if ($isAllowed($c)) {
+                        $result[$c] = [];
+                        foreach ($a as $one) {
+                            if ($isAllowed($c, $one)) {
+                                $result[$c][] = $one;
+                            }
+                        }
+                        if (count($a) == count($result[$c])) {
+                            unset($staticResources[$c]);
+                        }
+                        if (count($result[$c]) == 0) {
+                            unset($staticResources[$c]);
+                        }
+                    }
+                } else {
+                    if ($isAllowed($c)) {
+                        $result[$c] = [];
+                        unset($staticResources[$c]);
+                    }
+                }
+            }
+            $result = array_merge($result, $this->getAllowedParentStaticResource($roleEntity, $staticResources));
+        }
+        return $result;
     }
 
     public function resourceAction()
