@@ -28,7 +28,8 @@ class GroupRepositoryTest extends \PHPUnit_Framework_TestCase
     public function testHydrate()
     {
         $data = ['id' => 1, 'name' => 'test', 'description' => 'test', 'team' => true, 'active' => true];
-        $group = $this->repository->hydrate(new GroupEntity(), $data);
+        $group = new GroupEntity();
+        $group = $this->repository->hydrate($group, $data);
         $this->assertInstanceOf('OpsWay\TocatUser\Entity\Group', $group);
         //todo: test failing on this, need investigate why
         //$this->assertEquals(1, $group->getId());
