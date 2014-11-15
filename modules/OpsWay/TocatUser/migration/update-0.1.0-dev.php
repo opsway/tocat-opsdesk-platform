@@ -7,7 +7,6 @@ use OpsWay\TocatUser\Service\PermissionService;
 use Zend\Crypt\Password\Bcrypt;
 
 $console = $this->getServiceLocator()->get('console');
-$console = $this->getServiceLocator()->get('console');
 /**
  * @var EntityManagerInterface $em
  */

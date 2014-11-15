@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit bootstrap="Bootstrap.php">
+    <testsuites>
+        <testsuite name="TocatBudget Tests">
+            <directory>./TocatBudgetTest</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist addUncoveredFilesFromWhitelist="true">
+            <directory suffix='.php'>../code/</directory>
+            <!--exclude>
+                  <directory suffix=".php">./</directory>
+            </exclude-->
+        </whitelist>
+    </filter>
+</phpunit>

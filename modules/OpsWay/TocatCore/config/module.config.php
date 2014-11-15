@@ -21,4 +21,13 @@ return [
             __NAMESPACE__ => __DIR__ . '/../migration'
         ],
     ],
+    'doctrine' => [
+        'eventmanager' => [
+            'orm_default' => [
+                'subscribers' => [
+                    \Gedmo\Timestampable\TimestampableListener::class,
+                ],
+            ],
+        ],
+    ],
 ];

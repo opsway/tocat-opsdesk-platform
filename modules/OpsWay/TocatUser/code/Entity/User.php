@@ -75,6 +75,11 @@ class User implements UserInterface, ProviderInterface
     protected $groups;
 
     /**
+     * @ORM\OneToOne(targetEntity="OpsWay\TocatUser\Entity\Account", mappedBy="user", cascade={"persist"})
+     **/
+    private $account;
+
+    /**
      * Initialies the roles and group variable.
      */
     public function __construct()
@@ -323,5 +328,21 @@ class User implements UserInterface, ProviderInterface
         }
 
         return $this;
+    }
+
+    /**
+     * @return Account
+     */
+    public function getAccount()
+    {
+        return $this->account;
+    }
+
+    /**
+     * @param Account $account
+     */
+    public function setAccount($account)
+    {
+        $this->account = $account;
     }
 }

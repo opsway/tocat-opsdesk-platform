@@ -30,6 +30,7 @@ $config = array(
         'OpsWay\TocatCore',
         'OpsWay\TocatApi',
         'OpsWay\TocatUser',
+        'OpsWay\TocatBudget',
         'OpsWay\AppManager'
     ),
     'module_listener_options' => array(

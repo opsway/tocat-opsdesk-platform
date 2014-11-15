@@ -6,7 +6,9 @@
         "framework",
         "zf2",
         "tocat",
-        "application"
+        "application",
+        "doctrine",
+        "CRM"
     ],
     "homepage": "https://github.com/opsway/tocat",
     "authors": [
@@ -33,6 +35,7 @@
         "opsway/zfc-user-onelogin": "dev-master",
         "danielss89/zfc-user-admin": "dev-master",
         "bjyoungblood/bjy-authorize": "1.4.*",
+        "gedmo/doctrine-extensions": "2.3.*",
         "shandy-dev/humus-doctrine-hydrator": "dev-master"
     },
     "require-dev": {
@@ -51,6 +54,7 @@
         "psr-4": {
             "OpsWay\\TocatCore\\": "modules/OpsWay/TocatCore/code/",
             "OpsWay\\TocatUser\\": "modules/OpsWay/TocatUser/code/",
+            "OpsWay\\TocatBudget\\": "modules/OpsWay/TocatBudget/code/",
             "OpsWay\\AppManager\\": "modules/OpsWay/AppManager/code/"
         }
     }
