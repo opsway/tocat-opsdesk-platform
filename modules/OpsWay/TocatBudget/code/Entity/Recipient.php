@@ -24,7 +24,7 @@ class Recipient
     protected $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="OpsWay\TocatUser\Entity\Account")
+     * @ORM\OneToOne(targetEntity="OpsWay\TocatUser\Entity\Account", cascade={"persist"})
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id")
      **/
     private $account;

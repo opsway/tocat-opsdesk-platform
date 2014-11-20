@@ -7,7 +7,7 @@ return [
             Controller\IndexController::class       => Controller\IndexController::class,
         ],
         'factories'  => [
-            Controller\OtherController::class      => Factory\Controller\OtherControllerFactory::class,
+            Controller\TicketController::class      => Factory\Controller\TicketControllerFactory::class,
         ],
     ],
 ];

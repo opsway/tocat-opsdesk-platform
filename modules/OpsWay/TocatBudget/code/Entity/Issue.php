@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Entity Issue
  *
  * @package OpsWay\TocatBudget\Entity
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="OpsWay\TocatBudget\Repository\MyRepository")
  * @ORM\Table(name="tocat_issues")
  */
 class Issue
@@ -66,7 +66,7 @@ class Issue
      *
      * @var ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="OpsWay\TocatBudget\Entity\Recipient")
+     * @ORM\ManyToMany(targetEntity="OpsWay\TocatBudget\Entity\Recipient", cascade={"persist"})
      * @ORM\JoinTable(name="tocat_issue_recipient_linker",
      *      joinColumns={@ORM\JoinColumn(name="issue_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="recipient_id", referencedColumnName="id", unique=true)}
@@ -160,7 +160,7 @@ class Issue
     }
 
     /**
-     * @return ArrayCollection
+     * @return array
      */
     public function getBudgets()
     {
@@ -173,6 +173,7 @@ class Issue
             $this->getBudgets(),
             function ($total, $budget) {
                 $total += $budget->getCost();
+                return $total;
             },
             0
         );

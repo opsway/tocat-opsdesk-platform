@@ -1,13 +1,13 @@
 <?php
 namespace OpsWay\TocatBudget\Factory\Controller;
 
-use OpsWay\TocatBudget\Controller\OtherController;
+use OpsWay\TocatBudget\Controller\TicketController;
 use OpsWay\TocatBudget\Service\MyService;
 use Zend\Mvc\Controller\ControllerManager;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class OtherControllerFactory implements FactoryInterface
+class TicketControllerFactory implements FactoryInterface
 {
     /**
      * Create service
@@ -22,11 +22,11 @@ class OtherControllerFactory implements FactoryInterface
         /** @var ControllerManager $serviceLocator */
         $serviceLocator = $serviceLocator->getServiceLocator();
         /**
-         * @var $service GroupService
+         * @var $service MyService
          */
         $service = $serviceLocator->get(MyService::class);
 
-        return new OtherController($service);
+        return new TicketController($service);
 
     }
 }

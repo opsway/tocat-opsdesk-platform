@@ -5,51 +5,51 @@ namespace OpsWay\TocatBudget\Repository;
 use OpsWay\TocatCore\Library\Traits\DoctrineHydratorAwareInterface;
 use OpsWay\TocatCore\Library\Traits\DoctrineHydratorAwareTrait;
 use Doctrine\ORM\EntityRepository;
-use OpsWay\TocatBudget\Entity\My as MyEntity;
+use OpsWay\TocatBudget\Entity\Issue as IssueEntity;
 
 /**
- *  @method null|MyEntity find($id, $lockMode = \Doctrine\DBAL\LockMode::NONE, $lockVersion = null)
+ *  @method null|IssueEntity find($id, $lockMode = \Doctrine\DBAL\LockMode::NONE, $lockVersion = null)
  */
 class MyRepository extends EntityRepository implements DoctrineHydratorAwareInterface
 {
     use DoctrineHydratorAwareTrait;
 
     /**
-     * @return myEntity
+     * @return issueEntity
      */
     public function createNewEntity()
     {
-        return new MyEntity();
+        return new IssueEntity();
     }
 
     /**
-     * @param myEntity $myEntity
+     * @param issueEntity $issueEntity
      * @param array      $data
      *
-     * @return myEntity
+     * @return issueEntity
      */
-    public function hydrate(MyEntity $myEntity, array $data)
+    public function hydrate(IssueEntity $issueEntity, array $data)
     {
-        return $this->getHydrator()->hydrate($data, $myEntity);
+        return $this->getHydrator()->hydrate($data, $issueEntity);
     }
 
     /**
-     * @param myEntity $myEntity
+     * @param issueEntity $issueEntity
      *
      * @return array
      */
-    public function extract(MyEntity $myEntity)
+    public function extract(IssueEntity $issueEntity)
     {
-        return $this->getHydrator()->extract($myEntity);
+        return $this->getHydrator()->extract($issueEntity);
     }
 
     /**
-     * @param myEntity $myEntity
+     * @param issueEntity $issueEntity
      * @param bool       $flush
      */
-    public function save(MyEntity $myEntity, $flush = true)
+    public function save(IssueEntity $issueEntity, $flush = true)
     {
-        $this->getEntityManager()->persist($myEntity);
+        $this->getEntityManager()->persist($issueEntity);
 
         if ($flush) {
             $this->getEntityManager()->flush();
@@ -57,12 +57,12 @@ class MyRepository extends EntityRepository implements DoctrineHydratorAwareInte
     }
 
     /**
-     * @param myEntity $myEntity
+     * @param issueEntity $issueEntity
      * @param bool       $flush
      */
-    public function delete(MyEntity $myEntity, $flush = true)
+    public function delete(IssueEntity $issueEntity, $flush = true)
     {
-        $this->getEntityManager()->remove($myEntity);
+        $this->getEntityManager()->remove($issueEntity);
 
         if ($flush) {
             $this->getEntityManager()->flush();

@@ -21,6 +21,11 @@ class MyService
         return $this->myRepository->findAll();
     }
 
+    public function getRepo()
+    {
+        return $this->myRepository;
+    }
+
     public function getList()
     {
         return array_map(function ($my) {

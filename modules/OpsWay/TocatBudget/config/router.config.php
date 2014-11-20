@@ -4,10 +4,10 @@ namespace OpsWay\TocatBudget;
 return [
     'router' => [
         'routes' => [
-            'tocatbudget' => [
+            'budget' => [
                 'type'    => 'Zend\Mvc\Router\Http\Literal',
                 'options' => [
-                    'route'    => '/tocatbudget',
+                    'route'    => '/budget',
                     'defaults' => [
                         'controller' => Controller\IndexController::class,
                         'action'     => 'index',
@@ -28,19 +28,19 @@ return [
                             ],
                         ],
                     ],
-                    'other' => [
+                    'ticket' => [
                         'type'     => 'Segment',
                         'priority' => 1000,
                         'options'  => [
-                            'route'       => '/other[/:action[/:id]]',
+                            'route'       => '/ticket[/:action[/:id]]',
                             'constraints' => [
                                 'action'  => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'id' => '[0-9]*'
                             ],
                             'defaults'    => [
-                                'controller' => Controller\OtherController::class,
+                                'controller' => Controller\TicketController::class,
                                 'action'     => 'index',
-                                'role_id'    => null
+                                'id'    => null
                             ],
                         ],
                     ],

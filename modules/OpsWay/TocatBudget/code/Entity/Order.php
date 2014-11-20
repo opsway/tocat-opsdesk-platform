@@ -40,7 +40,7 @@ class Order
 
     /**
      * @var bool
-     * @ORM\Column(name="accept", type="boolean", nullable=false)
+     * @ORM\Column(name="is_paid", type="boolean", nullable=false)
      */
     protected $paid = false;
 

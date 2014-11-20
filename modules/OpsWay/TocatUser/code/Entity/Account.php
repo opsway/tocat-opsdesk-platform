@@ -81,9 +81,12 @@ class Account
 
     /**
      * @param User $user
+     *
+     * @return $this
      */
     public function setUser($user)
     {
         $this->user = $user;
+        return $this;
     }
 }

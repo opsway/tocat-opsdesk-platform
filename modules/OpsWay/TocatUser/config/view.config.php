@@ -9,5 +9,8 @@ return [
         'controller_map'      => [
             __NAMESPACE__ => 'tocatuser'
         ],
+        'template_map'        => [
+            'zfc-user/user/index' => __DIR__ . '/../template/tocatuser/user/index.phtml',
+        ],
     ],
 ];

@@ -4,6 +4,8 @@ namespace OpsWay\TocatBudget\Factory\Repository;
 
 use Doctrine\ORM\EntityManager;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
+use Humus\Doctrine\Hydrator\Hydrator;
+use OpsWay\TocatBudget\Entity\Issue;
 use OpsWay\TocatBudget\Entity\My as MyEntity;
 use OpsWay\TocatBudget\Repository\MyRepository;
 use Zend\ServiceManager\FactoryInterface;
@@ -25,8 +27,8 @@ class MyRepositoryFactory implements FactoryInterface
          * @var $MyRepository MyRepository
          */
         $em = $serviceLocator->get('doctrine.entitymanager.orm_default');
-        $MyRepository = $em->getRepository(MyEntity::class);
-        $hydrator = new DoctrineObject($em, MyEntity::class);
+        $MyRepository = $em->getRepository(Issue::class);
+        $hydrator = new DoctrineObject($em, Issue::class); //new Hydrator($em,true, [], true);//
         $MyRepository->setHydrator($hydrator);
 
         return $MyRepository;
