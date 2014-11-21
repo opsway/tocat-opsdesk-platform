@@ -28,6 +28,7 @@
     ],
     "require": {
         "php": ">=5.5",
+        "ext-intl": "*",
         "zendframework/zendframework": ">=2.3.2,<3.0.0",
         "zfcampus/zf-apigility": "~1.0",
         "kbsali/redmine-api":"~1.0",

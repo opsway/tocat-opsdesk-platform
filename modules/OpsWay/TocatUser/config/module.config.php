@@ -25,7 +25,7 @@ return [
             __NAMESPACE__ => __DIR__ . '/../migration'
         ],
     ],
-    'zfcuser'      => [
+    'zfcuser' => [
         'user_entity_class'       => Entity\User::class,
         'enable_default_entities' => false,
         'UserEntityClass'         => Entity\User::class,
@@ -33,7 +33,8 @@ return [
         'enable_username'         => false,
         'enable_display_name'     => true,
         'auth_identity_fields'    => ['email'],
-        //'login_redirect_route' => 'zfcuser',
+        'login_redirect_route'    => 'zfcuser/account',
+        'use_redirect_parameter_if_present' => true
     ],
     'zfcuseradmin' => [
         'user_list_elements'        => ['Id' => 'id', 'Name' => 'display_name', 'Email address' => 'email'],

@@ -8,7 +8,6 @@ before_script:
 - composer self-update
 - composer install --dev --prefer-source;
 - mysql -e "create database IF NOT EXISTS tocat;" -uroot
-- mkdir -p build/logs
 - php public/index.php app install --params="db[host]=localhost&db[port]=3306&db[user]=travis&db[password]=&db[dbname]=tocat" && php public/index.php app update
 
 script: 

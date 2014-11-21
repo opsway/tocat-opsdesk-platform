@@ -4,6 +4,24 @@ namespace OpsWay\TocatUser;
 return [
     'router' => [
         'routes' => [
+            'zfcuser' => [
+                'child_routes' => [
+                    'account'      => [
+                        'type'     => 'Segment',
+                        'priority' => 1000,
+                        'options'  => [
+                            'route'       => '/account[/:action]',
+                            'constraints' => [
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ],
+                            'defaults'    => [
+                                'controller' => Controller\UserAccountController::class,
+                                'action'     => 'index',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
             'zfcadmin' => [
                 'child_routes' => [
                     'roles'      => [
