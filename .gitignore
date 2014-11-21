@@ -7,13 +7,12 @@ nbproject
 .project
 .settings
 composer.lock
-vendor/
+vendor/*
 public/vendor/
+!public/vendor/.gitignore
 config/development.config.php
 config/autoload/local.php
 config/autoload/*.local.php
 !public/vendor/README.md
 data/cache/*
-!data/cache/.gitkeep
-
 sftp-config.json

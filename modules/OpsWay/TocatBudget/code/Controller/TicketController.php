@@ -61,7 +61,7 @@ class TicketController extends AbstractActionController
     {
         $issues = $this->service->getAll();
         $list = [];
-        foreach ($issues as $issue){
+        foreach ($issues as $issue) {
             $arr = $this->service->getRepo()->extract($issue);
             $arr['budgets'] = $issue->getTotalCost();
             $list[] = $arr;

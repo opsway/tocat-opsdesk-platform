@@ -17,11 +17,15 @@ Create MySQL/PostgresSQL database:
 CREATE DATABASE tocat;
 ```
 
-Cloning source and run composer, after run install/update application and follow instruction in console:
+ - Clone source 
+ - Run composer install
+ - Run bower install
+ - Run install & update application and follow instruction in console
 ```bash
 git clone git@github.com:opsway/tocat.git
 cd tocat
 php composer.phar install
+bower install
 php public/index.php app install && php public/index.php app update
 ```
 

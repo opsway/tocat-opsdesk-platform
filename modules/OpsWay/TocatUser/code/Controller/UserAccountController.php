@@ -31,5 +31,4 @@ class UserAccountController extends AbstractActionController
     {
         return new ViewModel();
     }
-
 }

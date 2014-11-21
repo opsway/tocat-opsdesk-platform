@@ -25,6 +25,13 @@ return [
             __NAMESPACE__ => __DIR__ . '/../migration'
         ],
     ],
+    'asset_manager' => [
+        'resolver_configs' => [
+            'paths' => [
+                __DIR__ . '/../public',
+            ],
+        ],
+    ],
     'zfcuser' => [
         'user_entity_class'       => Entity\User::class,
         'enable_default_entities' => false,

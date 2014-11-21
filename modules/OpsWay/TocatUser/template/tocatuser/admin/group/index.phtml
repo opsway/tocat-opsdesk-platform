@@ -1,145 +1,19 @@
 <?php  $this->headScript()
-            ->prependFile($this->basePath() . '/bower_components/angular-ui-grid/ui-grid.min.js')
-            ->prependFile($this->basePath() . '/bower_components/angular/angular.min.js');
-       $this->headLink()->prependStylesheet($this->basePath() . '/bower_components/angular-ui-grid/ui-grid.min.css'); ?>
-<style type="text/css">
-    .ui-grid-icon-menu:after {
-        content: "Menu Action";
-    }
+            ->prependFile($this->basePath() . '/tocat-user/js/controllers/admin-group.js')
+            ->prependFile($this->basePath() . '/vendor/angular-ui-grid/ui-grid.min.js')
+            ->prependFile($this->basePath() . '/vendor/angular/angular.min.js');
+       $this->headLink()
+           ->prependStylesheet($this->basePath() . '/tocat-user/css/style.css')
+           ->prependStylesheet($this->basePath() . '/vendor/angular-ui-grid/ui-grid.min.css'); ?>
 
-    .ui-grid-menu-button {
-        top: -30px;
-    }
-</style>
 <script type="text/javascript">
-    var app = angular.module('tocatApp', ['ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.selection']);
-
-    app.controller('MainCtrl', ['$scope', '$http', '$q', '$interval', function ($scope, $http, $q, $interval) {
-
-        $scope.groupsSelected = {};
-        $scope.gridOptions = {};
-        //$scope.gridOptions.enableFiltering = true;
-        $scope.gridOptions.enableRowSelection = true;
-        $scope.gridOptions.multiSelect = true;
-        $scope.gridOptions.rowIdentity = function (row) {
-            return row.id;
-        };
-        $scope.gridOptions.getRowIdentity = function (row) {
-            return row.id;
-        };
-
-        $scope.gridOptions.enableGridMenu = true;
-        $scope.gridOptions.gridMenuCustomItems = [
-            {
-                title: 'Save Selected Groups',
-                action: function ($event) {
-                    $scope.selectSendToServer('<?=$this->url('zfcadmin/groups', array('action' => 'save-bulk')) ?>');
-                }
-            },
-            {
-                title: 'Add Group',
-                action: function ($event) {
-                    $scope.gridOptions.data.push({name:'Name',team: false, active:false});
-                }
-            },
-            {
-                title: 'Delete Selected Groups',
-                action: function ($event) {
-                    if (confirm('Are you sure?')) $scope.selectSendToServer('<?=$this->url('zfcadmin/groups', array('action' => 'delete')) ?>');
-                }
-            },
-            {
-                title: 'Assign members',
-                action: function ($event) {
-                    alert('modalWindow?');
-                }
-            }
-        ];
-
-        $scope.gridOptions.columnDefs = [
-            {name: 'id', enableCellEdit: false},
-            {name: 'name', displayName: 'Name'},
-            {name: 'description'},
-            {name: 'team', displayName: 'Is Team', type: 'boolean', cellFilter: 'mapYesNo'},
-            {name: 'active', displayName: 'Active', type: 'boolean', cellFilter: 'mapYesNo'}
-        ];
-
-        $scope.saveRow = function (rowEntity) {
-            // create a fake promise - normally you'd use the promise returned by $http or $resource
-           //var promise = $q.defer();
-            //$scope.gridApi.rowEdit.setSavePromise($scope.gridApi.grid, rowEntity, promise.promise);
-            // fake a delay of 3 seconds whilst the save occurs, return error if gender is "male"
-            $http.post('<?=$this->url('zfcadmin/groups', array('action' => 'save')) ?>', rowEntity)
-                .success(function (data) {
-                    if (data['id'] != undefined) {
-                        $scope.getAllGroups();
-                    }
-                }).error(function (data) {
-                    alert("AJAX failed to Load Data");
-                });
-
-
-        };
-
-        $scope.selectSendToServer = function(url) {
-            var rows = $.extend(true,[],$scope.gridApi.selection.getSelectedRows());
-            if (rows.length == 0) {
-                alert('Please select row!');
-                return;
-            }
-            rows.forEach(function(row){
-                if (row.users !== undefined) delete row['users'];
-            });
-            $http.post(url, rows)
-                .success(function (data) {
-                    $scope.gridApi.selection.getSelectedGridRows().forEach(function (row) {
-                        row.isSelected = false;
-                    });
-                    $scope.getAllGroups();
-                    $scope.groupsSelected = {};
-                }).error(function (data) {
-                    alert("AJAX failed to Load Data");
-                });
-        };
-
-        $scope.gridOptions.onRegisterApi = function (gridApi) {
-            //set gridApi on scope
-            $scope.gridApi = gridApi;
-            gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
-                $scope.gridApi.selection.selectRow(rowEntity);
-                $scope.$apply();
-            });
-            //gridApi.rowEdit.on.saveRow($scope, $scope.saveRow);
-            gridApi.selection.on.rowSelectionChanged($scope, function (row) {
-                if (row.entity.id  === undefined) return;
-                if (row.isSelected) {
-                    $scope.groupsSelected[row.entity.id] = row.entity;
-                } else {
-                    delete  $scope.groupsSelected[row.entity.id];
-                }
-                console.log(row);
-                //$log.log(msg);
-            });
-
-        };
-
-        $scope.getAllGroups = function() {
-            $http.get('<?=$this->url('zfcadmin/groups', array('action' => 'list')) ?>')
-                .success(function (data) {
-                    $scope.gridOptions.data = data
-                });
-        };
-
-        $scope.getAllGroups();
-    }]).filter('mapYesNo', function () {
-        return function (input) {
-            return (input)?'Yes':'No';
-        };
-    })
-    ;
+    var URL_SAVE_GROUP_LIST = '<?=$this->url('zfcadmin/groups', array('action' => 'save-bulk')) ?>';
+    var URL_DELETE_GROUP = '<?=$this->url('zfcadmin/groups', array('action' => 'delete')) ?>';
+    var URL_SAVE_GROUP = '<?=$this->url('zfcadmin/groups', array('action' => 'save')) ?>';
+    var URL_SHOW_GROUP_LIST = '<?=$this->url('zfcadmin/groups', array('action' => 'list')) ?>';
 </script>
 <div>
-    <div ng-controller="MainCtrl">
+    <div ng-controller="AdminGroupCtrl">
         <h2>Management Groups / Teams</h2>
 
         <div class="row">
@@ -163,5 +37,4 @@
             </div>
         </div>
     </div>
-
 </div>

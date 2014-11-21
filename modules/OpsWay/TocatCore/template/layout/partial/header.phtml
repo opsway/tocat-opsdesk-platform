@@ -12,36 +12,18 @@
 
         <!-- Le styles -->
         <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
-                        ->prependStylesheet($this->basePath() . '/css/style.css')
-                        ->prependStylesheet($this->basePath() . '/bower_components/angular-ui-tree/dist/angular-ui-tree.min.css')
-                        //->prependStylesheet($this->basePath() . '/css/bootstrap-theme.min.css') https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css
-                        //->prependStylesheet($this->basePath() . '/css/bootstrap.min.css')
-                        ->prependStylesheet('https://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css')
-                        ->prependStylesheet('https://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css') ?>
+                        ->prependStylesheet($this->basePath() . '/tocat-core/css/style.css')
+                        ->prependStylesheet($this->basePath() . '/vendor/angular-ui-tree/dist/angular-ui-tree.min.css')
+                        ->prependStylesheet($this->basePath() . '/vendor/bootstrap/dist/css/bootstrap-theme.min.css')
+                        ->prependStylesheet($this->basePath() . '/vendor/bootstrap/dist/css/bootstrap.min.css') ?>
         <!-- Scripts -->
         <?php echo $this->headScript()
-            ->prependFile($this->basePath() . '/js/bootstrap.min.js')
-            ->prependFile($this->basePath() . '/js/jquery.min.js')
-            ->prependFile($this->basePath() . '/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
-            ->prependFile($this->basePath() . '/js/html5shiv.js',   'text/javascript', array('conditional' => 'lt IE 9',))
+            ->prependFile($this->basePath() . '/tocat-core/js/navbar-menu.js')
+            ->prependFile($this->basePath() . '/vendor/bootstrap/dist/js/bootstrap.min.js')
+            ->prependFile($this->basePath() . '/vendor/jquery/dist/jquery.min.js')
+            ->prependFile($this->basePath() . '/vendor/respond/dest/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+            ->prependFile($this->basePath() . '/vendor/html5shiv/dist/html5shiv.js',   'text/javascript', array('conditional' => 'lt IE 9',))
         ; ?>
-<script type="text/javascript">
-
-    $(function () {
-      var $win = $(window);
-      $win.resize(function () {
-          if ($win.width() > 768)
-              $(".navbar-nav > .dropdown > a").attr("data-toggle", "");
-          else
-              $(".navbar-nav > .dropdown > a").attr("data-toggle", "dropdown");
-      }).resize();
-      $(".dropdown-menu").find("input, button").each(function () {
-          $(this).click(function (e) {
-              e.stopPropagation();
-          });
-      });
-    });
-</script>
     </head>
     <body class="ng-scope" ng-app="tocatApp">
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -52,7 +34,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="<?php echo $this->url('home') ?>"><img src="<?php echo $this->basePath('img/opsway-logo.png') ?>" alt="OpsWay" width="60%"/>&nbsp;<?php echo $this->translate('Tocat') ?></a>
+                    <a class="navbar-brand" href="<?php echo $this->url('home') ?>"><img src="<?php echo $this->basePath('img/opsway-logo.png') ?>" alt="OpsWay" width="60%"/>&nbsp;<?php echo $this->translate('TOCAT') ?></a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <?php echo $this->
@@ -62,7 +44,7 @@
         ->setPartial('layout/partial/top-menu/navigation.phtml');
     ?>
                     <p class="navbar-text navbar-right">
-                        <span style="color: #f5f5f5;"><strong>Hello, <?=($this->zfcUserDisplayName())?'<a href="/user">'.$this->zfcUserDisplayName().'</a>':'guest'?></strong></span>
+                        <span style="color: #f5f5f5;"><strong>Hello, <?=($this->zfcUserDisplayName())?'<a href="/user/account">'.$this->zfcUserDisplayName().'</a>':'guest'?></strong></span>
                     </p>
                 </div><!--/.nav-collapse -->
             </div>
