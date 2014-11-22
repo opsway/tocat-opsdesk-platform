@@ -9,6 +9,8 @@
 
 namespace OpsWay\TocatUser\Controller;
 
+use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
+use OpsWay\TocatUser\Entity\User;
 use OpsWay\TocatUser\Service\UserAccountService;
 use Zend\Json\Json;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -29,6 +31,17 @@ class UserAccountController extends AbstractActionController
 
     public function indexAction()
     {
-        return new ViewModel();
+        $user = $this->zfcUserAuthentication()->getIdentity();
+        return new ViewModel(['user' => $user]);
+    }
+
+    public function loadAction()
+    {
+        $userId = $this->params()->fromRoute('user_id');
+        $em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+        $userRepository = $em->getRepository(User::class);
+        $user = $userRepository->find($userId);
+        $hydrator = new DoctrineObject($em, User::class);
+        return new JsonModel($hydrator->extract($user));
     }
 }

@@ -1,5 +1,59 @@
-<div style="float:left; padding-right:16px;"><?php echo $this->gravatar($this->zfcUserIdentity()->getEmail()) ?></div>
-<h3><?php echo $this->translate('Hello'); ?>, <?php echo $this->zfcUserDisplayName() ?>!</h3>
-This is cool!
-<a href="<?php echo $this->url('zfcuser/logout') ?>">[<?php echo $this->translate('Sign Out'); ?>]</a>
-<div style="clear:both;"></div>
+<?php  $this->headScript()
+            ->prependFile($this->basePath() . '/tocat-user/js/controllers/user-account.js')
+            ->prependFile($this->basePath() . '/vendor/angular-xeditable/dist/js/xeditable.min.js')
+            ->prependFile($this->basePath() . '/vendor/angular/angular.min.js');
+       $this->headLink()
+           ->prependStylesheet($this->basePath() . '/tocat-user/css/style.css')
+           ->prependStylesheet($this->basePath() . '/vendor/angular-xeditable/dist/css/xeditable.css'); ?>
+<script type="text/javascript">
+    var URL_SHOW_USER = '<?=$this->url('zfcuser/account', array('action' => 'load', 'user_id' => $this->user->getId())) ?>';
+    $('#accountTabs a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+    })
+</script>
+<div class="std" ng-controller="UserAccountCtrl">
+    <div role="tabpanel">
+        <div style="float:left; padding-right:16px;"><?php echo $this->gravatar($this->zfcUserIdentity()
+                    ->getEmail()) ?></div>
+        <h2><?= $this->translate('My Account'); ?></h2>
+        <ul id="accountTabs" class="nav nav-tabs">
+            <li role="presentation" class="active">
+                <a href="#home" aria-controls="home" role="tab" data-toggle="tab"><?= $this->translate('Overview') ?></a>
+            </li>
+            <li role="presentation">
+                <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab"><?= $this->translate('Profile') ?></a>
+            </li>
+            <li role="presentation">
+                <a href="#company" aria-controls="company" role="tab" data-toggle="tab"><?= $this->translate('Company') ?></a>
+            </li>
+            <li role="presentation">
+                <a href="#activity" aria-controls="activity" role="tab" data-toggle="tab"><?= $this->translate('Activity') ?></a>
+            </li>
+            <li role="presentation" class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                    <?= $this->translate('Reports') ?> <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#salary" aria-controls="salary" role="tab" data-toggle="tab"><?= $this->translate('Salary') ?></a></li>
+                    <li><a href="#bonuses" aria-controls="bonuses" role="tab" data-toggle="tab"><?= $this->translate('Bonuses') ?></a></li>
+                    <li><a href="#productivity" aria-controls="productivity" role="tab" data-toggle="tab"><?= $this->translate('Productivity') ?></a></li>
+                </ul>
+            </li>
+        </ul>
+        <div style="clear:both;"></div>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="home">
+                <div>Email: {{user.email}}</div>
+                <div>Full Name: {{user.displayName}}</div>
+                <div>Created At: {{user.createdAt.date}}</div>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="profile">..sssss.</div>
+            <div role="tabpanel" class="tab-pane fade" id="company">.dddd..</div>
+            <div role="tabpanel" class="tab-pane fade" id="activity">..asasaqqqq.</div>
+            <div role="tabpanel" class="tab-pane fade" id="salary">Salary</div>
+            <div role="tabpanel" class="tab-pane fade" id="bonuses">Bonuses</div>
+            <div role="tabpanel" class="tab-pane fade" id="productivity">Productivity</div>
+        </div>
+    </div>
+</div>

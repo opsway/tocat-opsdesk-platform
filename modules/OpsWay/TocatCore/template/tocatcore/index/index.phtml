@@ -5,9 +5,11 @@
     }
 </style>
 <div class="jumbotron">
-    <h1><?php echo sprintf($this->translate('Welcome to %sTocat%s'), '<span class="zf-green">', '</span>') ?></h1>
-    <p>This application will provide easy money ecosystem for your company.</p>
-    <p>Sorry, this is development build in demo mode. Follow us on <a href="https://github.com/opsway/tocat">GitHub</a></p>
+    <h2><?= sprintf($this->translate('Welcome to %sTOCAT%s Dashboard'), '<span class="zf-green">', '</span>') ?></h2>
+    <p>
+        <?= $this->translate('This application will provide easy money ecosystem for your company. Sorry, this is development build in demo mode. Follow us on');?>
+        <a href="https://github.com/opsway/tocat">GitHub</a>
+    </p>
 </div>
 
 

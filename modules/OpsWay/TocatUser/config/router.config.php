@@ -10,13 +10,14 @@ return [
                         'type'     => 'Segment',
                         'priority' => 1000,
                         'options'  => [
-                            'route'       => '/account[/:action]',
+                            'route'       => '/account[/:action[/:user_id]]',
                             'constraints' => [
                                 'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                             ],
                             'defaults'    => [
                                 'controller' => Controller\UserAccountController::class,
                                 'action'     => 'index',
+                                'user_id'    => null
                             ],
                         ],
                     ],

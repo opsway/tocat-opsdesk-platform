@@ -4,6 +4,8 @@ namespace OpsWay\TocatUser\Entity;
 
 use BjyAuthorize\Provider\Role\ProviderInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use ZfcUser\Entity\UserInterface;
 
@@ -17,6 +19,8 @@ use ZfcUser\Entity\UserInterface;
  */
 class User implements UserInterface, ProviderInterface
 {
+    use TimestampableEntity;
+
     /**
      * @var int
      * @ORM\Id

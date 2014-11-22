@@ -13,4 +13,9 @@ return [
             'zfc-user/user/index' => __DIR__ . '/../template/tocatuser/user/index.phtml',
         ],
     ],
+    'view_helpers' => [
+        'invokables' => [
+            'userTopWidget' => View\Helper\UserTopWidget::class,
+        ],
+    ],
 ];

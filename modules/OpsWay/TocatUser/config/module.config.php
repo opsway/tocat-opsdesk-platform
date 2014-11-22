@@ -78,10 +78,14 @@ return [
                             'top_nav:staff',
                             'top_nav:budget',
                             'top_nav:payment',
-                            'top_nav:administration'
                         ],
                         ['list']
                     ],
+                    [
+                        ['admin'],
+                        ['top_nav:administration'],
+                        ['list']
+                    ]
                 ],
             ],
         ],
