@@ -1,0 +1,35 @@
+<?php
+$flash = $this->flashMessenger();
+ $flash->setMessageOpenFormat('<div%s>
+     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+         &times;
+     </button>
+     <ul><li>')
+     ->setMessageSeparatorString('</li><li>')
+     ->setMessageCloseString('</li></ul></div>');
+
+ echo $flash->render('error',   array('alert', 'alert-dismissable', 'alert-danger'));
+ echo $flash->render('info',    array('alert', 'alert-dismissable', 'alert-info'));
+ echo $flash->render('default', array('alert', 'alert-dismissable', 'alert-warning'));
+ echo $flash->render('success', array('alert', 'alert-dismissable', 'alert-success'));
+?>
+<div class="col-sm-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">People list calendar</h3>
+      </div>
+      <div class="panel-body" style="height: 100%;">
+          <div class="list-group">
+             <?php foreach ($this->listCalendar as $calendar): ?>
+            <a href="<?php echo $this->url('calendar', ['action' => 'view', 'id' => $calendar->getId()]) ?>"
+               class="<?php echo (isset($this->calendar_id) && $this->calendar_id == $calendar->getId())?'active':''?> list-group-item">
+              <?php echo $calendar->getUser()->getDisplayName()  ?>
+                <?php if ($this->zfcUserIdentity() && $this->zfcUserIdentity()->getId() == $calendar->getUser()->getId()): ?><span class="badge">You</span><?php endif; ?>
+            </a>
+              <?php endforeach; ?>
+            <a href="#" class="list-group-item">Here can be your place</a>
+
+          </div>
+      </div>
+    </div>
+</div>

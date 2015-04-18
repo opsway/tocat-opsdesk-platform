@@ -60,7 +60,7 @@ class User implements UserInterface, ProviderInterface
 
     /**
      * @var \Doctrine\Common\Collections\Collection
-     * @ORM\ManyToMany(targetEntity="OpsWay\TocatUser\Entity\Role")
+     * @ORM\ManyToMany(targetEntity="OpsWay\TocatUser\Entity\Role", inversedBy="users", cascade={"persist"})
      * @ORM\JoinTable(name="user_role_linker",
      *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="role_id", referencedColumnName="id")}
@@ -82,6 +82,12 @@ class User implements UserInterface, ProviderInterface
      * @ORM\OneToOne(targetEntity="OpsWay\TocatUser\Entity\Account", mappedBy="user", cascade={"persist"})
      **/
     private $account;
+
+    /**
+     * @var Calendar
+     * @ORM\OneToOne(targetEntity="OpsWay\TocatUser\Entity\Calendar", mappedBy="user", cascade={"persist"})
+     **/
+     private $calendar;
 
     /**
      * Initialies the roles and group variable.
@@ -348,5 +354,24 @@ class User implements UserInterface, ProviderInterface
     public function setAccount($account)
     {
         $this->account = $account;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCalendar()
+    {
+        return $this->calendar;
+    }
+
+    /**
+     * @param mixed $calendar
+     *
+     * @return $this
+     */
+    public function setCalendar($calendar)
+    {
+        $this->calendar = $calendar;
+        return $this;
     }
 }

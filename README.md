@@ -1,6 +1,6 @@
 TOCAT App
 =======================
-[![Build Status](https://travis-ci.org/opsway/tocat.svg)](https://travis-ci.org/opsway/tocat)
+[![Build Status](https://travis-ci.org/opsway/tocat-opsdesk-platform.svg)](https://travis-ci.org/opsway/tocat-opsdesk-platform)
 [![Coverage Status](https://coveralls.io/repos/opsway/tocat/badge.png)](https://coveralls.io/r/opsway/tocat)
 Introduction
 ------------

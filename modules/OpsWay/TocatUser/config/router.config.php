@@ -69,6 +69,26 @@ return [
                             ],
                         ],
                     ],
+                    'zfcuseradmin' => [
+                        'child_routes' => [
+                            'account'      => [
+                                'type'     => 'Segment',
+                                'priority' => 1000,
+                                'options'  => [
+                                    'route'       => '/account[/:action[/:user_id]]',
+                                    'constraints' => [
+                                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                        'user_id' => '[0-9]*'
+                                    ],
+                                    'defaults'    => [
+                                        'controller' => Controller\Admin\UserAccountController::class,
+                                        'action'     => 'index',
+                                        'user_id'    => null
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
                 ],
             ],
         ],

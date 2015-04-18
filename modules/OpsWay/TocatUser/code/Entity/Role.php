@@ -39,6 +39,9 @@ class Role implements HierarchicalRoleInterface
     /**
      * @var Role
      * @ORM\ManyToOne(targetEntity="OpsWay\TocatUser\Entity\Role")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="parent_id", referencedColumnName="id", nullable=true)
+     * })
      */
     protected $parent;
 
@@ -46,6 +49,12 @@ class Role implements HierarchicalRoleInterface
      * @ORM\OneToMany(targetEntity="OpsWay\TocatUser\Entity\Permission", mappedBy="role", cascade={"persist"})
      */
     protected $permissions;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     * @ORM\ManyToMany(targetEntity="OpsWay\TocatUser\Entity\User", mappedBy="roles", cascade={"persist"})
+     */
+    protected $users;
 
     /**
      * Initialies the $permissions variable.
@@ -76,6 +85,15 @@ class Role implements HierarchicalRoleInterface
     {
         $this->id = (int) $id;
         return $this;
+    }
+
+    /**
+     * Get user list from group
+     * @return array
+     */
+    public function getUsers()
+    {
+        return $this->users->getValues();
     }
 
     /**

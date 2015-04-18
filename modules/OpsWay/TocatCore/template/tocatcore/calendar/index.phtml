@@ -1,0 +1,27 @@
+<div class="row">
+    <?php echo $this->partial('tocatcore/calendar/partial/sidebar.phtml', ['listCalendar' => $this->listCalendar]); ?>
+    <div class="col-sm-8">
+        <div class="jumbotron">
+            <h1><?php echo sprintf($this->translate('Welcome to %sCalendar%s'), '<span class="zf-green">', '</span>') ?></h1>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><?php echo $this->translate('Instruction') ?></h3>
+                </div>
+                <div class="panel-body">
+                    <p>Select people on sidebar to reserve his time for yourself.</p>
+                    <?php if ($user = $this->zfcUserIdentity()): ?>
+                        <?php if ($calendar = $this->user->getCalendar()) { ?>
+                            <a class="btn btn-primary" href="<?php echo $this->url('calendar', ['action' => 'edit', 'id' => $calendar->getId()]) ?>">Edit your calendar</a>
+                        <?php } else { ?>
+                            <a class="btn btn-primary" href="<?php echo $this->url('calendar', ['action' => 'create']) ?>">Create your calendar</a>
+                        <?php } ?>
+                    <?php else: ?>
+                    <p>If you want to have your own booking calendar, then just <a href="<?php echo $this->url('zfcuser/login') ?>">Log In</a></p>
+                    <?php endif; ?>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

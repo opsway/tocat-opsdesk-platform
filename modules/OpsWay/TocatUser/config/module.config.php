@@ -40,7 +40,7 @@ return [
         'enable_username'         => false,
         'enable_display_name'     => true,
         'auth_identity_fields'    => ['email'],
-        'login_redirect_route'    => 'zfcuser/account',
+        'login_redirect_route'    => 'home',
         'use_redirect_parameter_if_present' => true
     ],
     'zfcuseradmin' => [

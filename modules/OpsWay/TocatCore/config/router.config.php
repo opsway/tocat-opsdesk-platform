@@ -28,6 +28,22 @@ return [
                     ],
                 ],
             ],
+
+            'calendar'        => [
+                'type'    => 'Segment',
+                'options' => [
+                    'route'       => '/calendar[/:action[/:id]]',
+                    'constraints' => [
+                        'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[0-9]+',
+                    ],
+                    'defaults'    => [
+                        'controller'    => Controller\CalendarController::class,
+                        'action'        => 'index',
+                        'id'            => '0',
+                    ],
+                ],
+            ],
             // The following is a route to simplify getting started creating
             // new controllers and actions without needing to create a new
             // module. Simply drop new controllers in, and you can access them

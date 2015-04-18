@@ -1,0 +1,300 @@
+<?php  $this->headScript()
+    ->prependFile($this->basePath() . '/vendor/angular-bootstrap/ui-bootstrap.min.js')
+    ->prependFile($this->basePath() . '/vendor/bootstrap-validator/dist/validator.min.js')
+    ->prependFile($this->basePath() . '/vendor/angular-busy/dist/angular-busy.min.js')
+    ->prependFile($this->basePath() . '/vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js')
+    ->prependFile($this->basePath() . '/vendor/angular/angular.min.js')
+    ->prependFile($this->basePath() . '/vendor/moment-range/lib/moment-range.min.js')
+    ->prependFile($this->basePath() . '/vendor/moment/min/moment.min.js');
+$this->headLink()
+    ->prependStylesheet($this->basePath() . '/vendor/angular-busy/dist/angular-busy.min.css')
+    ->prependStylesheet($this->basePath() . '/vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css'); ?>
+<style type="text/css">
+    #events .col-xs-2 {
+        margin: 0;
+        padding: 0;
+        width: 13%;
+        text-align: center;
+    }
+
+    #events div.busy {
+        cursor: not-allowed;
+        background-color: #ccc;
+    }
+    #events div.busy a,
+    #events div.busy a {
+      color: #888;
+      text-decoration: none;
+      cursor: not-allowed;
+    }
+    #events div.busy a:hover,
+    #events div.busy a:focus {
+      color: #888;
+      text-decoration: none;
+      cursor: not-allowed;
+    }
+
+    #events h4 span.label {
+        color: #000000;
+        padding-top: 4px;
+        height: 20px;
+    }
+
+    #events h4 span.label-default {
+        color: #ffffff;
+    }
+    #pagerDays.pager {
+        margin: 0;
+    }
+
+    #booking-time-group .form-group {
+        margin-bottom: 0px;
+    }
+
+    #booking-time-group label
+    {
+        padding-top: 22px;
+    }
+
+    #booking-time-group input.form-control {
+        padding-left: 5px;
+        padding-right: 2px;
+    }
+</style>
+<script type="text/javascript">
+    var URL_EVENTS = '<?=$this->url('calendar', array('action' => 'events', 'id' => $this->calendar->getId())) ?>';
+    var calendarBegin = moment('<?=$this->calendar->getBeginDay()->format("m/d/Y H:i") ?>');
+    var calendarEnd = moment('<?=$this->calendar->getEndDay()->format("m/d/Y H:i") ?>');
+
+</script>
+<script type="text/javascript">
+    var app = angular.module('tocatApp', ['ui.bootstrap', 'cgBusy']);
+
+
+    app.controller('CalendarCtrl', ['$scope', '$http', '$q', '$interval', '$modal', function ($scope, $http, $q, $interval, $modal) {
+
+        $scope.events = [];
+        var beginTime = moment().subtract(3,'days').toDate();
+        var countColumns = 7;
+        $scope.daysLabel = [];
+        $scope.dayHours = [];
+        var normalizeTime = function(t){
+            var beginNormalize = t.startOf('hour');
+            var diff = (t.toDate() - beginNormalize.toDate())/1000;
+            if (diff <= 1800) {
+                t = beginNormalize.add(30,'minutes').toDate();
+            } else {
+                t = beginNormalize.add(1,'hours').toDate();
+            }
+            return t;
+        };
+
+        $scope.generateDays = function(beginDate) {
+            $scope.daysLabel = [];
+            var rangeToday = moment().range(moment().startOf('day'),moment().startOf('day').add(1,'days'));
+            for (var i =0; i < countColumns; i++) {
+                var d = moment(beginDate.toString()).add(i,'days');
+                $scope.daysLabel.push({date: d.toDate(), 'today': rangeToday.contains(d)});
+            }
+        };
+        $scope.generateHours = function(days, begin, end) {
+            $scope.dayHours = [];
+            begin = normalizeTime(begin);
+            end = normalizeTime(end);
+
+            for (var i =0; i < countColumns; i++) {
+                var hours = [];
+                var start = moment(days[i].date.toDateString() + ' ' + begin.toTimeString()).toDate();
+                end = moment(days[i].date.toDateString() + ' ' + end.toTimeString()).toDate();
+                while (start <= end) {
+                    hours.push({'date': start, 'busy': false});
+                    start = moment(start.toString()).add(30, 'minutes').toDate();
+                }
+                //var d = moment(beginDate.toString()).add(i,'days').toDate();
+                $scope.dayHours.push(hours);
+            }
+        };
+
+        $scope.pagerEvent = function(n) {
+            if (n > 0) {
+                beginTime = moment(beginTime.toString()).add(n,'days').toDate();
+            } else if (n < 0) {
+                beginTime = moment(beginTime.toString()).subtract( n * (-1),'days').toDate();
+            } else {
+                beginTime = moment().subtract(3,'days').toDate();
+            }
+            $scope.refresh();
+        };
+
+        $scope.loadEvents = function(beginDate, endDate) {
+            $scope.myPromise = $http.post(URL_EVENTS, {'action': 'list', 'start_at': beginDate, 'end_at': endDate});
+            $scope.myPromise.success(function (data) {
+                $scope.events = data;
+                var ranges = [];
+                jQuery.each($scope.events, function(index, event){
+                    ranges.push( moment().range(
+                            moment(event.start_at.date + ' ' + event.start_at.timezone),
+                            moment(event.end_at.date + ' ' + event.end_at.timezone)
+                        )
+                    );
+                });
+                for (var i=0; i < $scope.dayHours.length; i++) {
+                    for (var j=0; j < $scope.dayHours[i].length; j++) {
+                        for (var k=0; k < ranges.length; k++)
+                        if (moment($scope.dayHours[i][j].date).within(ranges[k])) {
+                            $scope.dayHours[i][j].busy = true;
+                        }
+                    }
+                }
+            });
+        };
+
+        $scope.saveEvent = function() {
+
+            var data = {};
+            $('#myModal form').serializeArray().map(function(item) {
+                data[item.name] = item.value;
+            });
+            data['start_at'] = $('#datetimepicker3').data('DateTimePicker').date().toDate();
+            data['end_at'] = $('#datetimepicker4').data('DateTimePicker').date().toDate();
+            $scope.myPromise = $http.post(URL_EVENTS, {'action': 'save', 'data': data});
+            $scope.myPromise.success(function (data) {
+                    $scope.refresh();
+                });
+            $('#myModal').modal('hide');
+        };
+
+        $scope.refresh = function() {
+            $scope.generateDays(beginTime);
+            $scope.generateHours($scope.daysLabel, calendarBegin, calendarEnd);
+            $scope.loadEvents(beginTime,moment(beginTime).add(7,'days').toDate());
+        };
+
+        $scope.open = function (t)
+        {
+            if (t.busy == true) return;
+            t = t.date;
+            $('#datetimepicker3').datetimepicker({
+                format: 'ddd, MMM D, hh:mma',
+                stepping: 30,
+                defaultDate: moment(t.toString())
+            }).data("DateTimePicker").date( moment(t.toString()));
+            $('#datetimepicker4').datetimepicker({
+                format: 'ddd, MMM D, hh:mma',
+                stepping: 30,
+                defaultDate: moment(t.toString()).add(1,'hours')
+            }).data("DateTimePicker").date(moment(t.toString()).add(1,'hours'));
+            $('#myModal').modal();
+        };
+
+        $scope.refresh();
+
+        $('#myModal form').validator().on('submit', function (e) {
+          if (e.isDefaultPrevented()) {
+            // handle the invalid form...
+          } else {
+              $scope.saveEvent();
+          }
+        })
+
+    }]).filter('mapYesNo', function () {
+        return function (input) {
+            return (input)?'Yes':'No';
+        };
+    });
+</script>
+<div ng-controller="CalendarCtrl" class="row">
+    <?php echo $this->partial('tocatcore/calendar/partial/sidebar.phtml', ['listCalendar' => $this->listCalendar, 'calendar_id' => $this->calendar->getId()]); ?>
+    <div class="col-sm-8">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+                  <div class="page-header" style="margin: 0; padding: 0;">
+                      <h1 class="text-center">
+                          <?= $this->gravatar($this->calendar->getUser()->getEmail(), ['img_size' => 75]) ?>
+                          <?php echo $this->calendar->getUser()->getDisplayName()?>
+                          <small>calendar availability</small>
+                      </h1>
+                  </div>
+          </div>
+          <div class="panel-body">
+              <nav>
+                <ul class="pager" id="pagerDays">
+                  <li class="previous"><a ng-click="pagerEvent(-1)" href="#"><span aria-hidden="true">&larr;</span> Older</a></li>
+                  <li class="text-center"><a ng-click="pagerEvent(0)" class="btn" href="#">Today</a></li>
+                  <li class="next"><a ng-click="pagerEvent(1)" href="#">Newer <span aria-hidden="true">&rarr;</span></a></li>
+                </ul>
+              </nav>
+            <div class="" cg-busy="{promise:myPromise,message:'Please Wait...',backdrop:true}" id="events">
+                <h4><span ng-repeat="dt in daysLabel" class="col-xs-2 label" ng-class="{'label-default': dt.today}">{{dt.date | date: 'EEE, MMM d' }}</span></h4>
+                <div ng-repeat="hours in dayHours" class="col-xs-2">
+                    <div ng-repeat="hr in hours" ng-class="{busy: hr.busy}"><a ng-click="open(hr)" href="#">{{hr.date | date: 'hh:mm a'}}</a></div>
+                </div>
+            </div>
+          </div>
+            <div class="panel-footer">Just click by time to reserve it.</div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title text-center" id="myModalLabel">Reserve this time for you</h4>
+              </div>
+              <div class="modal-body">
+                  <form data-toggle="validator" class="form-horizontal" id="formEvent" action="#">
+                      <div id="booking-time-group" class="form-group">
+                          <label for="" class="col-sm-3 control-label">BOOKING:</label>
+                          <div class='col-sm-4'>
+                              <div class="form-group">
+                                  <span>Start time:</span>
+                                  <div class='input-group date' id='datetimepicker3'>
+                                      <input required type='text' class="form-control" name="start_at"/>
+                                      <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span>
+                                      </span>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class='col-sm-4'>
+                              <div class="form-group">
+                                  <span>End time:</span>
+                                  <div class='input-group date' id='datetimepicker4'>
+                                      <input required type='text' class="form-control" name="end_at"/>
+                                      <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span>
+                                      </span>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">EMAIL:</label>
+                        <div class="col-sm-8">
+                          <input type="email" class="form-control" name="email" id="inputEmail3" placeholder="Email" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="inputName" class="col-sm-3 control-label">YOUR NAME:</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" name="name" id="inputName" placeholder="Your name" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="inputNotes" class="col-sm-3 control-label">NOTES:</label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control" rows="3" name="notes" id="inputNotes" placeholder="Notes"></textarea>
+                        </div>
+                      </div>
+                  </form>
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="$('#formEvent').submit()">Save event</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>

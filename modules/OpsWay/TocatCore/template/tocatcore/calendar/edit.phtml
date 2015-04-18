@@ -1,0 +1,55 @@
+<?php  $this->headScript()
+            ->prependFile($this->basePath() . '/vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js')
+            ->prependFile($this->basePath() . '/vendor/moment/min/moment.min.js');
+       $this->headLink()
+           ->prependStylesheet($this->basePath() . '/vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css'); ?>
+<div class="row">
+    <?php echo $this->partial('tocatcore/calendar/partial/sidebar.phtml', ['listCalendar' => $this->listCalendar]); ?>
+    <div class="col-sm-8">
+        <h3>Edit availability calendar</h3>
+        <hr/>
+        <form action="<?php echo $this->url('calendar',['action' => 'edit', 'id' => $this->calendar->getId()]) ?>" method="post">
+        <div class="row">
+                <div class='col-sm-3'>
+                    <div class="form-group">
+                        <span>Start workday:</span>
+                        <div class='input-group date' id='datetimepicker3'>
+                            <input type='text' class="form-control" name="begin_day"/>
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class='col-sm-3'>
+                    <div class="form-group">
+                        <span>End workday:</span>
+                        <div class='input-group date' id='datetimepicker4'>
+                            <input type='text' class="form-control" name="end_day"/>
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            <div class='col-sm-3'>
+                <div class="form-group">
+                    <div style="margin-top: 20px;">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+                <script type="text/javascript">
+                    $(function () {
+                        $('#datetimepicker3').datetimepicker({
+                            format: 'LT',
+                            defaultDate: moment("<?php echo $this->calendar->getBeginDay()->format("m/d/Y H:i") ?>")
+                        });
+                        $('#datetimepicker4').datetimepicker({
+                            format: 'LT',
+                            defaultDate: moment("<?php echo $this->calendar->getEndDay()->format("m/d/Y H:i") ?>")
+                        });
+                    });
+                </script>
+        </div>
+        </form>
+    </div>
+</div>

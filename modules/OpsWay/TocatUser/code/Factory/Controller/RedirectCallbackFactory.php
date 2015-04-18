@@ -29,8 +29,9 @@ class RedirectCallbackFactory implements FactoryInterface
         $options = $serviceLocator->get('zfcuser_module_options');
 
         return function () use ($router, $application, $options) {
-            $routeMatch = $application->getMvcEvent()->getRouteMatch();
-            $redirect = $router->assemble(array(), array('name' => 'zfcuser/account'));
+            $routeRedirect = $application->getMvcEvent()->getRequest()->getQuery('redirect', false);
+            $routeRedirect = ($routeRedirect) ?: $options->getLoginRedirectRoute();
+            $redirect = $router->assemble([], ['name' => $routeRedirect]);
             $response = $application->getResponse();
             $response->getHeaders()->addHeaderLine('Location', $redirect);
             $response->setStatusCode(302);

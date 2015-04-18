@@ -31,6 +31,14 @@ return [
         ],
     ],
     'asset_manager' => [
+        'caching' => [
+            'default' => [
+                'cache'   => 'Assetic\\Cache\\FilesystemCache',
+                'options' => [
+                    'dir' => 'public', // path/to/cache
+                ],
+            ],
+        ],
         'resolver_configs' => [
             'paths' => [
                 __DIR__ . '/../public',

@@ -1,11 +1,13 @@
 <span style="color: #f5f5f5;">
-    <strong>
+
         <?php if ($this->displayName): ?>
+    <strong>
             <span class="userpic"><?= $this->gravatar($this->zfcUserIdentity()->getEmail(), ['img_size' => 23]) ?></span>
             <a href="<?= $this->url('zfcuser/account') ?>"><?= $this->displayName ?></a> |
             <a href="<?= $this->url('zfcuser/logout') ?>">[<?= $this->translate('Sign Out'); ?>]</a>
-        <?php else: ?>
-            <?= $this->translate('Hello, guest') ?>
-        <?php endif; ?>
     </strong>
+        <?php else: ?>
+      <?= $this->translate('Hello, guest') ?> <a href="<?php echo $this->url('zfcuser/login') ?>">Log In</a>
+        <?php endif; ?>
+
 </span>
