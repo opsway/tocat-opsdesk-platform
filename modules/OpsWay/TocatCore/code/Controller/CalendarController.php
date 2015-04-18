@@ -33,7 +33,7 @@ class CalendarController extends AbstractActionController
             $userRepository = $em->getRepository(User::class);
             $user = $userRepository->find($user->getId());
         }
-        return new ViewModel(['listCalendar'=> $this->getListCalendar(), 'user' => $user]);
+        return new ViewModel(['listCalendar' => $this->getListCalendar(), 'user' => $user]);
     }
 
     public function viewAction()
@@ -48,7 +48,7 @@ class CalendarController extends AbstractActionController
         if (!$calendar) {
             return $this->forward('calendar', ['action' => 'notFound']);
         }
-        return new ViewModel(['listCalendar'=> $list, 'calendar' => $calendar ]);
+        return new ViewModel(['listCalendar' => $list, 'calendar' => $calendar]);
     }
 
     public function createAction()
@@ -58,7 +58,7 @@ class CalendarController extends AbstractActionController
             $this->changeCalendar($calendar, $this->params()->fromPost());
         }
 
-        return new ViewModel(['listCalendar'=> $this->getListCalendar() ]);
+        return new ViewModel(['listCalendar' => $this->getListCalendar()]);
     }
 
     public function eventsAction()
@@ -86,23 +86,30 @@ class CalendarController extends AbstractActionController
                         try {
                             $date = new \DateTime($data['data']['start_at']);
                             $mail = new Mail\Message();
-                            $mail->setBody($calendar->getUser()->getDisplayName() . ' will be ready start conversation at '. $date->format("m/d/Y H:i"));
+                            $mail->setBody(
+                                $calendar->getUser()->getDisplayName()
+                                . ' will be ready start conversation at ' . $date->format("m/d/Y H:i")
+                            );
                             $mail->setFrom('calendar@opsway.support', 'Calendar OpsDesk');
                             $mail->addTo($data['data']['email'], $data['data']['name']);
-                            $mail->setSubject('You created meet with '. $calendar->getUser()->getDisplayName());
+                            $mail->setSubject('You created meet with ' . $calendar->getUser()->getDisplayName());
                             $mail->addReplyTo($calendar->getUser()->getEmail());
                             $transport = new Mail\Transport\Sendmail();
                             $transport->send($mail);
 
                             $mail = new Mail\Message();
-                            $mail->setBody($data['data']['name'] . ' will be ready start conversation at '. $date->format("m/d/Y H:i"));
+                            $mail->setBody(
+                                $data['data']['name'] . ' will be ready start conversation at '
+                                . $date->format("m/d/Y H:i")
+                            );
                             $mail->setFrom('calendar@opsway.support', 'Calendar OpsDesk');
                             $mail->addTo($calendar->getUser()->getEmail(), $data['data']['name']);
-                            $mail->setSubject('New booking with '. $data['data']['name']);
+                            $mail->setSubject('New booking with ' . $data['data']['name']);
                             $mail->addReplyTo($data['data']['email']);
                             $transport = new Mail\Transport\Sendmail();
                             $transport->send($mail);
-                        } catch (Exception $e) {}
+                        } catch (Exception $e) {
+                        }
                         break;
                     case 'list':
                         $hydrator = new DoctrineObject($em, true);
@@ -119,7 +126,7 @@ class CalendarController extends AbstractActionController
                         }, $calendar->getEventsCollection()->matching($criteria)->getValues()));
                         break;
 
-                        default:
+                    default:
                         return new ApiProblemResponse(new ApiProblem(404, 'Not Found Action'));
                 }
             } catch (Exception $e) {
@@ -142,7 +149,7 @@ class CalendarController extends AbstractActionController
             return $this->forward('calendar', ['action' => 'notFound']);
         }
 
-        return new ViewModel(['listCalendar'=> $this->getListCalendar(), 'calendar' => $calendar ]);
+        return new ViewModel(['listCalendar' => $this->getListCalendar(), 'calendar' => $calendar]);
     }
 
     protected function changeCalendar(Calendar $calendar, $data)

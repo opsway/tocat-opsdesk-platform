@@ -42,14 +42,14 @@ class CalendarEvent
      protected $notes;
     /**
      * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(name="start_at", type="datetime")
      */
-    protected $start_at;
+    protected $startAt;
     /**
      * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(name="end_at", type="datetime")
      */
-    protected $end_at;
+    protected $endAt;
     /**
      * @var bool
      * @ORM\Column(name="accept", type="boolean", nullable=false)
@@ -135,13 +135,9 @@ class CalendarEvent
      */
     public function getStartAt()
     {
-        return $this->start_at;
+        return $this->startAt;
     }
 
-    public function getStart_at()
-    {
-        return $this->getStartAt();
-    }
 
     /**
      * @param \DateTime $start_at
@@ -149,7 +145,7 @@ class CalendarEvent
      */
     public function setStartAt($start_at)
     {
-        $this->start_at = $start_at;
+        $this->startAt = $start_at;
         return $this;
     }
 
@@ -158,13 +154,9 @@ class CalendarEvent
      */
     public function getEndAt()
     {
-        return $this->end_at;
+        return $this->endAt;
     }
 
-    public function getEnd_at()
-    {
-        return $this->getEndAt();
-    }
 
     /**
      * @param \DateTime $end_at
@@ -172,7 +164,7 @@ class CalendarEvent
      */
     public function setEndAt($end_at)
     {
-        $this->end_at = $end_at;
+        $this->endAt = $end_at;
         return $this;
     }
 

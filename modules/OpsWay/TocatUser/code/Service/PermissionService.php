@@ -130,7 +130,9 @@ class PermissionService
                     $controllerName = $controllerAliasName;
                 }
                 try {
-                    if (stripos($controllerName,'Console') !== FALSE) continue;
+                    if (stripos($controllerName, 'Console') !== false) {
+                        continue;
+                    }
                     $controller = $controllerManager->get($controllerAliasName);
                     $reflection = new \ReflectionObject($controller);
                     $methods = $reflection->getMethods(\ReflectionMethod::IS_PUBLIC);

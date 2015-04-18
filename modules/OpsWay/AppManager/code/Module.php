@@ -38,6 +38,14 @@ class Module implements BootstrapListenerInterface, ConfigProviderInterface, Aut
         $events->attach('loadModules.post', array($this, 'modulesLoaded'));
         $sharedEvents = $events->getSharedManager();
         $sharedEvents->attach('Zend\Mvc\Application', MvcEvent::EVENT_BOOTSTRAP, array($this, 'onStartBootstrap'), PHP_INT_MAX - 1);
+        $sharedEvents->attach('doctrine', 'loadCli.post', array($this, 'initializeConsole'), 100);
+    }
+
+    public function initializeConsole($e)
+    {
+        if (strpos(implode('-', $_SERVER['argv']), 'app-install') !== false) {
+            $e->stopPropagation(true);
+        }
     }
 
     public function modulesLoaded($e)
