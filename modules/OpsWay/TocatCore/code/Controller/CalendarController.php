@@ -75,8 +75,8 @@ class CalendarController extends AbstractActionController
                 switch ($data['action']) {
                     case 'save':
                         $calendarEvent = new CalendarEvent();
-                        $calendarEvent->setStartAt(new \DateTime($data['data']['start_at']))
-                            ->setEndAt(new \DateTime($data['data']['end_at']))
+                        $calendarEvent->setStartAt(new \DateTime($data['data']['startAt']))
+                            ->setEndAt(new \DateTime($data['data']['endAt']))
                             ->setEmail($data['data']['email'])
                             ->setName($data['data']['name'])
                             ->setNotes($data['data']['notes'])
@@ -84,7 +84,7 @@ class CalendarController extends AbstractActionController
                         $em->persist($calendarEvent);
                         $em->flush();
                         try {
-                            $date = new \DateTime($data['data']['start_at']);
+                            $date = new \DateTime($data['data']['startAt']);
                             $mail = new Mail\Message();
                             $mail->setBody(
                                 $calendar->getUser()->getDisplayName()
@@ -117,8 +117,8 @@ class CalendarController extends AbstractActionController
                         $criteria = Criteria::create();
                         $criteria->where(
                             $expr->andX(
-                                $expr->gte('start_at', new \DateTime($data['start_at'])),
-                                $expr->lte('end_at', new \DateTime($data['end_at']))
+                                $expr->gte('startAt', new \DateTime($data['startAt'])),
+                                $expr->lte('endAt', new \DateTime($data['endAt']))
                             )
                         );
                         return new JsonModel(array_map(function ($event) use ($hydrator) {

@@ -62,6 +62,7 @@ class Role implements HierarchicalRoleInterface
     public function __construct()
     {
         $this->permissions = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     /**

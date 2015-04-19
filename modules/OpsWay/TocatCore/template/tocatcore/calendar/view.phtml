@@ -127,17 +127,18 @@ $this->headLink()
         };
 
         $scope.loadEvents = function(beginDate, endDate) {
-            $scope.myPromise = $http.post(URL_EVENTS, {'action': 'list', 'start_at': beginDate, 'end_at': endDate});
+            $scope.myPromise = $http.post(URL_EVENTS, {'action': 'list', 'startAt': beginDate, 'endAt': endDate});
             $scope.myPromise.success(function (data) {
                 $scope.events = data;
                 var ranges = [];
                 jQuery.each($scope.events, function(index, event){
                     ranges.push( moment().range(
-                            moment(event.start_at.date + ' ' + event.start_at.timezone),
-                            moment(event.end_at.date + ' ' + event.end_at.timezone)
+                            moment.utc(event.startAt.date),
+                            moment.utc(event.endAt.date)
                         )
                     );
                 });
+                $scope.ranges = ranges;
                 for (var i=0; i < $scope.dayHours.length; i++) {
                     for (var j=0; j < $scope.dayHours[i].length; j++) {
                         for (var k=0; k < ranges.length; k++)
@@ -155,8 +156,8 @@ $this->headLink()
             $('#myModal form').serializeArray().map(function(item) {
                 data[item.name] = item.value;
             });
-            data['start_at'] = $('#datetimepicker3').data('DateTimePicker').date().toDate();
-            data['end_at'] = $('#datetimepicker4').data('DateTimePicker').date().toDate();
+            data['startAt'] = $('#datetimepicker3').data('DateTimePicker').date().toDate();
+            data['endAt'] = $('#datetimepicker4').data('DateTimePicker').date().toDate();
             $scope.myPromise = $http.post(URL_EVENTS, {'action': 'save', 'data': data});
             $scope.myPromise.success(function (data) {
                     $scope.refresh();
@@ -249,7 +250,7 @@ $this->headLink()
                               <div class="form-group">
                                   <span>Start time:</span>
                                   <div class='input-group date' id='datetimepicker3'>
-                                      <input required type='text' class="form-control" name="start_at"/>
+                                      <input required type='text' class="form-control" name="startAt"/>
                                       <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span>
                                       </span>
                                   </div>
@@ -259,7 +260,7 @@ $this->headLink()
                               <div class="form-group">
                                   <span>End time:</span>
                                   <div class='input-group date' id='datetimepicker4'>
-                                      <input required type='text' class="form-control" name="end_at"/>
+                                      <input required type='text' class="form-control" name="endAt"/>
                                       <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span>
                                       </span>
                                   </div>
@@ -296,5 +297,8 @@ $this->headLink()
             </div>
           </div>
         </div>
+        <pre> {{ events | json}}</pre>
+        <pre> {{ ranges | json}}</pre>
+        <pre> {{ dayHours | json}}</pre>
     </div>
 </div>

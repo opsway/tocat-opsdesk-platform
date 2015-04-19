@@ -35,7 +35,7 @@ return [
             'default' => [
                 'cache'   => 'Assetic\\Cache\\FilesystemCache',
                 'options' => [
-                    'dir' => 'public', // path/to/cache
+                    'dir' => __DIR__ . '/../../../../data/cache', // path/to/cache
                 ],
             ],
         ],
