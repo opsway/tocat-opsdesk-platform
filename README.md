@@ -1,5 +1,7 @@
 TOCAT App
 =======================
+
+[![Join the chat at https://gitter.im/opsway/tocat-opsdesk-platform](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/opsway/tocat-opsdesk-platform?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://travis-ci.org/opsway/tocat-opsdesk-platform.svg)](https://travis-ci.org/opsway/tocat-opsdesk-platform)
 [![Coverage Status](https://coveralls.io/repos/opsway/tocat/badge.png)](https://coveralls.io/r/opsway/tocat)
 Introduction
