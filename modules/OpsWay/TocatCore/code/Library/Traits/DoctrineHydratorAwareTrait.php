@@ -20,7 +20,7 @@ trait DoctrineHydratorAwareTrait
      * @return HydratorInterface
      * @throws \LogicException
      */
-    protected function getHydrator()
+    public function getHydrator()
     {
         if (!$this->hydrator) {
             throw new \LogicException('Hydrator has not been injected!');

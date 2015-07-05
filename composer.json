@@ -1,5 +1,5 @@
 {
-    "name": "opsway/tocat",
+    "name": "opsway/opsdesk",
     "description": "Tocat CMF based on ZF2",
     "license": "BSD-3-Clause",
     "keywords": [
@@ -29,7 +29,7 @@
     "require": {
         "php": ">=5.5",
         "ext-intl": "*",
-        "zendframework/zendframework": ">=2.3.2,<3.0.0",
+        "zendframework/zendframework": "~2.4",
         "zfcampus/zf-apigility": "~1.0",
         "kbsali/redmine-api":"~1.0",
         "zf-commons/zfc-user-doctrine-orm": "1.*",
